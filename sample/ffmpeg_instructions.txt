@@ -1,0 +1,1 @@
+ffmpeg -ss 00:00:00 -i Lesson\ 1_\ Deep\ Learning\ 2018_HD720.mp4 -to 00:05:00 -c copy -copyts sample.mp4

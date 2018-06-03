@@ -1,0 +1,3940 @@
+﻿1
+00:00:00,250 --> 00:00:04,350
+Okay so welcome back to deep learning lesson 2
+
+2
+00:00:06,940 --> 00:00:18,719
+Last week we
+Got to the point where we had successfully trained a pretty accurate
+image classifier and
+So just to remind you about how we did that
+
+3
+00:00:21,580 --> 00:00:57,389
+Can you guys see okay, I think the actually we can turn... can you guys all see the screen okay?
+We can to adjust these ones can we?
+Don't pitch us all into darkness, but if that works then
+Is that okay, that's better isn't it yeah?
+Can I do the other two and maybe that one as well oh
+But that one oh, that's great, sorry, I don't know your renders. Oh, okay great. That's better isn't it me?
+
+4
+00:01:02,440 --> 00:01:22,259
+So just to remind you the way that we built this image classifier was we used a small amount of code
+Basically three lines of code
+And these three lines of code pointed at a particular path
+Which already had some data in it and so the key thing for this to know how to train this model
+
+5
+00:01:23,049 --> 00:01:41,710
+was that this path which was data dogs cats and had to have a particular structure, which is that it had a
+train folder and a valid folder and
+In each of those trained and valid folders there was a cats folder in the dogs folder
+And if the cats on the docs folders was a bunch of images of cats and dogs, but this is like a pretty standard
+
+6
+00:01:41,810 --> 00:01:55,470
+It's one of two
+Main structures that are used to say here is
+The data that I want you to train an image model from so I know some of you during the week
+
+7
+00:01:55,780 --> 00:02:09,148
+Went away and tried different data sets where you had
+folders with different sets of images and in credit your own image classifiers
+And generally that seems to be working pretty well from what I can see on the forums so to make it clear
+
+8
+00:02:10,090 --> 00:02:24,959
+at this point this is
+Everything you need
+to get started so if you
+Create your own folders with different sets of images. You know a few hundred
+or a few thousand at each folder
+
+9
+00:02:25,569 --> 00:02:31,679
+And run the same three lines of code that will give you an image classifier
+
+10
+00:02:31,680 --> 00:02:36,460
+And you'll be able to see this third column tells you how accurate is?
+
+11
+00:02:37,420 --> 00:02:51,660
+So
+We looked at
+Some kind of simple visualizations to see like
+What was it uncertain about? What was it wrong about and so forth and that's always a really good idea
+
+12
+00:02:52,810 --> 00:03:05,970
+and
+Then we learned about the one key number you have to pick so this is this number here
+Is the one key number is 0.01 and this is called the learning rate, and so I wanted to go over this again
+
+13
+00:03:07,120 --> 00:03:15,509
+And we'll learn about the theory behind what this is?
+During the rest of the course in quite a lot of detail and for now I just wanted to talk about the practice
+
+14
+00:03:18,790 --> 00:03:20,790
+Yes, Yannet.
+
+15
+00:03:23,680 --> 00:03:27,540
+They cannot see you in the video. They can now. I just turned it around
+
+16
+00:03:30,760 --> 00:03:35,910
+You tell us about the other three numbers being bad, we did
+
+17
+00:03:36,640 --> 00:03:45,959
+These three here
+We're going to talk about the other other ones shortly so the main one we're going to look at for now is is the last
+Column which is the accuracy the?
+
+18
+00:03:47,110 --> 00:03:53,429
+First column as you can see is the epoch number so this tells us how many times has it been through the entire dataset
+
+19
+00:03:54,610 --> 00:04:09,944
+Trying to learn a better classifier and in the next two columns is what's called the loss which we'll be learning about
+Either later today or next week the first point is the loss on the training set
+These are the images that we're looking at in order to try to make a better classifier
+
+20
+00:04:10,044 --> 00:04:22,739
+And the second is the loss of the validation set these are the images that we're not looking at and we're training
+But we're just sitting on the side to see how accurate we are so we'll learn about littering loss in accuracy
+later
+
+21
+00:04:25,400 --> 00:04:39,430
+Okay, so
+So we've got the epoch number the training loss is the second column the
+Validation loss is the third column and the accuracy is the fourth column?
+
+22
+00:04:45,399 --> 00:04:48,599
+Okay, so the basic idea of the loading rate
+
+23
+00:04:54,520 --> 00:05:08,218
+So the basic idea of the learning rate is it's the thing that's going to decide how quickly do we zoom do we kind of
+Hone in on the solution, and so I find that a good way to think about this is to think about like well
+
+24
+00:05:08,219 --> 00:05:18,449
+What if we were trying to?
+fit to a function that
+Looks something like this right. We're trying to say okay. Where's where abouts is the minimum point?
+
+25
+00:05:19,029 --> 00:05:24,509
+This is basically what we do when we do deep learning is we try to find the minimum point of a function
+
+26
+00:05:26,349 --> 00:05:33,329
+Now our function happens to have
+Millions, or hundreds of millions of parameters, but it works the same basic way, and so when we look at it
+
+27
+00:05:33,330 --> 00:05:44,459
+you know we can immediately see that the
+Lowest point is here
+But how would you do that if you are a computer algorithm and what we do is we we start out at some point
+
+28
+00:05:44,619 --> 00:05:51,569
+At random so you pick say here, and we have a look and we say okay
+What's the what's the loss or the error at this point?
+
+29
+00:05:51,999 --> 00:06:05,759
+And we say what's the gradient in other words which way is up and which way is down and?
+It tells us that down is going to be in that direction and it also tells us how fast is it going down?
+Which is at this point is going down pretty quickly?
+
+30
+00:06:06,519 --> 00:06:20,909
+And so then we take a step in
+The direction that's down and the distance we travel is going to be
+Proportional to the gradient sort of unfortunately how steep it is the idea is if it's deeper, then we're probably further away
+
+31
+00:06:21,219 --> 00:06:30,718
+That's the general idea right and so specifically what we do is we take the gradient
+Which is how steep is it at this point, and we multiply it by some number and that number is called the learning rate?
+
+32
+00:06:31,209 --> 00:06:48,419
+Okay, so if we pick a number that is
+very small
+Then we're guaranteed that we're going to go a little bit closer and a little bit closer and a little bit closer each time
+Right, but it's going to take us a very long time to eventually get to the bottom if we dig a number
+
+33
+00:06:48,459 --> 00:07:00,929
+That's very big. We could actually step too far could go in the right direction, but we could step all the way over to here
+Right as result of which we end up further away than we started and we could
+
+34
+00:07:01,300 --> 00:07:12,930
+Oscillate and get worse and worse so if you start training a neural net and you find that your accuracy or your loss is like
+Spitting off into infinity almost certainly your learning rates too high
+
+35
+00:07:14,050 --> 00:07:20,520
+so in a sense learning rate too low is
+Is a better problem to have because you're going to have to wait a long time, but wouldn't it be nice
+
+36
+00:07:21,120 --> 00:07:36,089
+if there was a way to figure out like
+What's the best learning rate something where you could kind of go quickly go like Bom Bom Bom right and so?
+That's why we use this thing called a learning rate finder
+
+37
+00:07:36,590 --> 00:07:52,350
+And what the learning rate finder does is it tries each each time it looks at another remember the?
+Mini-batch how many batches a few images that we look at each time so that we're using the parallel processing power of the GPU
+Effectively we look generally at around
+
+38
+00:07:52,920 --> 00:08:02,850
+64 128 images at a time for each mini batch, which is labeled here as an iteration
+We gradually increase the learning rate
+multiplicatively increase the learning rate
+
+39
+00:08:02,850 --> 00:08:12,180
+We started really really tiny learning rates to make sure that we don't start at something too high and we gradually
+Increase it and so the idea is that?
+
+40
+00:08:12,670 --> 00:08:19,070
+Eventually the learning rate will be so big that the loss will start getting worse and so what we're going to do
+
+41
+00:08:19,370 --> 00:08:26,249
+Then is we're a look at the plot of
+Learning rate against loss right so when the learning rates tiny
+
+42
+00:08:27,250 --> 00:08:35,100
+It increases slowly, then it's that's where increase a bit faster
+And then eventually it starts not increasing as quickly and in fact it starts getting worse
+
+43
+00:08:35,380 --> 00:09:12,299
+Right so clearly here and make sure you're you want to be familiar with this
+Scientific notation okay so ten to the negative one is
+0.1. 10 to 50 or is 1 10 to the negative 2 is 0.001 and when we write this in
+Python we'll generally write it like this rather than writing 10 to the negative 1 or 10 to the negative 2
+we'll just write 1 a
+Neg 1 or 1 e neg - okay. I mean the same thing you're going to see that all the time
+And remember that equals 0.1. Oh point O one
+
+44
+00:09:15,100 --> 00:09:32,160
+Okay, so
+Don't be confused by this text that it prints out here this this loss
+Here is the the final loss at the very at the end of it's not of any interest right so ignore this this is only
+interesting when we're doing regular trading
+
+45
+00:09:32,160 --> 00:09:38,999
+That's not interesting for the learning rate finder the thing that's interesting for the learning rate finder. Is this loan shed plot and
+
+46
+00:09:39,670 --> 00:09:47,380
+Specifically we're not looking for the point where it's the lowest back to the point where it's the lowest it's actually not getting better anymore
+So that's to higher learning rate
+
+47
+00:09:47,380 --> 00:09:58,110
+So I generally look to see like where is it the lowest and then I go back like one for magnitude so?
+one enoch two
+Would be a pretty good choice
+
+48
+00:09:58,150 --> 00:10:08,460
+Yeah, okay, so that's why you saw when we ran our
+Fit here we picked 0.01 right which is one a neg two
+
+49
+00:10:10,180 --> 00:10:24,660
+So important point to make here is like this this is the one key number that we've learnt
+to adjust
+and
+if
+You just adjust this number at nothing else most of the time you're going to be able to get pretty good results
+
+50
+00:10:24,820 --> 00:10:41,790
+And this is like a very different message to what you would hear or see in any textbook or any video or any course
+because
+Up until now
+there's been like dozens and dozens of these they're called hyper parameters dozens and dozens of hyper parameters to set and
+
+51
+00:10:41,950 --> 00:10:52,150
+They've been thought of as highly sensitive and difficult to set so inside the first AI library
+We kind of do all that stuff for you
+as much as we can and
+
+52
+00:10:52,150 --> 00:10:56,400
+During the course we're going to learn that there are some more we can quake to get slightly better results
+
+53
+00:10:57,760 --> 00:11:22,229
+But it's kind of like
+It's kind of in a funny situation
+Here because for those of you that haven't done anything learning before is kind of like oh this is
+That's all there is to it. This is very easy, and then when you talk to people outside this class
+They'll be like deep learning so difficult as someone to say it's a real art form and so that's why there's this
+as is difference right and so that the truth is that the learning rate really is the key thing to set and
+
+54
+00:11:22,300 --> 00:11:41,990
+This ability to use this to figure out how to set it well though the paper is now
+probably 18 months old
+Almost nobody knows about this paper. It was from a guy
+Who's not from a famous research labs so most people kind of ignored it and in fact even this particular technique was one
+subpart of a paper that was about something else
+
+55
+00:11:42,829 --> 00:12:00,589
+So again this idea of like this is how you can set the learning rate?
+Really nobody outside this classroom just about knows about it obviously the guy who wrote it Leslie Smith knows about it. Yeah
+So it's a good thing to tell your colleagues about is like here is actually a great way to set the learning rate and
+
+56
+00:12:01,709 --> 00:12:10,008
+There's even been papers caught like one of the famous papers is called no more pesky learning rates
+Which actually is a less effective technique than this one?
+
+57
+00:12:10,009 --> 00:12:17,899
+But this idea that like setting learning rates is
+Is very difficult and thirdly is has been true for most of the kind of deep learning history
+
+58
+00:12:19,019 --> 00:12:27,079
+So here's the trick right go look at this plot
+Find kind of the lowest to go back about a multiple of ten and try that all right
+
+59
+00:12:27,079 --> 00:12:34,300
+And if that doesn't quite work you can always try you know going back another multiple ten, but this is always worked for me
+so far
+
+60
+00:12:40,160 --> 00:12:52,428
+Once
+Why does this learning rate? This method work versus something else like momentum base?
+Or what's like the advantages a disadvantage with just learning rate rate like technique. We're just feels
+
+61
+00:12:58,559 --> 00:13:03,498
+That's a great question so
+We're going to learn during this course about a number of ways of improving
+
+62
+00:13:03,929 --> 00:13:09,129
+gradient percent like you mentioned momentum and
+atom and so forth
+
+63
+00:13:09,129 --> 00:13:17,149
+This is orthogonal in fact so one of the things the faster a library tries to do is figure out the right
+Gradient descent version and in fact behind the scenes
+
+64
+00:13:17,149 --> 00:13:34,489
+This is actually using something called Adam and so this technique is telling us. This is the best learning rate to use
+given
+What I thought other tweaks you're using in this case the atom optimizer
+So it's not that there's some compromise between this and some other approaches who sits on top of those approaches
+
+65
+00:13:34,490 --> 00:13:43,129
+And you still have to set the learning rate when you use with other approaches
+So we're trying to find the best
+Kind of optimizer to use for a problem that you still have to set the learning rate
+
+66
+00:13:43,129 --> 00:14:00,589
+And this is how we can do it and in fact this idea of using this technique on top of
+more advanced optimizers like Adam might haven't even seen
+Mentioned in a paper before so I think this is like a I mean
+It's not a huge breakthrough. It seems obvious but nobody else seems to
+Tried it so as you can see it was well
+
+67
+00:14:05,800 --> 00:14:16,420
+When we use
+optimizers like Adam ditched Harvick adaptive learning rate so and he said this learning rate is Italy initial learning rate because it changes during the
+people
+
+68
+00:14:19,040 --> 00:14:29,649
+So
+We're going to be learning about things like Adam the details about it later in the class
+But the basic answer is no even with even the Adam that there actually is a learning rate
+
+69
+00:14:30,410 --> 00:14:53,080
+It's just being
+It's being basically divided by the the gradient
+The average previous gradient and also the recent summer Squared's of gradients
+So there's still like a number called the learning rate there. There. Isn't a even these so called dynamic learning rate
+methods still have
+unlearning rate
+
+70
+00:14:55,640 --> 00:15:08,649
+Okay, so
+The most important
+Thing that you can do to make your model better and is to give it more data
+
+71
+00:15:09,290 --> 00:15:18,640
+So the challenge that happens is that these models have hundreds of millions of parameters
+and if you train them for a while they start to
+
+72
+00:15:19,070 --> 00:15:26,679
+Do what's called overfitting and so overfitting means that they're going to start to see like the specific details of the images you're giving them?
+
+73
+00:15:26,750 --> 00:15:32,829
+rather than the more general
+Learning that can transfer across to the validation set
+
+74
+00:15:33,529 --> 00:15:38,199
+So the best thing we can do to avoid overfitting is to find more data
+
+75
+00:15:38,329 --> 00:15:49,119
+Now obviously one way to do that would just be to collect more data from where you're getting it from or label more data
+But a really easy way that we should always do is to use something called data augmentation
+
+76
+00:15:50,540 --> 00:15:57,530
+So they don't open tuition is one of these things that's key in many courses
+It's not even mentioned at all or if it is it's kind of like an advanced topic right at the end
+
+77
+00:15:57,630 --> 00:16:02,260
+But actually it's like the most important thing that you can do to make a better model, okay?
+
+78
+00:16:04,779 --> 00:16:09,849
+And so it's built into the faster you library to make it very easy to do and so we're going to look at the details
+
+79
+00:16:09,850 --> 00:16:14,050
+Of the code shortly, but the basic idea is that?
+
+80
+00:16:14,740 --> 00:16:22,630
+as in our initial code
+We had a line that said image classified data from parts
+
+81
+00:16:22,630 --> 00:16:31,838
+And we passed in the path to our data and for transforms. We passed in basically
+The sizing the architecture. We'll look at this in more detail shortly
+
+82
+00:16:32,180 --> 00:16:37,839
+We just add one more parameter, which is what kind of data augmentation do you want to do?
+
+83
+00:16:38,600 --> 00:16:51,819
+and so
+To understand data augmentation, it's may. Be easiest to look at some pictures of data augmentation so what I've done here again
+We'll look at the code in more detail later, but the basic idea is oh I've run
+
+84
+00:16:53,180 --> 00:17:02,169
+I've built a
+Data class like multiple times. I'm going to do it six times and each time. I'm going to plot the same catch and
+
+85
+00:17:02,779 --> 00:17:14,828
+You can see that what happens is that?
+This cap here is further over to the left this one here is further over to the right and this one here is fit
+horizontally and so forth so data augmentation
+
+86
+00:17:16,520 --> 00:17:24,309
+Different types of image you're going to want different types of data augmentation right so for example if you were trying to recognize
+
+87
+00:17:25,520 --> 00:17:30,400
+Letters and digits you wouldn't want to flip horizontally because like it's actually has a different meaning
+
+88
+00:17:31,040 --> 00:17:40,329
+Whereas on the other hand if you're looking at?
+Photos of cats and dogs you probably don't want to fit vertically because cats aren't generally upside down all right
+
+89
+00:17:40,550 --> 00:17:50,859
+Where else if you're looking at there's a current Cargill competition which is?
+recognizing
+Icebergs in satellite images you probably do want to fit them upside down
+
+90
+00:17:51,110 --> 00:17:56,500
+Because it's really matter which area around the iceberg or the satellite was right so
+
+91
+00:17:58,250 --> 00:18:05,069
+One of the examples of the transform sets we have is
+Transforms sidon so in other words if you have photos that are like generally taken from the side
+
+92
+00:18:05,590 --> 00:18:09,939
+Which generally means you want to be able to flip them horizontally, but not vertically
+
+93
+00:18:10,010 --> 00:18:13,749
+This is going to give you all the transforms you need for that so it'll flip them sideways
+
+94
+00:18:14,390 --> 00:18:28,190
+Rotate them by small amounts but not too much and slightly bury their contrast and brightness
+And slightly zoom in and out a little bit and move them around a little so each time it's a slightly different fight billionaires
+
+95
+00:18:30,210 --> 00:18:39,910
+We're getting a couple of questions from people about
+You explaining in the reason why you don't think the minimum of the loss curve
+
+96
+00:18:39,910 --> 00:18:54,590
+Yeah, but it's like the higher rate so yeah, and also could you?
+people understand if
+This works for every CNN for CNN every minute. There's a running right fine done. Yeah, exactly, yeah
+
+97
+00:18:58,050 --> 00:19:03,919
+Okay great, um could you put your hand up if there's a spare seat next to you?
+
+98
+00:19:10,650 --> 00:19:21,709
+So there was a question about the learning rate finder about why do we use the learning rate?
+That's less than the lowest point and so the reason why is to understand what's going on with this learning rate finder
+
+99
+00:19:24,660 --> 00:19:56,700
+So let's go back to our picture here
+Like how do we figure out what learning rate to use right and so what we're going to do is we're going to take
+Steps and each time we're going to double
+The learning rate so kind of double the amount by which we multiply the grander gradient so in other words would go
+tiny step slightly bigger slightly bigger slightly bigger
+slightly bigger
+Slightly bigger
+slightly bigger
+okay, and
+
+100
+00:19:56,700 --> 00:20:06,949
+so the question is of the purpose of this is not to find the minimum the
+Purpose of this is to figure out what learning rate is allowing us to decrease quickly, right?
+
+101
+00:20:07,530 --> 00:20:20,300
+So the point at which the loss was lowest here is actually there, right?
+But that learning rate actually looks like it's probably too high it's going to just jump like
+Probably backwards and forwards, okay?
+
+102
+00:20:20,460 --> 00:20:30,410
+So instead what we do is we go back to the point where the learning rates quickly are giving us a quick increase
+in the loss
+
+103
+00:20:30,720 --> 00:20:40,699
+So here is so here is the actual learning rate increasing every single time. We look at a new mini batch
+so mini-batch reiteration versus learning right and
+
+104
+00:20:41,249 --> 00:20:47,029
+Then here is learning rate versus loss, so here's that point at the bottom. Where is now already too high?
+
+105
+00:20:47,789 --> 00:20:52,309
+Okay, and so here's the point where we go back a little bit, and it's increasing nice and quickly
+
+106
+00:20:54,389 --> 00:20:58,968
+We're going to learn about something called
+stochastic gradient descent with restarts
+
+107
+00:20:59,159 --> 00:21:13,189
+Shortly where we're going to see like in a sense you might want to go back to 1 enoch 3 where it's actually even steeper
+Still and maybe we would actually find this book
+actually
+Learn even quicker you could try it, but we're going to see later
+
+108
+00:21:13,190 --> 00:21:20,389
+Why actually using a higher number is going to give us better generalization so?
+For now let's put that aside
+
+109
+00:21:20,399 --> 00:21:26,209
+Do you mean higher learning rate when you say I?
+Know I mean higher letting retina say higher. Yeah, yeah
+
+110
+00:21:27,059 --> 00:21:29,059
+I
+
+111
+00:21:29,849 --> 00:21:43,639
+Mean I am learning rate so as we increase the iterations from the learning rate finder the learning rate is going up
+This is iterations versus learning ready. Okay, so as we
+Do that as the learning rate increases and we plot it here?
+
+112
+00:21:44,039 --> 00:21:51,199
+the loss Goes Down and here we get to the point where the learning rate is too high and
+At that point the most is now getting worse
+
+113
+00:21:51,450 --> 00:21:57,289
+Because I asked the question because you were just indicating that you know even though the minimum was at 10 to the minus 1
+
+114
+00:21:58,019 --> 00:22:05,529
+You were gonna you suggest that we should choose 10 to the minus 2, but now you're saying
+I mean we should go back the other way higher
+
+115
+00:22:05,549 --> 00:22:21,228
+So I didn't mean to say that I'm sorry if I said something backwards. I want to go back down to the
+Lower learning rate, so possibly. I said a higher when I meant higher
+Into this lower OS. Do you know I'm learning right? Okay? Thanks. Yep
+
+116
+00:22:23,159 --> 00:22:35,720
+Last class is said that the local all the local minima are the same and
+This graph also shows the same is that is this something that was observed, or is the logic theory behind it
+
+117
+00:22:37,020 --> 00:22:48,500
+That's not what this graph is showing
+This graph is simply showing that there's a point where if we increase the learning rate more
+Then it stops getting better than actually starts getting worse the idea that
+
+118
+00:22:49,500 --> 00:23:00,110
+all local minima are the same is a
+totally separate issue
+and
+It's actually something else. We'll see a picture of shortly, so let's come back to that
+
+119
+00:23:02,909 --> 00:23:20,720
+Jeremy do we have to find the base learning rate every time we are going to
+run a poke
+third time we're
+Running on a poke and a pop so how many times should I run this like let me write find
+my training
+
+120
+00:23:24,030 --> 00:23:37,470
+That's a great question unit um
+I
+Certainly run it once when I start
+Later on in this class we're going to learn about unfreezing layers
+and
+
+121
+00:23:37,470 --> 00:23:58,160
+After I unfreeze layers, I sometimes run it again if I do something to like change the thing I'm training or change the way
+I'm training it you may want to run it again
+basically
+Or you know if you particularly if you've changed something about how you train like
+Unfreezing layers, which we're gonna soon learn about and you're finding the other training is
+
+122
+00:23:58,920 --> 00:24:06,950
+Unstable or too slow well again you can run it again. There's never any harm
+In running it it doesn't take very long
+
+123
+00:24:08,160 --> 00:24:09,085
+That's great question
+
+124
+00:24:09,185 --> 00:24:23,119
+Okay, so back to data augmentation so if we add to a when we run this little transforms from model
+function we pass in orientation transforms, we can pass in the main to a
+
+125
+00:24:23,820 --> 00:24:36,920
+Transform side on or transforms top down later on we'll learn about creating your own custom transform lists as well
+but for now because we're taking pictures from the side cats and dogs will say transform side on and
+
+126
+00:24:37,290 --> 00:24:53,780
+Now each time we look at an image. It's going to be zoomed in or out a little bit moved around a little bit
+rotated a little bit
+Possibly flipped okay, and so what this does is it's not exactly creating new data, but as far as the
+
+127
+00:24:54,420 --> 00:25:04,460
+Convolutional neural net is concerned. It's a different way of looking at this thing and it actually therefore allows it to learn
+how to recognize cats or dogs
+
+128
+00:25:05,130 --> 00:25:24,260
+From somewhat different angles right so when we do data orientation. We're basically trying to say based on our domain knowledge
+Here here are different ways that we can mess with this image that we know still make it the same image
+You know and that we could expect that you might actually see that kind of image in the real world
+
+129
+00:25:25,830 --> 00:25:39,950
+So what we can do now is when we call this from parts function
+Which we'll learn more about shortly we can now pass in this set of transforms, which actually have these augmentations in
+now
+
+130
+00:25:41,410 --> 00:25:49,850
+So that's going to we're going to start from scratch here. We do a fit and
+Initially
+the
+
+131
+00:25:49,850 --> 00:26:00,639
+Augmentations actually don't do anything and the reason initially they don't do anything is because we've got here something that says
+Precompute equals true. We're going to come back to these lots of times
+
+132
+00:26:03,170 --> 00:26:16,819
+But basically what this is doing is do you remember this picture we saw where we learn each different layer
+
+133
+00:26:17,820 --> 00:26:48,610
+Has these activations that basically look for it or anything from the middle of flowers to?
+eyeballs of
+Birds or whatever right and so literally what happens is that?
+The the later layers of this convolutional neural network have these things called activations and activation literally
+It's a number an activation is a number that says this feature like
+Eyeball of bird is in this location with this level of confidence with its probability
+right and so we're going to see a lot of this later, but
+
+134
+00:26:49,520 --> 00:27:04,630
+What we can do is we can say all right well in this
+We've got a pre trained network remember and a pre trained network is one where it's already learned to recognize
+Certain things in this case it's learnt to recognize the one and a half million images in the imagenet dataset
+
+135
+00:27:04,630 --> 00:27:20,770
+And so what we could do is we could take the the second last layer, so the one which is like
+Got all of the information necessary to figure out
+What kind of thing a thing is and we can save those activations so basically saving things saying you know?
+
+136
+00:27:20,770 --> 00:27:31,479
+There's this level of eyeball nurse here in this level of dogs facing us here or in this level of
+Fluffy ear there and so forth and so we save for every image these
+
+137
+00:27:32,270 --> 00:27:45,489
+Activations and that we call them the pre computed activations
+And so the idea is now that when we want to create a new classifier
+Which can basically take advantage of these pre computed applications?
+
+138
+00:27:46,040 --> 00:27:57,199
+We can just very quickly train when all the details there shortly we can very quickly train a simple linear model
+Based on those and so that's what happens when we say pre-compute equals true
+
+139
+00:27:57,200 --> 00:28:07,008
+And that's why you may have noticed this week the first time that you run a model a new model
+It takes a minute or two
+
+140
+00:28:07,590 --> 00:28:13,849
+Where else you saw when I ran it it took like five or ten seconds
+Took you a minute or two and that's because it had to pre-compute
+
+141
+00:28:13,949 --> 00:28:22,249
+These activations and just has to do that once if you're using like your own computer or AWS
+It just has to do it once ever
+
+142
+00:28:22,470 --> 00:28:39,739
+If you're using Kressel it actually has to do it once
+Every single time you rerun press all because press or uses are
+Just for these pre computed activations
+It uses a special that all had a scratch space that disappears each time you restart your press or instance
+
+143
+00:28:40,200 --> 00:28:47,449
+So other than the special case of cresol generally speak. He does have to run at once ever
+For a data set okay
+
+144
+00:28:49,110 --> 00:29:05,089
+So the issue with that is that since we pre computed for each image
+You know how much does it have an EI here and how much does it have a?
+Lizard's eyeball there and so forth that means that data augmentations don't work right in other words even though
+
+145
+00:29:05,090 --> 00:29:11,809
+We're trying to show at a different version of the cat each time. We've pre computed the activations for a particular version of that cat
+
+146
+00:29:12,749 --> 00:29:20,929
+So in order to use data augmentation. We just have to go and learn pre compute equals false
+Okay, and then we can run a few more
+
+147
+00:29:21,720 --> 00:29:33,799
+APIs right
+And so you can see here that as we run more a Potts
+The accuracy isn't particularly getting better. That's the bad news the good news is that?
+
+148
+00:29:34,679 --> 00:29:46,249
+You can see that the train loss
+Practices like the way of measuring the error of this model although
+That's getting better the errors going down the validation error isn't
+
+149
+00:29:46,649 --> 00:29:58,039
+Going down and but we're not overfitting and overfitting would mean that the training
+Loss is much lower than the validation loss, and we're going to talk about that a lot during this course
+
+150
+00:29:58,039 --> 00:30:07,069
+But the general idea
+Here is if you're doing much better job on
+The training set then you are on the validation set that means your models not generalize
+
+151
+00:30:07,780 --> 00:30:16,289
+So we're not at that point which is good, but we're not really improving
+So we're going to have to figure out how to deal with that
+
+152
+00:30:16,870 --> 00:30:24,240
+Before we do I want to show you one other cool trick. I've added here
+Cycle length equals one
+
+153
+00:30:24,400 --> 00:30:40,800
+And this is another really interesting idea
+Here's the basic idea
+cycle length equals one enables a
+recent fairly recent discovery and deep learning called stochastic gradient descent with restarts and the basic idea is this as
+
+154
+00:30:41,440 --> 00:31:05,129
+you
+As you get closer and closer as you get closer and closer
+to the right spot, right
+Now getting closer and closer I may want to start to decrease my learning rate right because as I get closer
+I'm kind of like oh, I'm pretty close down, so let's let's slow down my steps to try to get executive the right spot
+
+155
+00:31:05,470 --> 00:31:23,050
+Right and so as we do more iterations
+Our learning rate
+Perhaps should actually go
+Down right because as we go along we're getting closer and closer to where we want to be and we want to like get exactly
+to the right spot
+
+156
+00:31:24,260 --> 00:31:39,160
+Okay, so the idea of decreasing the learning rate as you train is called learning rate
+annealing and
+It's it's very very common very very popular
+Everybody uses it basically all the time
+
+157
+00:31:39,920 --> 00:31:58,809
+the most common kind of learning rate annealing is
+Really horrendously hacky. It's basically that researchers like pick a learning rate that seems to work for a while
+And then when it stops learning well they drop it down by about 10 times
+And then they keep learning a bit more until it doesn't seem to be improving and they drop it down by another ten times
+
+158
+00:31:59,210 --> 00:32:09,010
+That's what most academic research papers and most people in industry do so this would be like stepwise annealing very manual
+very annoying a
+
+159
+00:32:09,530 --> 00:32:15,280
+Better approach is simply to pick some kind of functional form like a line
+
+160
+00:32:16,010 --> 00:32:30,650
+It turns out that a really good functional form is one half of the cosine curve
+Right and the reason why is that for a while when you're not very close
+You kind of have a really high learning rate, and that is you do get close
+
+161
+00:32:30,650 --> 00:32:37,999
+You kind of quickly drop down and do a few iterations with a really low learning rate, and so this is called cosine annealing
+
+162
+00:32:38,910 --> 00:32:48,680
+So to those of you who haven't done trigonometry for a while cosine basically looks something like this right, so we've picked
+one little half piece
+
+163
+00:32:49,440 --> 00:32:53,270
+Okay, so we're going to use cosine annealing
+
+164
+00:32:54,570 --> 00:33:06,949
+But here's the thing
+When you're in a very?
+High dimensional space right near we're only able to show three dimensions right but in reality. We've got hundreds of millions of dimensions
+
+165
+00:33:08,010 --> 00:33:23,509
+We've got lots of
+different
+Fairly flat points there. No not the actual local minima, but they're fairly flat points all of which are pretty good, right?
+But they might differ in a really interesting way, which is that some of those flat points?
+
+166
+00:33:24,690 --> 00:33:26,690
+Let me show you
+
+167
+00:33:32,870 --> 00:33:51,370
+Let's imagine we've got a surface that looks something like this
+Right now imagine that where you kind of random guest started here and
+Our initial therefore kind of learning rate annealing schedule got us down to here
+
+168
+00:33:52,279 --> 00:34:05,836
+now
+Indeed that's a pretty nice low error right, but it probably doesn't generalize very well
+Which is to say if we use a different data set where things are just kind of slightly different in one of these directions
+
+169
+00:34:06,936 --> 00:34:31,119
+Suddenly is a terrible solution right where else over here
+is basically
+equally good in terms of loss, right
+But it rather suggests that if you move if you have slightly different data sets that are slightly moved in different directions
+It's still going to be good right so in other words. We would expect this solution. Here is probably going to generalize better
+than this by key one
+
+170
+00:34:31,399 --> 00:34:53,649
+So here's what we do is. We've got like a bunch of different low bits right then our standard
+Loading rate annealing approach will start of go down here or downhill downhill downhill downhill to one spot
+Right, but what we could do instead is use a learning rate schedule
+That looks like this
+
+171
+00:34:53,690 --> 00:34:59,200
+Which is to say we do a cosign annealing and then suddenly jump up again into a cosign annealing and then jump up again?
+
+172
+00:34:59,530 --> 00:35:12,459
+And so each time we jump up it means that if they're going to spiky bit
+and then we subtly increase the learning rate, and it jumps now all the way over to here and
+So then we kind of learning right in your learning right near death down to here
+
+173
+00:35:12,460 --> 00:35:33,580
+And then we jump up again to a high learning rate oh
+And it stays here right so in other words each time
+We jump up the learning rate that means that if it's in a nasty spiky part of the surface
+It's going to hop out of the spiky part, and hopefully if we do that enough times
+It'll eventually find a nice
+smooth Bowl
+
+174
+00:35:40,570 --> 00:35:49,409
+Could you get the same effect by running multiple iterations through the different ground of my starting point so that
+Eventually you explore all possible minimize
+
+175
+00:35:50,620 --> 00:36:05,069
+yeah, so in fact that that's a great question and
+before this
+approach
+Which is called stochastic gradient descent with restarts was was created
+
+176
+00:36:05,740 --> 00:36:18,630
+That's exactly what people used to do. They used to create these things called ensembles where they would basically
+Relearn a whole new model ten times in the hope that one of them's like but it ended up being better
+
+177
+00:36:19,450 --> 00:36:37,110
+and so
+The cool thing about this decosta gradient descent with restarts is that the model once? We're in a reasonably good spot
+Each time we jump up the learning rate
+It doesn't restart it actually hangs out in this nice part part of the space and then keeps getting better
+
+178
+00:36:37,420 --> 00:36:51,780
+So interestingly it turns out that this approach where we do this
+a bunch of separate cosine annealing steps we end up with a better result as
+Then if we just randomly try it a few different starting points
+
+179
+00:36:52,360 --> 00:37:02,099
+so it's a super neat trick and it's a
+fairly recent development
+But and again almost nobody's heard of it
+
+180
+00:37:02,800 --> 00:37:16,739
+But I found like
+it's now like my superpower like using this along with the learning rate finder like I
+Can get better results than nearly anybody like in a casual competition
+
+181
+00:37:16,740 --> 00:37:26,789
+You know in the first week or two I can like jump in it's been an arrow to and back
+I've got a fantastically good result and so this is why I
+
+182
+00:37:27,460 --> 00:37:37,679
+Didn't pick the point where it's got the steepest slope. I actually trying to pick something kind of aggressively high
+It's still getting down
+But maybe like getting to the point where it's nearly too high
+
+183
+00:37:37,960 --> 00:37:54,299
+Not because I want to make sure because that's because when we do this
+stochastic gradient descent with restarts this ten to the negative two represents the a
+Highest number that it uses so it goes up to ten to the negative two and then goes down
+
+184
+00:37:54,580 --> 00:38:03,509
+And then up to ten negative two and down so if I use to lower learning rate
+It's not going to jump to a different part of the function
+
+185
+00:38:05,950 --> 00:38:11,819
+So I have a few questions, but the first one is how many times do you change your learning rate you want to work?
+
+186
+00:38:12,610 --> 00:38:23,539
+We don't change the learning rate all three
+How many times - okay so in terms of this part here where it's going down?
+We change the learning rate every single mini - all right, and then the number of times. We reset it is set by the
+
+187
+00:38:24,190 --> 00:38:31,559
+Cycle length parameter, and so 1 means reset it up to every epoch
+
+188
+00:38:32,110 --> 00:38:36,450
+so if I had to there it would reset it up to every to epochs and
+
+189
+00:38:36,520 --> 00:38:51,599
+Interestingly this this point that when we do the learning rate and kneeling that we actually change it every single batch
+It turns out to be
+Really critical to making this work, and it again is very different to what nearly everybody in industry in academia has done before
+
+190
+00:38:53,470 --> 00:38:59,760
+What do you get a chance could you explain recompute it was true because it's still
+
+191
+00:39:00,820 --> 00:39:13,259
+Yeah, we're going to come back to that
+Multiple times in this course so the way this course has been a work is we're going to like do a really high-level
+Version of each thing and then we're going to like come back to it in two or three lessons and then come back to it
+
+192
+00:39:13,260 --> 00:39:18,239
+at the end of the course and each time we're going to see like more of the math more of the code and get a
+
+193
+00:39:18,240 --> 00:39:24,630
+Deeper view okay, and we can talk about it also in the forums
+During the week
+
+194
+00:39:27,040 --> 00:39:40,290
+Our main goal is to generalize, and we don't want to get those like narrow
+Demas yeah, that's a it's a very short. Summary. This method are we keeping track off to minimize and averaging them? Ah?
+
+195
+00:39:41,260 --> 00:39:50,850
+That's that's another
+Level of sophistication and indeed you can see there's something here called snapshot ensemble, so we're not doing it in the code right now
+
+196
+00:39:51,730 --> 00:40:04,489
+But yes if you wanted to make us generalize even better
+You can save the weights here and here and here and then take the average ishes
+But for now we're just going to pick the last one
+
+197
+00:40:09,420 --> 00:40:27,889
+If you want to skip ahead
+If you want to skip ahead there's a parameter called cycle safe name
+Which you can add as well as cycle them, and that will save a set of weights at the end of every
+Learning rate cycle, and then you can ensemble them
+
+198
+00:40:31,830 --> 00:40:33,830
+Ok
+
+199
+00:40:34,200 --> 00:40:45,229
+So we've got a
+Pretty decent model here ninety nine point three percent accuracy
+And we've gone through of you know a few steps that is taken you know a minute or two to run
+
+200
+00:40:45,780 --> 00:41:01,670
+And so from time to time
+I tend to save my weight so if you go learn dot save and then pass in a file name
+It's going to go ahead and save that for you later on if you go learn load
+You'll be straight back to where you came from okay, so it's a good idea to do that from time to time
+
+201
+00:41:02,670 --> 00:41:19,310
+This is a good time to mention
+What happens when you do this?
+When you go learn dot save when you create precomputed activations another thing we learn about soon when you create resized images
+These are all creating various temporary files, okay?
+
+202
+00:41:20,090 --> 00:41:48,020
+And so what happens is?
+If we go to
+Data and
+We go to
+Dogs cats, this is my data folder, and you'll see there's a folder here called
+TMP or - and
+So this is automatically created and all of my pre computed activations end up in here. I mention this because if
+
+203
+00:41:48,540 --> 00:42:03,679
+If things are if you're getting weird errors that might be because you've got some Oh pre computed activations like we're only half
+completed or
+Are in some way incompatible with what you're doing so you can always go ahead and just delete this
+
+204
+00:42:04,109 --> 00:42:08,659
+TMP this temporary directory and see if that causes your error to go away. This is the
+
+205
+00:42:09,540 --> 00:42:13,749
+Faster I equivalent of turning it off and then on again
+
+206
+00:42:14,200 --> 00:42:21,160
+You'll also see there's a directory called models, and that's where all of these when you say dot save with a model
+That's where that's going to go
+
+207
+00:42:22,020 --> 00:42:26,089
+Actually it reminds me when the stochastic gradient descent with restarts paper came out
+
+208
+00:42:26,090 --> 00:42:30,650
+I saw a tweet that was somebody was like Oh to make your deep learning work better turn it off and then on again
+
+209
+00:42:33,180 --> 00:42:35,180
+Question it
+
+210
+00:42:36,360 --> 00:42:43,640
+So if I want to see I want to retrain my model fuselage again do I just do everything the 10 folder if you want
+
+211
+00:42:49,020 --> 00:43:07,730
+If you want to train your model from scratch
+There's generally no reason to delete the pre computed activations because the pre computed activations are
+Without any training. That's what the pre trained model
+Created with the with the weights that you downloaded off the internet
+
+212
+00:43:09,180 --> 00:43:21,049
+the only
+Yeah, I mean the only reason you want to delete the pre computed activations is that there was some error caused by like half
+Creating them and crashing or some something like that
+
+213
+00:43:21,360 --> 00:43:31,309
+as you change the size of your import change different architectures and so forth they all create different sets of
+activations with different file names
+So you don't generally you shouldn't have to worry about it
+
+214
+00:43:31,770 --> 00:43:46,669
+If you want to start training again from scratch all you have to do is create a new
+Learn object so each time you go like conch learner dot pre-trained that creates a new
+object with with new sets of weights fever train from
+
+215
+00:43:49,140 --> 00:43:58,220
+Okay
+So before our break. We'll finish off by talking about
+about fine-tuning and differential learning rates
+
+216
+00:43:59,040 --> 00:44:12,750
+And so so far
+Everything we've done
+Has not changed any of these free trained filters right so we've used a pre trained model that already knows how to find
+
+217
+00:44:13,750 --> 00:44:30,829
+At the early stages
+edges ingredients
+And then corners and curves
+And then repeating patterns
+and bits of text and eventually
+Eyeballs, right we have not
+
+218
+00:44:33,059 --> 00:44:51,319
+Retrained any of those
+activations any of those features
+Well specifically any of those weights in the convolutional kernels all we've done is we've learnt
+Some new layers that we've added on top of these things. We've learned how to mix and match these pre-trained features
+
+219
+00:44:52,559 --> 00:45:10,309
+Now obviously it may turn out that
+Your pictures have you know different kinds of eyeballs or faces?
+Or if you're using different kinds of images like satellite images
+Totally different kinds of features altogether right so if you're like training to recognize
+
+220
+00:45:10,920 --> 00:45:19,579
+Icebergs you'll probably want to go all the way back and learn
+You know all the way back to kind of different combinations of these simple gradients and edges
+
+221
+00:45:21,029 --> 00:45:32,190
+In our cases dogs vs. Cats
+We're going to have some minor differences, but we still may find. It's helpful to slightly tune some of these
+Later layers as well
+
+222
+00:45:32,190 --> 00:45:47,539
+So to tell the learner that we now want to start actually changing the convolutional filters themselves
+We simply say unfreeze okay, so a frozen layer is a layer, which is not trained is not updated, okay?
+
+223
+00:45:47,539 --> 00:45:49,999
+So unfreeze unfreezes all of the layers
+
+224
+00:45:50,880 --> 00:46:07,549
+Now when you think about it. It's pretty obvious that
+Layer one
+Right which is like a diagonal edge, or a gradient?
+Probably doesn't need to change by much if at all right from the 1 and a half million images on image net it probably already
+
+225
+00:46:07,549 --> 00:46:17,629
+Is figured out pretty well how to find like edges of gradients?
+It probably already knows also like which kind of corners to look for and how to find which kinds of curves and so forth
+
+226
+00:46:17,690 --> 00:46:37,159
+So in other words these early layers probably need little if any
+learning
+Where else these later ones are much more likely to need more learning, and this is universally true regardless of whether you're looking for
+Satellite images of rainforests or icebergs or whether you're looking for cats versus dogs, right?
+
+227
+00:46:38,909 --> 00:46:59,239
+So what we do is we create an array of learning rates
+Where we say okay? These are the learning rates to use for our additional layers that we've added on top
+These are the learning rates to use in the middle few layers
+And these are the learning rates to use for the first few layers
+
+228
+00:46:59,339 --> 00:47:03,078
+So these are the ones for the layers that represent like very basic geometric
+
+229
+00:47:03,779 --> 00:47:08,718
+Features these are the ones that are used to for the more complex
+
+230
+00:47:09,179 --> 00:47:16,249
+Kind of sophisticated convolutional features, and these are the ones that are used for the features that we've added and went from stretch
+
+231
+00:47:16,380 --> 00:47:29,390
+right so you can create a array of learning rates and
+Then when we called up fit and pass an array of learning rates. It's now going to use those different learning rates for different
+parts of the model
+
+232
+00:47:29,640 --> 00:47:45,529
+This is not something that
+We've like invented
+But I'd also say it's like it's so not that common that it doesn't even have a name as far as I know so
+We're going to call it
+differential learning rates
+
+233
+00:47:46,019 --> 00:47:52,158
+If it actually has a name or indeed if somebody's actually written a paper specifically talking about it. I don't know
+
+234
+00:47:52,859 --> 00:48:01,079
+there's a
+Great researcher called Jason your Sinskey who who did write a paper about the kind of the idea that you might want different learning rates?
+and showing why
+
+235
+00:48:01,079 --> 00:48:07,999
+but I don't think any other libraries support it and
+Yeah, I don't know of a name for it having said that though
+
+236
+00:48:08,819 --> 00:48:19,338
+This ability to like unfreeze and then use these differential learning rates
+I found it's like the secret to taking a pretty good model and putting it into an awesome model
+
+237
+00:48:24,959 --> 00:48:37,578
+So just to clarify
+So you have three numbers there okay three hyper parameters the first one is the photo
+late model so the mall that are late layers the
+
+238
+00:48:40,049 --> 00:48:47,449
+So with
+The it's your answer is many many right and they're kind of in groups, and we're going to learn about the architecture
+
+239
+00:48:47,449 --> 00:48:51,000
+This is called a ResNet for residual network
+It kind of has ResNet blocks
+
+240
+00:48:51,100 --> 00:48:55,770
+And so what we're doing is we're grouping the blocks into three groups
+
+241
+00:48:57,249 --> 00:49:09,269
+And so this one is actually this first number is for the earliest layers
+Yeah, they're ones closest to the pixels that represent like corners and edges and gradients, but why
+
+242
+00:49:09,940 --> 00:49:28,319
+Why do you well I thought those layers are frozen at first so yeah right so we just said unfreeze the streets
+Also, we so yeah, I'm freezing them because you have kind of partially trained
+Although lately we've trained. We've trained our added layers. Yes, now you are we training the Oh step exactly?
+
+243
+00:49:29,049 --> 00:49:33,538
+Obviously so it waits and the learning rate is particularly small for the early layers
+
+244
+00:49:33,539 --> 00:49:43,169
+That's right, because you just find a want to find food. Yeah. Yeah, we probably don't want to change them at all
+But you know if it does need to then it can
+
+245
+00:49:43,960 --> 00:49:45,960
+Thanks, no problem
+
+246
+00:49:48,759 --> 00:49:53,009
+So using the differential in rates a little different from like grid search
+
+247
+00:49:55,119 --> 00:50:06,568
+There's no similarity to grid search so grid search is where we're trying to find the best hyper parameter
+for something so for example you could kind of think of the
+
+248
+00:50:07,719 --> 00:50:12,759
+Learning rate finder as a really sophisticated grid search, which is like trying lots and lots of learning rates to find, which one is best
+
+249
+00:50:13,350 --> 00:50:16,490
+But this has nothing to do with that
+
+250
+00:50:16,490 --> 00:50:24,680
+This is actually for the entire training from now on it's actually going to use a different learning rate for each layer
+
+251
+00:50:28,980 --> 00:50:49,758
+And so I was wondering so you give a pre train model, then you have to use the same input
+Dimensions right because I was thinking okay, let's say you have this big
+They use like big machines to train these things and you want to take advantage of it
+How would you go about you know you have like images that are like bigger than the ones that
+
+252
+00:50:50,099 --> 00:50:59,508
+They used or we're going to be talking about sizes later, but the short answer is that with this library and the modern
+Architectures were using we can use any size we like
+
+253
+00:51:02,849 --> 00:51:07,159
+So did I mean do we need can we at least just a specific layer?
+
+254
+00:51:07,619 --> 00:51:14,629
+We can we're not doing it yet, but if you wanted to you can learn dot freeze underscore two and pass into layer number
+
+255
+00:51:19,440 --> 00:51:38,960
+Much to my surprise or at least initial my surprise it turns out I almost never need to do that
+I almost never find it helpful, and I think it's because we're using differential learning rates
+The the optimizer can kind of learn just as much as it needs to
+so yeah, it's
+
+256
+00:51:43,470 --> 00:51:47,779
+A little data like very little data. Yeah it still
+
+257
+00:51:48,539 --> 00:52:00,259
+Doesn't seem to help the one place. I have found it helpful is if
+I'm using like a really big memory intensive model, and I'm like running out of GPU
+crazy having
+
+258
+00:52:00,630 --> 00:52:06,740
+The the less layers you unfreeze the less memory it takes and the less time it takes so there's that kind of practical aspect
+
+259
+00:52:06,779 --> 00:52:13,758
+So to me she'll say I asked the question right
+Can I just like unfreezes specific layer?
+
+260
+00:52:14,190 --> 00:52:19,069
+No you you can only unfreeze layers from layer n onwards
+
+261
+00:52:21,119 --> 00:52:25,639
+You could probably delve inside the library in phase one phase one layer, but I don't know why you would
+
+262
+00:52:28,589 --> 00:52:37,070
+Okay, so I'm really excited to be showing you guys this stuff because it's like it's something
+We've been kind of researching all year. It's figuring out how to train
+state of the art models
+
+263
+00:52:38,970 --> 00:52:49,680
+and we've kind of found these like tiny number of tricks and so once we do that we now go learn about fit right and
+You can see look at this we get right up to that
+99.5%
+Accuracy which is crazy
+
+264
+00:52:51,780 --> 00:53:05,599
+There's one other trick you might see here that as well as using stochastic gradient descent with restarts a cycle length equals one
+We've done three cycles so earlier on I lied to you. I said this is this is the number of epochs
+
+265
+00:53:06,000 --> 00:53:19,700
+It's actually the number of cyclists right so if you said cycle length equals two it would do three
+Cycles of each of two epochs or do six because so here I've said two three cycles yet somehow. It's done seven epochs
+
+266
+00:53:20,339 --> 00:53:24,979
+and the reason why is I've got one last trick to show you which is cycle mult equals two and
+
+267
+00:53:25,380 --> 00:53:39,609
+To tell you what that does I'm simply going to draw you a picture you the picture
+If I go learn Dutch share top plot learning rate there it is
+Now you can see what cycle mode equals to is doing okay?
+It's it's doubling
+
+268
+00:53:40,430 --> 00:53:55,520
+The length of the cycle after each cycle and so in the paper that introduced this stochastic gradient descent with restarts
+The researcher kind of said hey, this is something that seems to sometimes work pretty well
+And I've certainly found that often to be the case so basically
+
+269
+00:53:57,810 --> 00:54:11,299
+Intuitively speaking if your cycle length is too short, right
+Then it's kind of starts going down to find a good spot
+And then it pops out and it goes to a try and photographs button pops out it never actually gets to find a good spot
+
+270
+00:54:11,339 --> 00:54:23,269
+Right so earlier on you want it to do that because it's trying to find the bit
+That's like smoother, but then later on you want it to fight do more exploring and then more exploring right so that's why this
+
+271
+00:54:24,329 --> 00:54:29,869
+Cycle mole equals two thing often seems to be a pretty good approach right so
+
+272
+00:54:30,480 --> 00:54:35,179
+Suddenly we're introducing more and more hyper parameters having told you that there aren't that many?
+
+273
+00:54:35,400 --> 00:54:52,729
+But the reason is that like you can really get away with just
+Taking a good learning rate, but then adding these extra tweaks
+Really, helps get that extra level up without any effort right and so in practice I find
+
+274
+00:54:53,759 --> 00:55:03,019
+this kind of three cycles starting at 1 mode equals 2
+Works very very often to get a pretty decent model
+
+275
+00:55:04,169 --> 00:55:11,509
+If it does doesn't then often I'll just do 3 cycles of length 2
+
+276
+00:55:12,030 --> 00:55:17,190
+With no molt. Okay. There's kind of like two things that seem to work a lot, and there's not too much fiddling
+I find necessary
+
+277
+00:55:17,190 --> 00:55:25,008
+And as I say even even if you just if you use this line every time
+I'd be surprised if you didn't get a reasonable result so a question here
+
+278
+00:55:28,680 --> 00:55:37,069
+Why does a smoother services correlate to more generalize networks
+
+279
+00:55:39,660 --> 00:56:01,152
+So it's kind of this some
+This intuitive explanation, I try to just kill the whole thing. I try to give back here, which is that?
+if you've got
+Something spiky right and so what this
+
+280
+00:56:03,152 --> 00:56:24,809
+What this x-axis is showing is like how?
+How good is this at recognizing dogs versus cats as you change this particular parameter right and?
+So so something to be generalizable
+that means that we wanted to work when we give it when we give it a slightly different data set and
+
+281
+00:56:26,009 --> 00:56:33,259
+So a slightly different data set may
+Have a slightly different relationship between this parameter, and how caddy versus dog it is it may instead look a little bit like this
+
+282
+00:56:34,359 --> 00:56:48,190
+Right so in other words if we end up at this point
+Right then it's not going to do a good job on this slightly different data set for else if we end up on this point
+It's still going to do a good job on this data set
+
+283
+00:56:49,730 --> 00:57:02,858
+Okay, so that's what psychomotor equals doing okay, so we've got one last thing before we going to take a break
+which is we're now going to take this model, which has 99.5 percent accuracy and we're going to try and make it better still and
+
+284
+00:57:03,380 --> 00:57:16,929
+what we're going to do is we're not actually going to change the model at all right, but instead we're going to look back at
+The original virtual visualization, we did where we looked at some of our incorrect pictures
+
+285
+00:57:20,720 --> 00:57:41,709
+Now what I've done is I've printed out the whole of these incorrect pictures, but the key thing to realize is that?
+Particularly in fact when we do the the validation set all of our inputs
+To our model all the time have to be square right and the reason for that is
+
+286
+00:57:42,740 --> 00:57:56,855
+It's kind of a minor technical detail
+But basically the GPU doesn't go very quickly if you have like different dimensions for different images because it needs seems to be consistent
+So that every part of the GPU can do the same thing and I think this is probably fixable
+But it now
+
+287
+00:57:56,955 --> 00:58:20,530
+That's the state of the technology we have so our validation set when we actually say for this particular thing is it's a dog
+What we actually do to make it square as we just pick out
+The square in the middle right so we would take off its two edges
+And so we take the whole height
+And then as much of the middle as we can and so you can see in this case we wouldn't actually see this dog's head
+right so
+
+288
+00:58:20,530 --> 00:58:35,709
+I think the reason this was actually not correctly classified was because the validation set only got to see the body and the body
+Doesn't look particularly doglike or cat-like. It's not at all punctual what it is, so what we're going to do
+
+289
+00:58:36,380 --> 00:58:42,160
+when we calculate the predictions for our validation set is we're going to use something called test time augmentation and
+
+290
+00:58:42,560 --> 00:58:52,385
+What this means is that every time we decide is this cat or a dog not in the training?
+But after we've trained the model is we're going to actually take
+
+291
+00:58:52,485 --> 00:59:02,310
+Four
+random data augmentations and remember the data augmentations move around
+and zoom in and out and flip
+
+292
+00:59:02,720 --> 00:59:14,110
+okay, so we're going to take four of them at random and we're going to take the original and
+Augmented sent a cropped image, and we're going to do a prediction for all of those, and then we're going to take the average
+
+293
+00:59:14,750 --> 00:59:33,789
+Of those predictions, so I'm going to say is this a cat is this a cat is this a cat is this a cat
+But and so hopefully in one of those random ones we actually make sure that the face is there
+Zoomed in by a similar amount to other dogs faces at sea
+And it's rotated by the amount that it expects to see it and so forth and so do that
+
+294
+00:59:35,270 --> 00:59:40,510
+All we have to do is
+Just call tt8 TTA stands for Test time
+
+295
+00:59:40,700 --> 00:59:53,620
+Augmentation this term of like what a what do we call up when we're making predictions from up from a model?
+We've trained sometimes. It's called inference time sometimes
+It's called test time everybody since have a different name so TTA and so when we do that
+
+296
+00:59:53,620 --> 01:00:00,910
+We go learn TTA check the accuracy and lo and behold we're now at ninety nine point six five percent, which is kind of crazy
+
+297
+01:00:01,460 --> 01:00:14,380
+Where's our green box?
+But for every park we are only
+Showing one type of augmentation or for particular image right so when we are training
+
+298
+01:00:14,930 --> 01:00:26,319
+back here
+We're not doing any TTA right so TTA is not like
+You could and sometimes like I've written libraries where after a cheap up I run TTA to see how well it's going
+
+299
+01:00:26,320 --> 01:00:46,449
+But that's not what's happening here. I trained the whole thing
+with
+training time organization
+Which doesn't have a special name because that's what we mean when we say data
+Augmentation we need training time augmentation so here every time we showed a picture
+We were randomly changing it a little bit so each epoch each of these seven epochs. It was seen slightly different versions of the picture
+
+300
+01:00:47,030 --> 01:00:56,229
+Having done that we now have a fully trained model. We then said okay
+Let's look at the validation set so TTA by default uses the validation set and said okay
+
+301
+01:00:56,230 --> 01:01:01,430
+What are your predictions of which ones are cats and which ones are dogs?
+And it did 4
+
+302
+01:01:04,210 --> 01:01:09,610
+Predictions with different random orientations plus one on the organ under Augmented version average them all together
+And that's what we got and that's what we can't clear the accurate
+
+303
+01:01:10,200 --> 01:01:16,199
+So is there a high probability of having?
+Sample in TTA that was not shown in doing trained
+
+304
+01:01:17,590 --> 01:01:25,559
+Yeah, actually every data augmented for image is is unique because the rotation could be like point zero three four
+
+305
+01:01:25,660 --> 01:01:33,960
+Degrees and zoom could be 1.0. One sixty five so every time. It's slightly different
+No problem was behind you
+
+306
+01:01:36,849 --> 01:01:46,169
+What's your
+Might not use white padding or something like that
+Just one of your white padding like just you know put like a white water around
+
+307
+01:01:46,170 --> 01:01:55,160
+Oh padding's not yes
+So like there's lots of different types of a better orientation you can do and so one of the things you can do is to
+Add a border around it
+
+308
+01:01:55,900 --> 01:02:06,240
+Basically adding a border around it in my experiments doesn't doesn't help it doesn't make it any less
+Cat-like it's not the convolutional neural network doesn't seem to find it very interesting basically
+
+309
+01:02:06,790 --> 01:02:12,209
+Something that I do do we'll see later is I do something called reflection padding, which is where I add some borders
+
+310
+01:02:12,210 --> 01:02:19,230
+That are the outside just reflected. It's a way to kind of make some bigger images works well with satellite imagery in particular
+
+311
+01:02:19,869 --> 01:02:25,238
+But yeah in general. I don't do I have a lot of padding instead I do a bit of zooming
+
+312
+01:02:28,390 --> 01:02:40,979
+It's kind of follow-up to that last one but
+Rather than cropping just at white space because when you crop you lose the dog's face
+but if you added white space you wouldn't yeah, so that's that's where the
+
+313
+01:02:41,560 --> 01:02:46,019
+Kind of the reflection padding or the zooming or whatever can help so there are ways in the faster
+
+314
+01:02:46,020 --> 01:02:50,939
+You know library when you do custom transforms of of making that happen
+
+315
+01:02:51,440 --> 01:03:01,229
+I
+Find that
+It kind of depends on the image size you know but
+
+316
+01:03:01,870 --> 01:03:09,750
+Generally speaking it seems that using TTA plus data
+Augmentation the best thing to do is to try to use this larger image as possible
+
+317
+01:03:09,750 --> 01:03:22,049
+And so if you kind of crop the thing down and put white borders on top and bottom it's now
+Quite a lot smaller and so to make it as big as it was before
+you now have to use more GPU and if you're going to use more that multi figure you could have zoomed in and used a
+
+318
+01:03:22,050 --> 01:03:27,550
+bigger image, so
+In my playing around that doesn't seem to be generally as successful
+
+319
+01:03:35,410 --> 01:03:44,190
+There is a little interest on the topic of how do the domain tation in older than images?
+Indeed at least not images um
+
+320
+01:03:47,440 --> 01:03:50,399
+no one seems to know I actually um I
+
+321
+01:03:52,630 --> 01:03:58,560
+Asked some of my friends in the natural language processing community about this. We'll get to natural language processing in a couple of lessons you
+
+322
+01:03:59,110 --> 01:04:18,480
+Know it seems like it'd be really helpful. There's been a few
+Example I carry very few number examples of people where papers would like try replacing synonyms for instance
+But on the whole and understanding of like appropriate data augmentation for non image domains is
+Under-researched in under under developed
+
+323
+01:04:23,500 --> 01:04:38,939
+The question was could couldn't we just use a sliding window to generate on the images so in that dog
+Thank you. Couldn't we generate three?
+Parts of it wouldn't that be better. Yeah, PTI you mean?
+Just just in general when you're creating your so
+
+324
+01:04:40,349 --> 01:04:52,139
+Training time I would say no that wouldn't be better because we're not gonna get as much variation
+You know we want to have it like like
+One degree off five you know five degrees off ten pixels up like lots of slightly different versions
+
+325
+01:04:52,140 --> 01:04:58,890
+And so if you just have three standard ways then you're not giving it as many different ways of looking at the data
+
+326
+01:04:59,739 --> 01:05:07,960
+for testing augmentation
+Having fixed cropped locations. I think probably
+Would be better
+
+327
+01:05:07,960 --> 01:05:21,539
+And I just haven't gotten around to writing that yet. I have a version in an old library. I think having fixed cropped locations
+plus
+random
+Contrast brightness rotation changes might be better
+
+328
+01:05:23,619 --> 01:05:32,729
+The reason I've got around to it yet is because in my testing it didn't seem to help him practice very much
+And it made the code a lot more complicated, so you know it's kind of it's an interesting question
+
+329
+01:05:34,490 --> 01:05:41,510
+I just wanted all of this last AI api's that you are using is it
+
+330
+01:05:43,440 --> 01:05:53,660
+Yeah, that's a great question so the faster you go libraries open source and let's talk about it a bit more generally because
+You know it's like the fact that
+
+331
+01:05:54,089 --> 01:06:01,699
+The fact that we're using this library is kind of interesting and unusual
+And it sits on top of something called a torch right so
+
+332
+01:06:02,940 --> 01:06:15,199
+pi torch is
+a
+fairly recent development
+and it's kind of I've noticed all the
+researchers that I respect pretty much are now using high torch I
+
+333
+01:06:15,960 --> 01:06:20,584
+Found in part two of last year's course that a lot of the cutting-edge stuff
+
+334
+01:06:20,684 --> 01:06:32,629
+I wanted to teach I couldn't do it in chaos and tensorflow, which is what we used to teach with
+And so I had to switch the course to pay torch halfway through part two the problem was that
+
+335
+01:06:33,630 --> 01:06:38,910
+PI torch isn't very easy to use you have to write your own training loop from scratch
+
+336
+01:06:39,510 --> 01:06:59,119
+I basically write everything from scratch or the stuff you see inside the class they are library
+We would have had to written it
+You know to learn and so it really
+makes it very hard to learn deep learning when you have to write hundreds of lines of code to do anything so
+So we decided to create a library on top of Pi torch because we you know this
+
+337
+01:06:59,910 --> 01:07:10,939
+Our mission is to teach world class big morning
+So we wanted to show you like here's how you can be the best in the world at doing it
+And we found that a lot of the world class stuff we needed to show
+
+338
+01:07:11,520 --> 01:07:27,740
+really needed PI torch or at least with PI torch it was far easier and but then PI thought itself just wasn't suitable as a
+first thing to teach with for new
+For new deep learning practitioners, so we built this library on up of PI torch
+
+339
+01:07:29,339 --> 01:07:36,859
+Initially heavily influenced by chaos
+Which is what we taught last year and but then we realized we could actually make things much much much easier than care us
+
+340
+01:07:36,930 --> 01:07:50,298
+So in care us if you look back at last year's course notes
+You'll find that all of the code is two to three times longer
+and there's lots more opportunities for
+Stakes because there's just a lot of things you have to get right
+
+341
+01:07:51,539 --> 01:08:01,969
+So we ended up kind of building this this this library in order to make it easier to get into deep learning
+but also easier to get state-of-the-art results and
+
+342
+01:08:02,729 --> 01:08:16,818
+Then over the last year as we started developing on top of that we started discovering that by using this library
+It made us so much more productive that we actually started kind of developing you state-of-the-art results and new methods ourselves
+
+343
+01:08:16,819 --> 01:08:30,109
+And we started realizing that there's a whole bunch of like papers that have kind of been ignored or lost which
+When you use them, it could like automate or semi-automated stuff like learning read finder. That's not in any other library, so
+
+344
+01:08:31,109 --> 01:08:50,178
+So it kind of got to the point where now not only is kind of fast AI
+Lets us do things easier much easier than any other approach, but at the same time it actually
+Has a lot more kind of sophisticated stuff behind the scenes than anything else so
+So it's kind of an interesting mix
+
+345
+01:08:51,299 --> 01:09:04,668
+So yeah, so we've released this library like at this stage
+It's like very early version and so through this course by the end of this course. I hope as a group
+You know we will all a lot of people are already helping have developed it into something. That's
+
+346
+01:09:06,270 --> 01:09:19,039
+You know really pretty stable and rock-solid
+And yeah, anybody can then can use it
+To build your own models under an open-source license as you can see it's available on github
+
+347
+01:09:23,069 --> 01:09:32,689
+Behind the scenes it's it's creating play torch models and so apply torch models can then be exported
+into various different formats
+
+348
+01:09:33,689 --> 01:09:40,339
+Having said that like a lot of folks like issue if you want to do something on a mobile phone for example
+You're probably going to need to use tensorflow
+
+349
+01:09:41,040 --> 01:09:53,329
+and so
+later on in this course
+We're going to show like how some of the things that we're doing in the past AI library you can
+do in chaos and cancel flow so you can going to get a sense of what the different libraries look like and
+
+350
+01:09:53,908 --> 01:10:06,679
+generally speaking the simple stuff
+is
+Like it'll take you a small number of days
+To learn to do it and care us in tensorflow versus fast AI and high torch and the more complex stuff often
+
+351
+01:10:07,590 --> 01:10:14,659
+This won't be possible so that like if you needed to be intensive flow you're just kind of simplify it off in a little bit
+
+352
+01:10:18,060 --> 01:10:29,600
+But you know I think the more important thing to realize is
+Every year the kind of the libraries that are available and which ones are the best totally changes so like the main thing
+
+353
+01:10:29,600 --> 01:10:34,879
+I hope that you get out of this course is an understanding of the concepts like here's how you find a learning rate?
+
+354
+01:10:34,880 --> 01:10:43,009
+Here's why differential learning rates are important is they do learn where the kneeling?
+You know here's what stochastic gradient a second's restarts does so on and so forth?
+
+355
+01:10:44,550 --> 01:10:53,540
+Because you know by the time we do this course again next year
+You know the library
+situations and the difference the king
+
+356
+01:11:03,510 --> 01:11:08,510
+Was wondering if you've had an opinion on pyro which is ubers new release, I haven't looked at it
+
+357
+01:11:09,010 --> 01:11:14,060
+No, I'm very interested in probabilistic programming, and it's really cool
+
+358
+01:11:14,060 --> 01:11:19,859
+That's built on top of paper so one of the things we'll learn about in this course is we'll see that PI torch is much
+
+359
+01:11:20,360 --> 01:11:34,760
+More than just a deep learning library it actually lets us write arbitrary
+Gpu-accelerated
+algorithms
+From scratch which we're actually going to do and pyro is a great example of what people are now doing with might watch
+outside of the deep level
+
+360
+01:11:35,969 --> 01:11:41,719
+Great ok let's take a
+Eight-minute break, and we'll come back at 7:55
+
+361
+01:11:46,590 --> 01:11:56,929
+So
+Ninety nine point six five percent accuracy
+What does that mean so in?
+
+362
+01:11:57,570 --> 01:12:06,409
+classification when we do classification and machine learning the
+Really simple way to look at the result of a classification is what's called the confusion matrix
+
+363
+01:12:06,719 --> 01:12:26,329
+This is not just deep learning, but in any kind of classifier machine learning where we say okay. What was the actual truth there were?
+thousand cats and a thousand dogs out of the thousand actual cats
+How many did we predict were cats? This is obviously in the validation step?
+This is the images that we didn't use to train with
+
+364
+01:12:26,820 --> 01:12:33,259
+It turns out there were nine hundred ninety-eight cats that we actually predicted as cats and two that we got wrong okay
+
+365
+01:12:33,260 --> 01:12:39,980
+And then for dogs there were nine hundred ninety-five that we predicted were dogs and then five that we got wrong and so often these
+
+366
+01:12:40,710 --> 01:12:50,599
+Confusion matrices can be helpful particularly if you've got like four or five classes you're trying to predict to see like which
+group you having the most trouble with and you can see it uses color coding to
+
+367
+01:12:50,940 --> 01:12:59,480
+Tell you you know to highlight the large the large bits. You've got to hope that the diagonal is
+the highlighted section
+
+368
+01:13:00,150 --> 01:13:10,130
+So now that we've retrained the model it can be quite helpful now
+That's better to actually look back and see like okay, which ones in particular were incorrect and we can see here
+
+369
+01:13:10,680 --> 01:13:18,770
+There were actually only two incorrect cats
+It prints out four by default so you can actually see these two actually less than 0.5
+
+370
+01:13:18,770 --> 01:13:32,600
+So they weren't they weren't wrong, okay, so it's actually these two were wrong cats and this one isn't obviously a cat at all
+This one is but it looks like it's got a lot of weird artifacts, and you can't see its eyeballs at all so
+
+371
+01:13:33,120 --> 01:13:49,069
+and then here are the
+How many dogs where they're all wrong there were five wrong dogs here are four of them? That's not obviously a dog
+That looks like a mistake that looks like a mistake that one. I guess doesn't have enough information that I guess it's a mistake so
+
+372
+01:13:50,190 --> 01:14:01,640
+So we've done a pretty good job here of creating a good classifier. I would based on
+Entering a lot of capital competitions and comparing results. I've done two various research papers
+
+373
+01:14:01,640 --> 01:14:08,930
+I can tell you it's a state of the art classifier. It's it's right up there with the best in the world
+We're going to make it a little bit better in a moment
+
+374
+01:14:08,930 --> 01:14:13,889
+But here in the basic steps right so if you want to create a world-class image
+
+375
+01:14:14,270 --> 01:14:22,620
+Classifier the steps that we just went through was that we started our week's term data augmentation on
+By saying oil transforms equals, and you either say sidon or top-down depending on what you're doing
+
+376
+01:14:23,260 --> 01:14:26,660
+Start with pre compute equals true
+
+377
+01:14:27,179 --> 01:14:35,059
+Find a decent learning eight we then train just like it one or two epochs
+Which that takes a few seconds as we got through compute equals true?
+
+378
+01:14:35,460 --> 01:14:44,720
+Then we turn off pre compute, which allows us to use data augmentation to do another two or three epochs
+generally with cycle length equals one
+
+379
+01:14:45,090 --> 01:14:56,059
+Then I unfreeze all them as I then set the earlier layers to be like
+Either somewhere between a 3 times 2 10 times mobile learning rate in the previous so in this case I did
+
+380
+01:15:00,450 --> 01:15:07,110
+10 times right so it's like this was my learning rate that I found from the learning rate finer than I went 10 times smaller
+and then 10 times smaller
+
+381
+01:15:07,110 --> 01:15:21,410
+as a rule of thumb like
+knowing that you're starting with a pre trained imagenet model if
+You know if you can see that the things that you're now trying to classify a pretty similar the kinds of things in imagenet ie
+pictures of normal objects in normal environments
+
+382
+01:15:22,110 --> 01:15:29,179
+You probably want about a 10x difference because you want those earlier layers like you think that the earlier layers are probably very good already
+
+383
+01:15:29,760 --> 01:15:37,739
+But also if you're doing something like satellite imagery or medical imaging
+Which is not at all like image net then you probably want to be training those earlier layers a lot more so you might have
+
+384
+01:15:38,140 --> 01:15:42,799
+like oh just a 3/8
+Difference all right so that's like
+
+385
+01:15:43,440 --> 01:15:48,109
+One change that I make is to try to make it out of 10x or 3x
+
+386
+01:15:51,450 --> 01:15:59,540
+Yes, so then after unfreezing
+You can now call LR find again, but at Nike didn't in this case
+
+387
+01:15:59,580 --> 01:16:08,270
+But like once you've unfrozen all the layers you've turned on differential learning rates. You can then call a lot of fine
+again, right
+
+388
+01:16:09,030 --> 01:16:14,179
+And so you can then check like oh does it still look like the same point. I had last time is about right
+
+389
+01:16:14,850 --> 01:16:20,630
+Something to note is that if you call LR find
+having set differential learning rates
+
+390
+01:16:21,000 --> 01:16:28,900
+The thing that's actually going to print out is the learning rate of the last layers right because you've got three different learning rates
+So it's actually showing you the last layer
+
+391
+01:16:29,190 --> 01:16:35,450
+so then yeah
+then I trained the full network with cycle more equals two and it'll either it starts with the fitting or I
+
+392
+01:16:35,610 --> 01:16:41,089
+Run out of time right so like let me show you all right, so let's do this again
+
+393
+01:16:41,640 --> 01:16:53,070
+A totally different data set so this morning
+I noticed that some of you on the forums were playing around with this playground Kegel competition very similar
+Called dog breed identification
+
+394
+01:16:53,680 --> 01:17:08,849
+So the dog breed identification cat will challenge
+is
+One where you don't actually have to decide which ones are cats and which ones the dogs
+They're all dogs, but you have to decide what kind of dog. It is, but there are 120 different breeds of dogs
+
+395
+01:17:09,370 --> 01:17:29,789
+okay, so
+You know obviously this could be like
+different types of
+Cells and pathology slides it could be different kinds of cancers in CT scans it could be
+Different kinds of icebergs and satellite images whatever right as long as you've got some kind of labeled images
+
+396
+01:17:30,820 --> 01:17:40,499
+So I want to show you what I did this morning, so it took me about an hour
+Basically to go in to end from something. I'd never seen before so I
+
+397
+01:17:41,650 --> 01:17:47,790
+Downloaded the data from kaggle, and I'll show you how to do that shortly, but the short answer
+Is there's something called cable CLI?
+
+398
+01:17:48,130 --> 01:17:58,919
+Which is a github project you can search for and if you read the docs to basically run cagey download?
+Provide the competition name and it will grab all the data for you to your crystal or Amazon or whatever instance
+
+399
+01:17:59,440 --> 01:18:10,349
+I put in my data folder
+and
+I then went LS and I saw that it's a little bit different to
+
+400
+01:18:11,560 --> 01:18:16,905
+Our previous data set it's not that there's a train folder
+Which has a separate folder for each kind of dog?
+
+401
+01:18:17,005 --> 01:18:25,410
+But instead of tonette there was a CSV file and the CSV file I read it in with pandas
+So pandas is the thing we use in python to do structured data analysis like csv files?
+
+402
+01:18:31,030 --> 01:18:39,120
+So he picked pandas. We called pd. That's pretty much universal
+PDR htsb reads in the csv file we can then take a look at it
+
+403
+01:18:39,120 --> 01:18:46,260
+and you can see that basically it had like some kind of identifier and
+Then the debris right so this is like a different way
+
+404
+01:18:46,260 --> 01:19:02,489
+This is the second main way that people kind of give you image labels one is to put different images into different folders
+the second is generally to give you as some kind of file like a CSV file to tell you here's the image name and
+here's the label, okay, so
+
+405
+01:19:04,359 --> 01:19:10,019
+What I then did was I used
+Pandas again to create a pivot table, which basically groups it up
+
+406
+01:19:10,119 --> 01:19:24,689
+Just to see how many of each breed there were and I sorted them, and so I saw okay, they've got like about a hundred
+some of the more common breeds and
+Some of the less common breeds they've got like 60 or so okay?
+
+407
+01:19:25,269 --> 01:19:30,239
+Altogether there are 120 rows and I've been 120 different breeds represented, okay?
+
+408
+01:19:30,760 --> 01:19:35,179
+So I'm going to go through the steps right so
+
+409
+01:19:35,760 --> 01:19:48,599
+Enable data augmentation so to enable data augmentation when we call this transforms from model you just pass in and all
+Transformers in this case I chose side on again. These are pictures of dots and stuff so this side on photos I
+
+410
+01:19:50,349 --> 01:20:00,148
+We're talking about maqsuum as
+More detail later, but maximum basically says when you do the data augmentation we like zoom into it by up to
+
+411
+01:20:00,789 --> 01:20:13,618
+One point one times okay, so but randomly between one the original image size and one point one points
+So it's not always cropping out in the middle or an edge, but it could be cropping out a smaller part, okay, so
+
+412
+01:20:14,409 --> 01:20:30,929
+Having done that the key step now is to graphically going from paths
+So previously we went from paths and that tells it that the the names of the folders are the names of the labels we go
+from CSV, and we pass in the
+CSV file that contains the letters
+
+413
+01:20:31,479 --> 01:20:41,069
+So we're passing in the path that contains all of the data
+The name of the folder that contains the training data the CSV that contains the labels
+
+414
+01:20:42,699 --> 01:20:47,728
+We need to also tell it where the test set is if you want to submit to cattle later talk more about that next week
+
+415
+01:20:49,149 --> 01:21:05,499
+now this time
+The previous data set we had had actually separated a validation set out into a separate folder
+Right, but in this case. You'll see that. There is not a separate folder called validation
+right so
+
+416
+01:21:05,499 --> 01:21:13,089
+We want to be able to track how good our performance is low
+So we're going to have to separate some of the images out to put it into a validation set
+
+417
+01:21:13,670 --> 01:21:26,679
+okay, so I do that at random and
+So up here, you can see how it basically opened up the CSV file
+Turned it into a list of rows and then taken the length of that
+
+418
+01:21:27,050 --> 01:21:33,279
+minus one because there's a header at the top right and so that's the number of
+
+419
+01:21:35,130 --> 01:21:47,679
+Rows in the CSV file which must be the number of images that we have and then this is a fast AI thing get cross-validation
+Indexes now. We'll talk about cross-validation later, but basically if you call this and pass in a number. It's going to return to you
+
+420
+01:21:48,590 --> 01:22:09,430
+by default a random twenty percent of the rows who uses your validation set and you can pass in parameters to
+get different amounts right so this is now going to grab twenty percent of the data and
+Say all right. This is the this is the indexes the numbers of the files
+Which we're going to use as a validation set, okay, so
+
+421
+01:22:11,090 --> 01:22:34,279
+Now that we've got that in fact let's kind of run this so you can see what that looks like
+so
+well
+indexes is
+Just a big bunch of numbers okay, and so an is
+10,000 right and so we have about twenty percent of those is going to be in a validation set
+
+422
+01:22:35,310 --> 01:22:50,629
+So when we call?
+From CSV
+We can pass in a parameter, which is talent, which indexes to treat us a validation set and so that's passed in those indexes
+
+423
+01:22:52,350 --> 01:23:18,709
+One thing that's a little bit tricky here is that?
+The
+File names
+Actually have I checked they actually have a dot jpg on the end and these obviously don't have a dot jpg
+So you can pass in when you call from CSV you can pass in a suffix?
+It says that the labels don't actually contain the full file names. You need to add this to them, okay
+
+424
+01:23:19,710 --> 01:23:25,219
+so
+That's basically all I need to do to set up my data
+
+425
+01:23:25,890 --> 01:23:36,739
+And as a lot of Europe noticed during the week
+Inside that data object you can actually get access to the data set like what the training data set by same train yes
+
+426
+01:23:37,290 --> 01:23:55,699
+And inside train des is a whole bunch of things including the file names
+Okay
+So train desktop file names contains all of the file names of everything in the training set and so here's like one file name
+Okay, so here's an example of one file name
+So I can now go ahead and open that file and take a look at it
+
+427
+01:23:56,040 --> 01:24:04,940
+That's the next thing I did was to try and understand what my file my dataset looks like and it found an adorable puppy
+So that was very nice so feeling good about this
+
+428
+01:24:04,940 --> 01:24:20,149
+I also want to know like how big of these files right like how big are the images because?
+That's a key issue if they're huge, and then I have to think really carefully about how to deal with huge images. That's really challenging
+If they're tiny well that's also challenging
+
+429
+01:24:20,670 --> 01:24:29,779
+most of imagenet models are trained on either 224 by 224 or
+299 by 299 images so anytime you have images in that kind of range
+
+430
+01:24:30,090 --> 01:24:38,059
+That's that's really hopeful. You're probably not going to have to do too much different in this case the first image
+I looked at was about the right size, so I'm thinking of pretty hopeful
+
+431
+01:24:39,880 --> 01:24:51,509
+So what I did, then is I created a dictionary comprehension now if you don't know about list comprehensions and dictionary comprehensions in Python
+Go study them. They're the most useful thing super handy
+
+432
+01:24:52,060 --> 01:25:02,040
+You can see the basic idea here
+Is that are going through all of the files and then putting a dictionary that map's the name of the file to?
+the size of that file
+
+433
+01:25:04,389 --> 01:25:17,760
+Again this is a handy little Python feature, which I'll let you think learn about during the week if you don't know about it
+which is zip and using a special star notation is never to take this dictionary and turn it into the
+rows and the columns
+
+434
+01:25:18,639 --> 01:25:27,449
+And so I can now turn those into num pay arrays and like okay. Here are the first five
+rows sizes for each of my images and
+
+435
+01:25:27,969 --> 01:25:45,899
+Then matplotlib is something you want to be very familiar with if you do any kind of data science or machine learning in python
+matplotlib we always refer to as PLT as if this is a histogram and so I got a histogram of the
+How high how many rows there are in each image? So you can see here?
+
+436
+01:25:45,900 --> 01:25:52,589
+I'm kind of getting a sense before I start doing any modeling
+I kind of need to know what I'm modeling with and I can see some of the images are going to be like
+
+437
+01:25:53,139 --> 01:26:10,889
+2500 3000 pixels high but most of them seem to be around 500
+So given it so few of them were bigger than a thousand. I use standard numpy
+Slicing to just grab those at a smaller than a thousand and histogram that
+Just to zoom in a little bit, and I can see here all right
+
+438
+01:26:10,889 --> 01:26:25,520
+It looks like yet the vast majority are around 500 and so this actually also prints out
+The histogram so I can actually go through and I can see here for four thousand five hundred of them are about 450 okay
+So I get about that seems about anywhere
+
+439
+01:26:27,940 --> 01:26:34,799
+So generally how many images should we get in the validation set is always a 20%?
+
+440
+01:26:39,179 --> 01:26:52,129
+So the size of the validation set like
+Using 20% is fine unless you kind of feeling like my data is my data. Sets really small. I'm not sure that's enough
+
+441
+01:26:54,030 --> 01:27:00,949
+You know like
+if you've got
+Basically think of it this way if you train like the same model multiple times
+
+442
+01:27:01,549 --> 01:27:12,919
+And you're getting very different validation set results and your validation sets kind of small but smaller than a thousand or so
+Then it's going to be quite hard to interpret. How well you're doing now
+
+443
+01:27:12,920 --> 01:27:17,599
+This is particularly true like if you're like if you care about the third decimal place of accuracy
+
+444
+01:27:18,630 --> 01:27:26,800
+And you've got like a thousand things in your validation set then you bring about like a single image changing class is changing
+You know it's what you're looking at so
+
+445
+01:27:27,449 --> 01:27:53,119
+it's it really depends on my cow accurate you have much difference you care about I
+Would say in general like at the point where you care about difference between like out of 0.01 and 0.02 like the second decimal place
+You want that to represent like?
+10 or 20 roads you know like
+Changing the class of that 10 or 20 rows then
+That's something you can be pretty confident of
+
+446
+01:27:53,940 --> 01:28:09,739
+So like most of the time
+You know give them the data sizes. We normally have 20 percent seems to work fine
+But yeah, it's it's it's kind of a it depends a lot on
+Specifically what you're doing and what you care about
+
+447
+01:28:11,639 --> 01:28:19,639
+And it's not it's not a deep learning specific question either
+You know so those who are interested in this kind of thing we're going to look into it a lot more detail in our machine
+
+448
+01:28:19,639 --> 01:28:24,769
+learning course
+which
+Will also be available online
+
+449
+01:28:27,389 --> 01:28:32,149
+Ok so I did the same thing for the columns
+Just to make sure that these aren't like super wide and I've got similar
+
+450
+01:28:32,280 --> 01:28:37,489
+Results and checked in and again found they're kind of like 4 or 500 seem to be about the average size
+
+451
+01:28:38,130 --> 01:28:44,240
+So based on all of that
+I kind of thought ok this looks like a pretty normal kind of image data set that I can probably use pretty normal kinds of
+
+452
+01:28:44,929 --> 01:28:54,720
+models on I was also particularly encouraged to see that when I looked at the
+That the dog like takes up most of the frame right, so I'm not too worried about like cropping problems. You know
+
+453
+01:28:55,420 --> 01:29:04,710
+If the if the dog was just like a tiny little piece of one little corner that I'd be thinking about doing different
+You know maybe zooming in a lot more or something
+
+454
+01:29:04,990 --> 01:29:13,090
+Like a medical imaging that happens a lot like often the tumor or the cell whatever is like one tiny piece and there's much more
+complex
+
+455
+01:29:13,090 --> 01:29:18,095
+So yeah based on all that and this morning. I kind of thought like okay
+this looks pretty standard, so I
+
+456
+01:29:18,195 --> 01:29:29,189
+I
+Went ahead and created a little function called get data that basically had my normal two lines of code in it
+
+457
+01:29:30,280 --> 01:29:34,319
+But I made it so I could passed in a size and a batch size
+
+458
+01:29:35,020 --> 01:29:40,080
+the reason for this is that when I start working with new data set I want everything to go super fast and
+
+459
+01:29:40,270 --> 01:29:47,670
+So if I use small images it's going to go super fast
+So I actually started out with size equals 64
+
+460
+01:29:48,040 --> 01:29:58,560
+Just to create some super small images that just go like a second to run through and see how it
+Later on I started using some big images and some and some also some bigger
+
+461
+01:29:58,810 --> 01:30:03,780
+Architectures at which point I started running out of GPU memory, so I started getting these errors saying
+
+462
+01:30:04,570 --> 01:30:19,940
+CUDA out of memory error when you get a CUDA out of memory error the first thing you need to do is to go kernel
+restart once you get a code an out of memory error on your GPU you can't really recover from it right doesn't matter what you
+Do you know you have to go restart?
+
+463
+01:30:21,190 --> 01:30:34,410
+And once I've restarted
+I then just changed my batch size to something smaller so when you call create your data object
+You can pass in a batch size parameter, okay?
+
+464
+01:30:34,410 --> 01:30:43,020
+And like I normally use 64 until I hit something that says out of memory
+And then i'll just have it, and if I still get out of memory. I was hobbit again, okay
+
+465
+01:30:44,500 --> 01:30:49,740
+so that's where I created this to allow me to like start making my size as bigger as I looked into it more and
+
+466
+01:30:49,810 --> 01:30:53,075
+You know as I started running out of memory to decrease my batch size
+so
+
+467
+01:30:53,175 --> 01:31:03,579
+at this point
+You know I went through this a couple of iterations, but I basically found everything was working fine
+So once it's working fine set size 2 to 24
+
+468
+01:31:04,580 --> 01:31:12,939
+and I
+Created my you know pre-compute equals true first time
+I did that it took a minute to create the precomputed activations
+
+469
+01:31:12,940 --> 01:31:18,190
+And then it ran through this in about 4 or 5 seconds, and you can see I was getting eighty-three percent accuracy
+
+470
+01:31:18,770 --> 01:31:25,479
+Now remember accuracy means, it's it's exactly right and so it's predicting out of a hundred and twenty categories
+
+471
+01:31:25,670 --> 01:31:36,340
+It's predicting exactly right so when you see something with two classes is you?
+Know 80% accurate versus something with 120 classes is 80% accurate. They're very different
+
+472
+01:31:37,190 --> 01:31:52,030
+Levels you know so when I saw like eighty-three percent accuracy with just a pre computed classify and OData augmentation though
+I'm freezing anything else across 120 classes of the oh this looks good right so um
+
+473
+01:31:53,120 --> 01:32:11,170
+Then I just kind of kept going throughout at all standard process right so then I turn
+Precompute off
+okay, and
+Cycle length equals one, and I started doing a few more
+Cycles few more epochs
+
+474
+01:32:11,480 --> 01:32:16,719
+so remember an epoch is one pass through the data and
+
+475
+01:32:17,660 --> 01:32:27,159
+a cycle is
+However many epochs you said is in a cycle
+It's one it's the learning rate going from the top that you asked for all the way down
+
+476
+01:32:27,740 --> 01:32:37,220
+So since here cycle length equals one a cycle in an epoch at the same. Okay, so I did I tried a few
+epochs
+
+477
+01:32:37,220 --> 01:32:41,949
+I did actually do the learning rate finder, and I found one in a two again looked fine
+
+478
+01:32:41,950 --> 01:32:49,780
+It often looks fine, and I found it kind of kept improving so I tried five epochs, and I found my accuracy getting better
+
+479
+01:32:52,160 --> 01:32:58,720
+So then I saved that and I tried something which we haven't looked at before, but it's kind of cool
+
+480
+01:32:59,720 --> 01:33:07,449
+if you train something on a smaller size you can then actually call learned set data and
+
+481
+01:33:08,120 --> 01:33:19,939
+Pass in a larger size data set and that's gonna take your model however
+It's trained so far and it's going to let you can in you to train on on
+larger images
+
+482
+01:33:19,939 --> 01:33:31,629
+And I tell you something amazing
+This actually is another way you can get state-of-the-art results and I've never seen this written in any paper
+Or discussed anywhere as far as I know this is a new insight
+
+483
+01:33:32,840 --> 01:33:45,398
+Basically, I've got a pre trained model which in this case
+I've trained a few epochs with the size of 224 by 224
+And I'm now going to do a few more air pops with the size of 299 by 299 now
+
+484
+01:33:45,399 --> 01:33:52,929
+I've gotten very little data cut out by deep learning standards only about 10,000 images, right?
+so with a 224 by 224
+
+485
+01:33:52,929 --> 01:34:09,649
+I kind of built this these final layers to try to find things that work well to 24 but to 24
+but I go to 299 by 299 I
+Basically if I over fit before I'm definitely not going to over fit now might have changed the size of my images
+They're kind of like totally different
+
+486
+01:34:10,789 --> 01:34:19,089
+But like conceptually
+They're still picked the same kinds of pictures are the same kinds of things so I found this trick of like starting training on small
+
+487
+01:34:19,090 --> 01:34:32,349
+Images for a few a box and then switching to bigger images and continuing training is an amazingly effective way to avoid
+overfitting and
+It's like it's so easy and so obvious
+
+488
+01:34:32,349 --> 01:34:39,479
+I don't understand why it's never been written about before maybe it's in some paper somewhere, and I haven't found it
+But it's I haven't seen it
+
+489
+01:34:43,610 --> 01:34:50,199
+Would it be possible to do the same thing on using let's take a resort our
+disposal to feed a
+
+490
+01:34:50,869 --> 01:35:10,629
+Different size yeah, I think so like as long as you use one of these more modern
+Architectures what we call fully convolutional architectures, which means not vgg
+and you'll see we don't use vgg in this course because it doesn't have this property but most of the
+architectures developed in the last couple of years can handle pretty much arbitrary sizes
+
+491
+01:35:12,199 --> 01:35:15,339
+Yeah be worth trying yeah, I think it ought to work
+
+492
+01:35:17,209 --> 01:35:22,839
+Okay, so I call get data again remember get data is the just a little function that I created back up here right get data
+
+493
+01:35:22,840 --> 01:35:25,929
+Is just this little function that's oh, I just passed a different size to it
+
+494
+01:35:26,599 --> 01:35:37,090
+and so I
+Call freeze just to make sure that but everything so the last layer is frozen
+I mean it actually already was at its point that really doing a thing
+
+495
+01:35:37,809 --> 01:35:50,850
+and
+You can see now with free compute off
+I've now got that data augmentation working, so I kind of run a few more a pox and what I notice here
+
+496
+01:35:50,850 --> 01:36:00,330
+Is that the loss to my training set and the loss of my validation set my validation set loss is a lot lower than?
+My training set this is still just training the last layer
+
+497
+01:36:00,429 --> 01:36:13,080
+so what this is telling me is I'm
+Under fitting right and so from under fitting it means this cycle length equals one is too short
+It means it's like finding something better popped with popping out and it's like never getting a chance to zoom in properly
+
+498
+01:36:13,870 --> 01:36:20,519
+So then I'd set cycle mod equals two to give it more time so like the first time is one epoch
+
+499
+01:36:20,770 --> 01:36:24,434
+The second one is two epochs the third one is for epochs
+
+500
+01:36:24,934 --> 01:36:36,480
+And you can see now the validation train and training are about the same
+Okay, so that's kind of thinking. Yeah. This is this is about the right track and so then I tried using test time
+
+501
+01:36:37,060 --> 01:36:41,789
+Augmentation to see if that gets any better still didn't actually help a hell of a lot just a tiny bit
+
+502
+01:36:42,699 --> 01:36:54,659
+And just kind of at this point. I think here. This is nearly done
+So I just did it like you know one more cycle of two to see if it got any better
+And it did get a little bit better, and then I'm like okay
+
+503
+01:36:55,179 --> 01:37:03,040
+That looks pretty good. I've got a validation set
+lost
+0.199
+
+504
+01:37:03,040 --> 01:37:21,749
+And so your Lotus here
+Actually, you haven't tried unfreezing the reason why I was going to try to unfreezing and training more
+It didn't get any better and so the reason for this clearly is that this data
+set is so similar the image net that the training that convolutional layers actually doesn't help in the slightest and
+
+505
+01:37:22,690 --> 01:37:27,899
+actually when I loaded up into it it turns out that this competition is actually using a
+
+506
+01:37:28,480 --> 01:37:41,190
+Subset of improve image net so that's okay so that if we check this out point one nine nine
+against the leaderboard
+This is only a playground competition, so it's not like the best of here, but you know it's still interesting
+
+507
+01:37:41,949 --> 01:37:55,880
+It gets us
+Somewhere around ten thrillers, okay, and
+In fact we're competing against. I noticed other the first AI student. This is a first AI student
+
+508
+01:37:57,030 --> 01:38:04,280
+These people up here. I know they actually posted that they cheated. They actually went you downloaded the original images and train to that so
+
+509
+01:38:06,929 --> 01:38:14,959
+And this is why this is a playground competition they call it. It's not it's not real right you know
+It's just to allow us to try things out, but you can basically see
+
+510
+01:38:16,170 --> 01:38:25,670
+Out of two hundred and something people where you know we're getting some very good results
+Without doing anything remotely interesting or clever
+
+511
+01:38:25,670 --> 01:38:38,110
+and we haven't even used the whole data set you're going to use to eighty percent of it like to get a better result I
+Would go back and remove that validation set and just rerun the same steps and then submit that exact
+Let's just use it under percent of the data
+
+512
+01:38:46,350 --> 01:38:51,949
+Have three questions the first one is like that class in this case is very it's not balanced
+
+513
+01:38:53,780 --> 01:39:06,020
+Instead unbalanced like it's not totally balanced, but it's not bad right. It's like
+
+514
+01:39:06,540 --> 01:39:11,959
+Between sixty and a hundred like it's it's it's it's not unbalanced enough that I would give it a second thought okay?
+
+515
+01:39:12,600 --> 01:39:30,170
+Yeah, let's get to that later in this course and don't let me forget right the short answer is that there was a recent list
+The paper came out about two or three weeks ago on this
+and it said the best way to deal with very unbalanced data sets is to basically make copies of the
+rare cases
+
+516
+01:39:33,510 --> 01:39:50,600
+Yeah, my second question is I want to pin down a difference between creation he read was and
+So you have these two options right so when you beginning I
+Did an optimization use that pre computed it was true by not using layers
+
+517
+01:39:51,150 --> 01:39:57,080
+Right right so it's not only they frozen their pre computed so the data augmentation doesn't do anything at that point
+
+518
+01:39:59,910 --> 01:40:06,709
+Right before you outcries everything
+What as examples you and IV only you only on freeze?
+
+519
+01:40:08,559 --> 01:40:13,319
+So we're going to learn more about the details as we look into the the math and stuff in coming lessons
+
+520
+01:40:13,420 --> 01:40:24,449
+But basically what happened was we started with a pre trained network, right?
+Which was kind of finding activations that had these kind of rich features?
+
+521
+01:40:25,989 --> 01:40:35,219
+And we were adding, then we add a couple of layers on the end of it
+Which which start out random and so with fries equals?
+
+522
+01:40:35,559 --> 01:40:46,840
+with with everything frozen and indeed with pre compute equals true all we're learning is told is those couple of layers that we've added and
+So with pre compute equals true
+We actually pretty
+
+523
+01:40:46,840 --> 01:40:52,409
+Calculate like how much does this image have something that looks like this a ball one looks like this face and so forth
+
+524
+01:40:52,989 --> 01:40:58,199
+and therefore data augmentation doesn't do anything with pre compute equals true because
+
+525
+01:40:58,299 --> 01:41:08,729
+You know we're actually showing exactly the same activations each time we can then set pre compute equals false
+Which means it's still only training those last two layers that we added
+
+526
+01:41:08,729 --> 01:41:15,479
+It's still frozen, but data augmentations now working because it's actually going through and recalculating all of the activations from scratch
+
+527
+01:41:16,630 --> 01:41:24,024
+And then finally when we unfreeze that's actually saying okay, now. You can go ahead and change all of these earlier
+
+528
+01:41:24,524 --> 01:41:28,719
+convolutional filters, so well you just
+
+529
+01:41:29,499 --> 01:41:39,958
+So the only reason to have pre compute equals true is it's just much faster, so it's like it is
+It's about you know ten or more times faster, so particularly if you're working with like quite a large data set
+
+530
+01:41:40,539 --> 01:41:54,388
+You know it can save quite a bit of time, but it's never
+There's no like companies like
+Accuracy reason ever to use pre computed calls true. It's just a it's just a shortcut. It's also like quite handy. If you're like
+
+531
+01:41:55,090 --> 01:41:59,699
+Throwing together a quick model you know it can take a few seconds to create
+
+532
+01:42:01,949 --> 01:42:20,538
+My last question, which I think you answer is I
+Don't like your suggestions to build a model you have this aged yeah
+What if
+Would you like we just wanted one?
+Initial setting without these like checking after each
+
+533
+01:42:23,099 --> 01:42:44,538
+I mean if you want it like if your question is like is there some shorter version of this
+That's like a bit quicker and easier. I could like to lead a few things here
+Okay, I think this is a kind of a minimal version to get you a very good result which is like
+
+534
+01:42:44,729 --> 01:42:50,239
+don't worry about pre compute equals true because that's just saving a little bit of time you know so so I
+
+535
+01:42:50,729 --> 01:42:53,689
+Still suggest use LR find at the start to find a good learning rate
+
+536
+01:42:55,530 --> 01:43:01,639
+By default everything is frozen from the start so then you can just go ahead and run two or three epochs or cyclic Nichols one
+
+537
+01:43:02,550 --> 01:43:07,019
+unfreeze
+And then train the rest of the network with differential learning rates, so it's basically three steps learning rate finder
+
+538
+01:43:07,580 --> 01:43:15,739
+Trained frozen network with cycle methods one and
+
+539
+01:43:16,289 --> 01:43:21,049
+Then trained unfrozen network with differential learning rates and cycle molecules, too
+
+540
+01:43:21,719 --> 01:43:30,059
+so like that's something you could turn into I
+guess five or six lines of code
+at all I
+
+541
+01:43:30,059 --> 01:43:32,268
+Think it's a question provide your own mix book
+
+542
+01:43:33,719 --> 01:43:39,138
+By reusing the batch size does the only at better speed of training yeah?
+
+543
+01:43:39,139 --> 01:43:46,969
+Pretty much so each batch and again
+We're going to see like all this stuff about precomputing batch sizes we dig into the details of the algorithms
+
+544
+01:43:46,969 --> 01:43:58,248
+It's going to make a lot more. Sense intuitively, but basically if you're showing it
+Less images each time then it's calculating the gradient with less images
+
+545
+01:43:58,249 --> 01:44:09,769
+Which means it's less accurate which means like knowing which direction to go and how far to go in that direction
+Is less accurate so as you make the batch size smaller you're basically making it kind of more volatile
+
+546
+01:44:10,709 --> 01:44:28,199
+It's kind of like
+It kind of impacts the
+Optimal learning rate that you would need to use but in practice where only you know
+I generally find only dividing with the batch size by like 2 or 4 it doesn't seem to change things very much
+
+547
+01:44:28,659 --> 01:44:32,798
+Should I reveals the learning rate of quality me?
+
+548
+01:44:33,359 --> 01:44:45,149
+If you if you change the batch size by much you can rerun the learning rate finder to see if it's changed if I match
+But it it
+I was in for only
+Generally looking at like a power of 10 it probably is not going to change the it's not that you can't because plus back there
+
+549
+01:44:48,090 --> 01:45:20,639
+This is sort of a conceptual
+Basic questions, we're going back to the previous night where you should put in the thought behind, sorry yeah
+This is well one for conceptual so a basic question. We've actually really slide where you should what the different layers were doing?
+Yes from this slide I understand right the meaning of
+sync the third column relative to the fourth column is that
+What you're interpreting what the layer is doing based on what the image is actually?
+
+550
+01:45:22,090 --> 01:45:24,210
+Yeah, so we're going to look at this in more detail
+
+551
+01:45:24,210 --> 01:45:30,179
+So these these gray ones basically say this is kind of what the filter looks like so on the first layer
+
+552
+01:45:30,179 --> 01:45:40,019
+You can see exactly what the filter looks like because the input to it of pixels
+Right so you can absolutely say and remember we looked at what a convolutional kernel was like was that three by three thing
+
+553
+01:45:40,210 --> 01:45:45,419
+So this look like there's seven by seven kernels you can say this is actually what it looks like but later on
+
+554
+01:45:45,820 --> 01:45:55,499
+It's combined. You know the the the input to it are themselves
+Activations which are combinations of activations relation to activations so you can't draw it
+
+555
+01:45:55,570 --> 01:46:05,720
+But there's clever technique that I learned focus created which allowed them to say
+
+556
+01:46:06,490 --> 01:46:22,859
+This is kind of what the filters tended to look like on average
+Alright, so this is kind of what the photos look like and then here is specific examples of patches of image which?
+Activated that filter highly so yet the pictures are the ones that I kind of find more useful because it tells you this
+Kernel is kind of a mini cycle. We all find
+
+557
+01:46:25,320 --> 01:46:38,020
+Right how do we know that's it?
+
+558
+01:46:38,920 --> 01:46:51,299
+Well we'll come back well we may come back to that if not in this part in the next part that
+Probably a part two actually because this paper this paper uses to create these things this paper uses something called a deconvolution
+
+559
+01:46:51,940 --> 01:47:02,190
+Which I'm pretty sure we won't do in this part, but we will do it in part two so if you're interested
+Check out the paper. It's it's in the notebook has a link to it xyler in Fergus
+
+560
+01:47:03,310 --> 01:47:08,160
+It's a very clever technique
+And not terribly intuitive
+
+561
+01:47:17,130 --> 01:47:31,850
+So you mentioned that it was good that the dog took up the full picture
+And it would have been a problem if it was kind of like off in one of the corners in really tiny
+Well, what would you what would you technique have been to try to make that work?
+
+562
+01:47:33,510 --> 01:47:40,610
+Something that we'll learn about in part two but basically
+There's a technique that allows you to to kind of
+
+563
+01:47:41,010 --> 01:47:50,779
+figure out roughly which parts of an image and most likely to have the interesting things in them and
+Then you can like crop out those bits if you're interested in learning about it
+
+564
+01:47:50,780 --> 01:48:02,658
+We did cover it briefly in lesson seven of part one, but I'm going to actually do it
+properly in part two of this course
+Because I didn't really cover it thoroughly enough
+
+565
+01:48:05,969 --> 01:48:11,839
+Maybe we'll find time to have a quick look at it
+But we'll see I know your Nets written some of the code that we need already
+
+566
+01:48:16,760 --> 01:48:28,420
+So once I have something like this notebook. That's basically working I can
+Immediately make it better by doing two things
+
+567
+01:48:29,840 --> 01:48:41,830
+assuming that the size image
+I was using is smaller than the average size of the image that we've been given I can increase the size and
+As I showed before with the dog breeds you can actually increase it during training
+
+568
+01:48:42,170 --> 01:48:46,330
+The other thing I can do is to create is to use a better
+
+569
+01:48:46,880 --> 01:48:52,390
+Architecture now an architect. We're going to talk a lot in this course about architectures, but basically
+
+570
+01:48:53,300 --> 01:49:11,030
+there are
+Different ways of putting together like what size convolutional filters, and how are they connected to each other and so forth?
+and
+Different architectures have different like numbers of layers and sizes of kernels and number of filters and so forth and so
+
+571
+01:49:14,750 --> 01:49:26,350
+There are some the one that we've been using ResNet 34 is a great
+Starting point and often a good finishing point because it's like it's pretty it doesn't have too many parameters often
+
+572
+01:49:26,350 --> 01:49:30,309
+It works pretty well with small amounts of data as we've seen and so forth but
+
+573
+01:49:31,610 --> 01:49:41,289
+There's actually an architecture that I really like called not res net but res next
+Which was actually the second-place winner in last year's image net competition?
+
+574
+01:49:41,930 --> 01:49:49,299
+and
+Like ResNet you can put a number after the res next to say like how big it is and
+
+575
+01:49:49,670 --> 01:50:05,710
+Like my next step after resume 34 is always res next 50 now
+you'll find res next 50 takes like can take like twice as long as
+ResNet 34 that can take like 2 to 4 times as much memory as retina 34
+
+576
+01:50:06,590 --> 01:50:19,120
+so what I wanted to do was I wanted to rerun that previous notebook with res next and
+Increasing the image size to turn on a node so here
+I just said architecture equals res next 50 size equals 299
+
+577
+01:50:19,120 --> 01:50:24,219
+And then I found that I had to take the batch size all the way back to 28 to get it to fit my GPU
+
+578
+01:50:24,219 --> 01:50:31,149
+Is 11 gig if you're using AWS or cresol? I think they're like?
+12 gigs they might be a bit higher
+
+579
+01:50:31,429 --> 01:50:42,009
+But this is what I found I had to do so then I this is literally a copy of the previous notebook
+So you can actually go file make a copy?
+right and then rerun it with with these different parameters and
+
+580
+01:50:42,770 --> 01:51:00,320
+So I deleted some of the pros and some of the expiratory stuff to see you know basically
+I said everything else is the same all the same steps as before there's my in fact
+You can kind of see what this minimum service desk looks like I didn't need to worry about learning rate finder
+So I just left it as is so
+
+581
+01:51:00,320 --> 01:51:13,779
+transforms data equals loan equals bit pre computed false feet with cycle integrals one and
+freeze
+differential learning rates
+Bits and more and you can see here
+
+582
+01:51:13,780 --> 01:51:28,779
+I didn't do the cycle mop thing because I found like now that I'm using a bigger architecture. It's got more parameters
+It was overfitting
+Pretty quickly so rather than like cycle length equals one never finding the right spot it actually did find the right spot
+
+583
+01:51:28,780 --> 01:51:38,049
+and if I used longer cycle legs I found that my
+Validation error was higher than my training error. It was over there
+
+584
+01:51:39,440 --> 01:51:47,144
+So check us out though by using these you know
+Three steps, I got plus TTA
+99.75
+
+585
+01:51:47,244 --> 01:51:56,569
+So what does that mean that means? I have one incorrect dog for incorrect cats and when we look at the pictures of them
+
+586
+01:51:58,280 --> 01:52:04,690
+My incorrect dog has a cat now this one is not a either this one is not either so I've actually got one
+
+587
+01:52:05,750 --> 01:52:11,179
+mistake and then my incorrect dog is
+teeth
+
+588
+01:52:11,179 --> 01:52:22,914
+Right so like we're at a point
+Where we're now able to train a classifier, that's so good that it has like
+Basically one's dead
+
+589
+01:52:23,514 --> 01:52:31,359
+Right and so when people say like we have superhuman image performance now
+This is kind of what they're talking about right, so did you actually when I looked at the?
+
+590
+01:52:31,880 --> 01:52:37,719
+Dog breed one. I did this morning. I was like it was it was getting the dog breeds much better than I ever could
+
+591
+01:52:39,860 --> 01:52:52,390
+So like hits this this is what we can get to if you use a really modern architect like redneck
+And this suddenly took out a tall way and remember don't like 20 minutes to Train
+
+592
+01:53:01,100 --> 01:53:03,100
+If you want to do
+
+593
+01:53:03,140 --> 01:53:05,140
+satellite imagery instead
+
+594
+01:53:05,450 --> 01:53:10,599
+Right then it's the same thing and in fact the the planet satellite data sets already
+
+595
+01:53:10,600 --> 01:53:14,140
+oh and Chris, or if you're using Chris or you can jump straight there right and
+
+596
+01:53:16,190 --> 01:53:21,760
+I just went into this data stash planet, and I can do exactly the same thing right I can
+
+597
+01:53:24,980 --> 01:53:26,980
+Image classifier from CSV
+
+598
+01:53:27,440 --> 01:53:31,690
+Right and you can see these three lines are actually exactly the same as my dog breed lines
+
+599
+01:53:31,730 --> 01:53:36,160
+You know how big how many lines are in the file grab my validation indexes?
+
+600
+01:53:36,500 --> 01:53:39,850
+This get data as you can see it's identical except. I've changed
+
+601
+01:53:40,850 --> 01:53:45,399
+Side on to top down the satellite images about top down so I can fit them
+
+602
+01:53:46,010 --> 01:53:52,780
+Vertically and they still make sense right and so you can see here. I'm doing this trick round back to size equals 64 and
+
+603
+01:53:53,840 --> 01:53:59,559
+Train a little bit first learning rate find on right and interestingly in this case you can see it
+
+604
+01:53:59,690 --> 01:54:01,690
+I want really high learning rates I
+
+605
+01:54:02,390 --> 01:54:04,629
+Don't know what it is about this particular data
+
+606
+01:54:04,630 --> 01:54:09,460
+Set this is true, but it's clearly I can use super high learning rate, so I use a lot here at a point, too
+
+607
+01:54:10,490 --> 01:54:12,999
+And so I've trained for a while
+
+608
+01:54:13,760 --> 01:54:16,419
+differential learning rates right and so remember
+
+609
+01:54:16,420 --> 01:54:23,710
+I said like if the data sets very different to image net I probably want to train those middle layers a lot more
+
+610
+01:54:23,710 --> 01:54:29,530
+so I'm using divided by three rather than divided by ten all right the other than that is the same thing cycle Nauticals -
+
+611
+01:54:30,140 --> 01:54:31,700
+All right
+and
+
+612
+01:54:32,720 --> 01:54:34,300
+Then I just kind of keep an eye on it
+
+613
+01:54:34,300 --> 01:54:37,300
+So you can actually plot the loss if you go and learned up shared a plot loss
+
+614
+01:54:37,340 --> 01:54:39,909
+You can see here that here's the first cycle
+
+615
+01:54:40,400 --> 01:54:41,960
+Is the second cycle?
+
+616
+01:54:41,960 --> 01:54:44,859
+Is the third cycle right so you can see it gets better?
+
+617
+01:54:44,950 --> 01:54:49,090
+Pops out gets better pops out if better pops out and each time it finds something better than the last time
+
+618
+01:54:50,660 --> 01:54:57,609
+Then set the size up to 128 and just repeat exactly the last few steps and then set up to 256
+
+619
+01:54:59,000 --> 01:55:01,000
+repeat the last two steps and then
+
+620
+01:55:01,670 --> 01:55:08,770
+Do TTA and if you submit this and this gets about 30th place in this competition?
+
+621
+01:55:09,800 --> 01:55:17,350
+so these basic steps work super well this this thing where I went all the way back to a size of 64 I
+
+622
+01:55:18,020 --> 01:55:23,919
+Wouldn't do that if I was doing like dogs and cats or dog breeds because like this is so small that
+
+623
+01:55:24,140 --> 01:55:29,409
+if if the thing I was working on is very similar to imagenet I would kind of
+
+624
+01:55:30,020 --> 01:55:35,859
+Destroy those imagenet weights like 64 by 64 is so small but in this case the satellite imagery data
+
+625
+01:55:35,860 --> 01:55:42,100
+It's so different to imagenet. Um you know I really found that it worked pretty well start right back to these tiny images
+
+626
+01:55:42,800 --> 01:55:44,800
+It really helped me to avoid overfitting
+
+627
+01:55:45,830 --> 01:55:47,300
+and interestingly
+
+628
+01:55:47,300 --> 01:55:52,029
+Using this kind of approach I actually found that even with using only 128 by 128
+
+629
+01:55:52,100 --> 01:55:59,379
+I was getting like much better cackled results than really everybody on the leader board and when I say 30th place
+
+630
+01:55:59,380 --> 01:56:03,219
+This is a very recent competition right and so I find like in
+
+631
+01:56:03,860 --> 01:56:09,250
+The last year like a lot of people have got a lot better at computer vision and so the people in the top 50 in
+
+632
+01:56:09,250 --> 01:56:13,750
+This competition were generally ensemble in dozens of models lots of people on a team
+
+633
+01:56:14,510 --> 01:56:17,199
+lots of pre-processing specific satellite data
+And so forth so like to be able to get xxx using this totally standard technique is pretty cool
+
+634
+01:56:25,460 --> 01:56:26,810
+Alright
+
+635
+01:56:26,810 --> 01:56:33,370
+So now that we've got to this point right. We've got through two lessons if you're still here then hopefully you're thinking
+
+636
+01:56:34,159 --> 01:56:36,159
+Okay, this is actually pretty useful
+
+637
+01:56:36,469 --> 01:56:43,719
+I want to do more in which case Kressel might not be where you want to stay the issues with Kressel
+
+638
+01:56:43,719 --> 01:56:49,448
+I mean, it's it's it's pretty handy. It's pretty cheap and something we haven't talked about much is paper
+
+639
+01:56:49,449 --> 01:56:56,979
+Space is another great choice by the way paper. Space are short. They're going to be releasing kress or like instant Drupal. Notebooks unfortunately
+
+640
+01:56:56,980 --> 01:56:58,489
+They're not ready quite yet
+
+641
+01:56:58,489 --> 01:57:00,489
+but they do have an ability to
+
+642
+01:57:00,679 --> 01:57:02,679
+Basically, they have the best price
+
+643
+01:57:02,840 --> 01:57:08,620
+performance relationship right now and they you can SSH into them and use them so
+
+644
+01:57:08,989 --> 01:57:11,859
+They're also a great choice and probably by the time this the MOOC
+
+645
+01:57:12,560 --> 01:57:14,560
+Will probably have a separate lesson
+
+646
+01:57:14,720 --> 01:57:19,059
+Showing you how to set up set up paper space because there they're likely to be a great option
+
+647
+01:57:19,970 --> 01:57:22,659
+but at some point you're probably going to want to look at AWS a
+
+648
+01:57:23,450 --> 01:57:28,539
+Couple of reasons why the first is as you all know by now
+
+649
+01:57:29,660 --> 01:57:31,839
+amazon have been kind enough to donate about
+
+650
+01:57:32,870 --> 01:57:38,260
+$200,000 worth of compute time to this course, so I want to say thank you very much to Amazon
+
+651
+01:57:38,450 --> 01:57:42,789
+We've all been given credit, so everybody this year, so thanks very much. Hey, don't worry. We're
+
+652
+01:57:44,870 --> 01:57:49,300
+So sorry you're sure in the MOOC. We didn't get it for you, but everybody here is like
+
+653
+01:57:49,940 --> 01:57:51,940
+AWS credits for everybody so um
+
+654
+01:57:52,100 --> 01:57:57,249
+But you can get even if you're not here in person you can get AWS credits from lots of places
+
+655
+01:57:57,830 --> 01:58:03,010
+Github has a student pack Google for github student pack. That's like 150 bucks worth of credits
+
+656
+01:58:03,740 --> 01:58:10,269
+AWS educate can get credits these our office students, so there's lots of places you can get started on AWS
+
+657
+01:58:11,090 --> 01:58:13,090
+pretty much everybody
+
+658
+01:58:13,550 --> 01:58:16,059
+Everybody a lot of the people that you might work with
+
+659
+01:58:16,820 --> 01:58:18,820
+Will be using AWS
+
+660
+01:58:19,160 --> 01:58:21,160
+Because it's like super flexible
+
+661
+01:58:21,200 --> 01:58:27,729
+Right now AWS has the fastest available GPUs you can get in the cloud. They're p3s
+
+662
+01:58:29,450 --> 01:58:31,420
+They're kind of expensive at three bucks an hour
+
+663
+01:58:31,420 --> 01:58:36,220
+But if you've got like a model where you've done all the steps before you're thinking. This is looking pretty good
+
+664
+01:58:36,290 --> 01:58:40,330
+You know for 6 bucks you could get a p3 for 2 hours and run
+
+665
+01:58:41,000 --> 01:58:43,000
+turbo speed right
+
+666
+01:58:43,340 --> 01:58:50,440
+Um we didn't start with AWS because well. Hey it's like twice as expensive as Chris Hall for the cheapest GPU
+
+667
+01:58:50,990 --> 01:58:53,109
+And being a Texan setup, right
+
+668
+01:58:53,180 --> 01:58:59,349
+But I wanted to kind of go through and show you how to get your AWS setup
+
+669
+01:58:59,350 --> 01:59:02,289
+And so we're going to be going slightly over time to do that
+
+670
+01:59:02,290 --> 01:59:05,620
+But I want to show you a very quick place. I feel prettier if you have to
+
+671
+01:59:06,170 --> 01:59:08,530
+But I want to show you very quickly how you can get your
+
+672
+01:59:09,140 --> 01:59:11,800
+AWS setup right from scratch so
+
+673
+01:59:13,190 --> 01:59:16,000
+Basically you have to go to consult on AWS but
+
+674
+01:59:16,640 --> 01:59:22,660
+Amazon.com and it'll take you to the console right and so you can follow along on the video with this
+
+675
+01:59:23,190 --> 01:59:25,460
+quickly from here you have to go to
+
+676
+01:59:26,010 --> 01:59:31,250
+AC - this is where you set up your instances and so from ec2
+
+677
+01:59:32,099 --> 01:59:38,119
+You need to do what's called launching an instance so launching an instance means you're basically creating a computer
+
+678
+01:59:38,429 --> 01:59:42,379
+right now creating a computer on Amazon, so I say launch instance and
+
+679
+01:59:43,080 --> 01:59:48,679
+what we've done is we've created a fast AI it's got an amo and ami is like a
+
+680
+01:59:48,840 --> 01:59:54,500
+template for how your computer's going to begin so if you've got a community a Mis and type in fast AI
+
+681
+01:59:55,139 --> 02:00:00,919
+You'll see that. There's one there called fast AI part 1 version 2 for the p2
+
+682
+02:00:01,440 --> 02:00:03,679
+ok so I'm going to select that and
+
+683
+02:00:04,590 --> 02:00:11,630
+then we need to say what kind of computer do you want and so I can say I want a GPU compute computer and
+
+684
+02:00:12,690 --> 02:00:17,149
+Then I can say I want a p2 x large. This is the cheapest
+
+685
+02:00:18,030 --> 02:00:22,580
+Reasonably effective for deep learning instance type they have and then I can say launch
+
+686
+02:00:23,520 --> 02:00:24,570
+and
+then I can say launch and
+
+687
+02:00:27,510 --> 02:00:33,260
+So at this point they asked you to choose a key pair right now
+
+688
+02:00:33,530 --> 02:00:36,349
+If you don't have a key pair you have to create one right?
+
+689
+02:00:37,170 --> 02:00:39,170
+So to create a key pair
+
+690
+02:00:40,199 --> 02:00:42,199
+You need to open your terminal
+
+691
+02:00:43,530 --> 02:00:50,239
+If you don't have a terminal if you've got a Mac or Linux box you've definitely got one if you've got Windows
+
+692
+02:00:50,310 --> 02:00:52,310
+Hopefully you've got Ubuntu
+
+693
+02:00:52,710 --> 02:00:57,409
+if you don't already have Ubuntu setup, you can go to the Windows Store and
+
+694
+02:00:59,040 --> 02:01:00,869
+Click on
+
+695
+02:01:00,869 --> 02:01:02,869
+Ubuntu right we'll get it from the Windows Store
+
+696
+02:01:03,780 --> 02:01:07,070
+So from there you basically go SSH
+
+697
+02:01:08,730 --> 02:01:10,730
+- caged in and
+
+698
+02:01:11,010 --> 02:01:16,010
+That will create like a special password for your computer to be able to log in to Amazon
+
+699
+02:01:16,010 --> 02:01:18,010
+And then you just hit enter three times
+
+700
+02:01:18,540 --> 02:01:24,560
+Okay, and that's going to create for you your key, you can use to get into Amazon alright
+
+701
+02:01:24,599 --> 02:01:29,839
+So then what I do is I copy that key somewhere that I know where it is, so it'll be in the dot SSH folder
+
+702
+02:01:30,610 --> 02:01:34,239
+It's called IDRs a dub and so I'm going to copy it
+
+703
+02:01:34,940 --> 02:01:36,940
+to
+
+704
+02:01:37,010 --> 02:01:38,750
+My hard drive
+
+705
+02:01:38,750 --> 02:01:43,659
+So if you're in a macro and Linux it'll already be in an easy to find place it'll be in your SSH folder
+
+706
+02:01:45,500 --> 02:01:47,500
+That in documents
+
+707
+02:01:48,650 --> 02:01:56,409
+So from there back in AWS you have to tell it that you've created. This key, so you can go to key pairs and
+
+708
+02:01:57,800 --> 02:02:02,560
+You say import key pair, and you just browse to that file that you just created
+
+709
+02:02:05,480 --> 02:02:07,689
+There it is I say import
+
+710
+02:02:08,960 --> 02:02:13,659
+Okay, so if you've ever used SSH before you've already got the key pair
+
+711
+02:02:13,660 --> 02:02:19,180
+You don't have to do those depths if you've used AWS before you've already imported it. You don't have to do that step
+
+712
+02:02:19,340 --> 02:02:22,060
+Maybe haven't done any of those things you have to do both steps
+
+713
+02:02:23,780 --> 02:02:27,639
+So now I can go ahead and launch my instance
+
+714
+02:02:31,010 --> 02:02:34,119
+Community I am eyes search last day I
+
+715
+02:02:36,020 --> 02:02:37,430
+Select
+
+716
+02:02:37,430 --> 02:02:39,230
+launch and
+So now it asks me
+
+717
+02:02:41,510 --> 02:02:44,739
+what's where's your key pair, and I can choose that one that I just
+
+718
+02:02:45,410 --> 02:02:47,410
+grabbed okay
+
+719
+02:02:49,490 --> 02:02:53,920
+So this is going to go ahead and create a new computer for me to log into
+
+720
+02:02:54,890 --> 02:02:58,900
+And you can see here. It says the following have been initiated, and so if I click on that
+
+721
+02:03:00,020 --> 02:03:01,610
+It'll show me
+This new computer that I've created okay
+
+722
+02:03:05,180 --> 02:03:07,180
+So it'll be able to log into it
+
+723
+02:03:08,520 --> 02:03:10,520
+I need to know its IP address
+
+724
+02:03:10,990 --> 02:03:14,879
+So here it is the IP address there. Okay, so I can copy that and
+
+725
+02:03:16,000 --> 02:03:18,299
+That's the IP address of my computer
+
+726
+02:03:18,970 --> 02:03:21,119
+so to get to this computer I need to
+
+727
+02:03:21,190 --> 02:03:26,609
+SSH to it so SSH into a computer means connecting to that computer so that it's like you're typing in that computer
+
+728
+02:03:26,710 --> 02:03:29,640
+So I type SSH and they username
+
+729
+02:03:30,460 --> 02:03:32,460
+For this instance is always Ubuntu
+
+730
+02:03:33,190 --> 02:03:38,790
+Right and then I can paste in that IP address, and then there's one more thing
+
+731
+02:03:38,790 --> 02:03:45,990
+I have to do which is I have to connect up the jupiter notebook on that instance to the jupiter notebook on my machine and
+
+732
+02:03:46,180 --> 02:03:48,180
+So to do that there's just a particular
+
+733
+02:03:48,430 --> 02:03:52,439
+Flag that I said, okay, we can talk about it on the forums as to exactly what it does
+
+734
+02:03:52,750 --> 02:03:55,109
+But you just type - l.a today date
+
+735
+02:03:55,720 --> 02:04:02,970
+localhost 8 8 8 8 ok so like once you've done it once you can like save that as an alias and type in the
+
+736
+02:04:02,970 --> 02:04:04,970
+same thing every time
+
+737
+02:04:05,680 --> 02:04:10,019
+So we can check here, we can see it says that it's running so we should be able to now hit enter
+
+738
+02:04:11,410 --> 02:04:16,260
+First time ever which sit reconnect to it. It does checks. This is okay. I'll say yes
+
+739
+02:04:18,190 --> 02:04:20,879
+And then that goes ahead and SSH is in
+
+740
+02:04:22,510 --> 02:04:24,510
+So
+
+741
+02:04:25,270 --> 02:04:28,950
+This ami is all set up for you alright
+So you'll find that the very first time you log in it takes a few extra seconds because it just kind of is getting everything
+
+742
+02:04:33,840 --> 02:04:34,600
+Set up
+
+743
+02:04:34,600 --> 02:04:39,419
+But once it's logged in you'll see there that there's a directory called fast AI
+
+744
+02:04:39,820 --> 02:04:45,600
+And the fast AI directory contains our fast AI repo that contains all the notebooks
+
+745
+02:04:47,080 --> 02:04:50,039
+Or the code etc so I can just go CD faster
+
+746
+02:04:50,040 --> 02:04:55,379
+All right first thing you do when you get in is to make sure it's updated, so you just go git pull
+
+747
+02:04:56,680 --> 02:04:58,680
+right and that updates
+
+748
+02:04:58,990 --> 02:05:03,059
+to make sure that your repo is the same as the most recent video and
+
+749
+02:05:04,060 --> 02:05:05,610
+So as you can see there we go
+Let's make sure it's got all the most recent code the second thing you should do is type Condor and update
+
+750
+02:05:11,440 --> 02:05:17,069
+You can just do this maybe once a month or so and that makes sure that the libraries there are all the most recent
+
+751
+02:05:17,260 --> 02:05:22,990
+Libraries I'm not going to run that so it takes a couple of minutes okay, and then the last step is to type particular notebook
+
+752
+02:05:25,970 --> 02:05:30,820
+Okay, so this is going to go ahead and launch the triplet notebook
+
+753
+02:05:31,460 --> 02:05:37,390
+Server on this machine again the first time I do it the first time you do everything on AWS
+
+754
+02:05:37,540 --> 02:05:39,540
+It just takes like a minute or two
+
+755
+02:05:39,950 --> 02:05:45,249
+And then once you've done it in the future. We just as fast as running it locally basically
+
+756
+02:05:45,440 --> 02:05:49,150
+Okay, so you can see it's going ahead and firing out the notebook
+
+757
+02:05:49,150 --> 02:05:54,400
+And so what's going to happen is that because when we SSH into it? We said to both connect our?
+
+758
+02:05:55,100 --> 02:05:58,990
+Notebook port to the remote notebook port we're just going to be able to
+
+759
+02:05:59,180 --> 02:06:01,930
+Use this locally so I see he says here copy paste this URL
+
+760
+02:06:02,570 --> 02:06:04,570
+so I'm going to grab that URL and
+
+761
+02:06:05,600 --> 02:06:07,600
+I'm going to paste it into my browser and
+
+762
+02:06:11,330 --> 02:06:18,400
+That's it, okay, so this notebook is now actually not running on my machine. It's actually running on AWS
+
+763
+02:06:19,100 --> 02:06:25,059
+Okay, using the AWS GPU it's got a lot of memory. It's not the fastest around, but it's not terrible
+
+764
+02:06:25,870 --> 02:06:31,570
+You can always fire up a p3 if you want something that's super fast. This is costing me ninety cents a minute
+
+765
+02:06:32,630 --> 02:06:38,199
+Okay, so when you're finished. Please don't forget to shut it down right so to shut it down
+
+766
+02:06:38,900 --> 02:06:40,100
+You can
+
+767
+02:06:40,100 --> 02:06:42,100
+right-click on it and
+
+768
+02:06:42,530 --> 02:06:44,530
+Say instance date
+
+769
+02:06:44,960 --> 02:06:46,460
+stop
+
+770
+02:06:46,460 --> 02:06:47,870
+Okay
+
+771
+02:06:47,870 --> 02:06:49,870
+We've got five hundred bucks of credit
+
+772
+02:06:51,110 --> 02:06:53,650
+Assuming that you put your code down in the spreadsheet?
+
+773
+02:06:53,810 --> 02:06:59,110
+One thing I forgot to do the first time I showed you this by the way. I said make sure you choose a
+
+774
+02:07:00,560 --> 02:07:01,670
+p2
+
+775
+02:07:01,670 --> 02:07:08,170
+The second time I went through I didn't choose p2 by mistake, so just don't forget choose gpq compute P
+
+776
+02:07:08,170 --> 02:07:10,170
+- do you have a question
+
+777
+02:07:11,749 --> 02:07:14,858
+My Bernice it's an hour. Thank you
+
+778
+02:07:16,159 --> 02:07:18,159
+90 cents an hour
+
+779
+02:07:18,800 --> 02:07:22,869
+It also costs like I don't know three or four bucks a month for the storage as well
+
+780
+02:07:23,629 --> 02:07:27,309
+Thanks for checking that all right. See you next week. Sorry. We're a bit over
+
