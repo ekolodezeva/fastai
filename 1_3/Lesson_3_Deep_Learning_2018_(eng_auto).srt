@@ -98,7 +98,7 @@ I think this is a really helpful summary
 like what if those couple of hours look
 
 15
-00:02:28,810 --> 00:02:45,069
+00:02:29,610 --> 00:02:45,069
 like if we summarize it all into a page
 or two I also really like Pavel has dad
 kind of done a deep dive on the learning
@@ -700,16 +700,16 @@ this case to keep this as simple as
 possible I have no pre computed anything
 
 93
-00:18:14,780 --> 00:18:24,110
+00:18:14,780 --> 00:18:22,810
 going on so I do three cycles of length
 one and then I can then unfreeze so it's
 
 94
-00:18:24,110 --> 00:18:25,890
+00:18:23,110 --> 00:18:27,190
 now going to train the whole thing
 
 95
-00:18:25,990 --> 00:18:39,170
+00:18:27,590 --> 00:18:39,170
 something we haven't seen before and
 we'll learn about in the second half is
 called B and freeze for now all you need
@@ -803,7 +803,7 @@ replicate at least parts of lesson one
 in care us just to give you a sense of
 
 108
-00:20:51,124 --> 00:20:59,110
+00:20:51,124 --> 00:20:59,510
 how that works I'm not going to talk
 more about batch two norm freeze now
 
@@ -840,7 +840,7 @@ second half of the course when we come
 back to our CNN in death section in the
 
 114
-00:21:46,720 --> 00:22:01,480
+00:21:50,820 --> 00:22:01,480
 second last lesson so with care us again
 we import a bunch of stuff and remember
 
@@ -1035,13 +1035,13 @@ model so basically once your model is
 ready to use you have to compile it
 
 142
-00:26:28,160 --> 00:26:33,860
+00:26:28,160 --> 00:26:35,360
 passing in what kind of optimizer to use
 what kind of loss to look for about
 metric so again with fast AI you don't
 
 143
-00:26:37,039 --> 00:26:47,324
+00:26:36,439 --> 00:26:47,324
 have to pass this in because we know
 what loss is the write loss to use you
 can always override it but for a
@@ -1056,7 +1056,7 @@ generators that you saw earlier the
 Train generator in the validation
 
 145
-00:26:55,986 --> 00:27:06,081
+00:26:55,886 --> 00:27:06,681
 generator for reasons I don't quite
 understand chaos expects you to also
 tell it how many batches there are per
@@ -1064,12 +1064,12 @@ epoch so the number of batches is a
 quarter the size of the generator
 
 146
-00:27:06,181 --> 00:27:11,780
+00:27:07,081 --> 00:27:13,680
 divided by the batch size you can tell
 it how many epochs just like in fast AI
 
 147
-00:27:16,100 --> 00:27:35,639
+00:27:15,100 --> 00:27:35,639
 you can say how many processes or how
 many workers to use for pre-processing
 [Music]
