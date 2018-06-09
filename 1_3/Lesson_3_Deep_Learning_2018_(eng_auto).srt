@@ -3929,1536 +3929,1347 @@ this X when we say it's just equal to it
 divided by one plus
 
 550
-01:46:00,194 --> 01:46:05,119
+01:46:00,194 --> 01:46:15,439
 it and so the nice thing about that is
-
-551
-01:46:05,119 --> 01:46:15,439
 that now like multiple things can be
 high at once right and so generally then
 
-552
-01:46:15,439 --> 01:46:21,229
+551
+01:46:15,439 --> 01:46:26,300
 if something is less than zero its
 sigmoid is going to be less than 0.5 if
-
-553
-01:46:21,229 --> 01:46:26,300
 it's greater than zero is signal it's
 going to be greater than 0.5 and so the
 
-554
-01:46:26,300 --> 01:46:34,570
+552
+01:46:26,300 --> 01:46:49,604
 important thing to know about a sigmoid
 function is that its shape is
-
-555
-01:46:36,050 --> 01:46:44,560
 something which asymptotes at the top to
 one and asymptotes drew
-
-556
-01:46:45,869 --> 01:46:53,440
 asymptotes at the bottom to zero and so
-therefore it's a good thing to model a
 
-557
-01:46:53,440 --> 01:47:01,960
+553
+01:46:49,704 --> 01:47:07,144
+therefore it's a good thing to model a
 probability with anybody who has done
 any logistic regression will be familiar
-
-558
-01:47:01,960 --> 01:47:05,440
 with this is what we do in logistic
 regression so it kind of appears
-
-559
-01:47:05,440 --> 01:47:08,949
 everywhere in machine learning and
-you'll see that kind of a sigmoid and a
 
-560
-01:47:08,949 --> 01:47:15,880
+554
+01:47:07,244 --> 01:47:19,869
+you'll see that kind of a sigmoid and a
 softmax they're very close to each other
 conceptually but this is what we want is
-
-561
-01:47:15,880 --> 01:47:19,869
 our activation function for multi-label
 and this is what we want the single
 
-562
+555
 01:47:19,869 --> 01:47:22,659
 label and again first AI does it all for
 you
 
-563
-01:47:22,659 --> 01:47:34,059
+556
+01:47:22,659 --> 01:47:28,309
 there was a question over here yes I
-have a question about the initial
 
-564
-01:47:34,059 --> 01:47:39,659
+557
+01:47:28,409 --> 01:47:46,904
+have a question about the initial
 training that you do if I understand
 correctly you have we have frozen the
 the premium model and you only need
-
-565
-01:47:42,989 --> 01:47:50,920
 initially try to train the latest
-playwright right but from the other hand
 
-566
-01:47:50,920 --> 01:47:55,960
+558
+01:47:47,004 --> 01:48:02,904
+playwright right but from the other hand
 we said that only the initial layer so
 let's last probably the first layer is
-
-567
-01:47:55,960 --> 01:48:01,599
 like important to us and the other two
 are more like features that are you must
-
-568
-01:48:01,599 --> 01:48:07,119
 not related and we then apply in this
+
+559
+01:48:03,004 --> 01:48:16,210
 case what that they the lie is a very
 important but the pre-trained weights in
-
-569
-01:48:10,840 --> 01:48:16,210
 them aren't so it's the later layers
 that we really want to train the most so
 
-570
+560
 01:48:16,210 --> 01:48:23,769
 earlier layers likely to be like already
 closer to what we want okay so you
 
-571
-01:48:23,769 --> 01:48:27,519
+561
+01:48:23,769 --> 01:48:46,589
 started with the latest one and then you
 go right so if you go back to our quick
-
-572
-01:48:27,519 --> 01:48:33,820
 dogs and cats right when we create a
 model from pre train from a pre train
 model it returns something where all of
-
-573
-01:48:36,190 --> 01:48:42,969
 the convolutional layers are frozen and
 some randomly set fully connected layers
-
-574
-01:48:42,969 --> 01:48:50,309
 we add to the end our unfrozen and so
-when we go fit at first it just trains
 
-575
-01:48:50,309 --> 01:48:56,920
+562
+01:48:46,689 --> 01:48:58,544
+when we go fit at first it just trains
 the randomly set a randomly initialized
 fully connected letters right
-
-576
-01:48:56,920 --> 01:49:02,530
 and if something is like really close to
-imagenet that's often all we need
 
-577
-01:49:02,530 --> 01:49:08,380
+563
+01:48:58,644 --> 01:49:12,555
+imagenet that's often all we need
 but because the early early layers are
 already good at finding edges gradients
-
-578
-01:49:08,380 --> 01:49:16,830
 repeating patterns for ears and dogs
-heads you know so then when we unfreeze
 
-579
-01:49:16,830 --> 01:49:22,960
+564
+01:49:12,655 --> 01:49:25,565
+heads you know so then when we unfreeze
 we set the learning rates for the early
 layers to be really low because we don't
-
-580
-01:49:22,960 --> 01:49:28,270
 want to change the mesh for us the later
-ones we set them to be higher where else
 
-581
-01:49:28,270 --> 01:49:34,690
+565
+01:49:25,665 --> 01:49:31,430
+ones we set them to be higher where else
 for satellite data right this is no
 longer true you know the early layers
-are still like better than the later
 
-582
-01:49:37,420 --> 01:49:42,730
+566
+01:49:31,530 --> 01:49:40,025
+are still like better than the later
 layers but we still probably need to
 change them quite a bit so that's right
-this learning rate is nine times smaller
 
-583
-01:49:45,460 --> 01:49:52,150
+567
+01:49:40,125 --> 01:49:52,150
+this learning rate is nine times smaller
 than the final learning rate rather than
 a thousand times smaller the final loan
 
-584
-01:49:52,150 --> 01:50:00,219
+568
+01:49:52,150 --> 01:49:56,134
 rate okay you play with with the weights
-of the layers yeah normally most of the
 
-585
-01:50:00,219 --> 01:50:03,989
+569
+01:49:56,234 --> 01:50:03,989
+of the layers yeah normally most of the
 stuff you see online if they talk about
 this at all they'll talk about
 unfreezing different subsets of layers
 
-586
-01:50:07,300 --> 01:50:13,960
+570
+01:50:07,300 --> 01:50:18,250
 and indeed we do unfreeze our randomly
 generated runs but what I found is
-
-587
-01:50:13,960 --> 01:50:18,250
 although the first layer library you can
 type learn dot freeze too and just
 
-588
-01:50:18,250 --> 01:50:22,449
+571
+01:50:18,250 --> 01:50:28,179
 freeze a subset of layers this approach
 of using differential learning rates
-
-589
-01:50:22,449 --> 01:50:28,179
 seems to be like more flexible to the
 point that I never find myself I'm
 
-590
-01:50:28,179 --> 01:50:34,960
+572
+01:50:28,179 --> 01:50:40,270
 freezing subsets of layers that I would
 expect you to start with that with a
-
-591
-01:50:34,960 --> 01:50:40,270
 different cell the different learning
 rates rather than trying to learn the
 
-592
-01:50:40,270 --> 01:50:48,190
+573
+01:50:40,270 --> 01:50:53,890
 last layer so the reason okay so you
 could skip this training just the last
 layers and just go straight to
-
-593
-01:50:49,719 --> 01:50:53,890
 differential learning rates but you
 probably don't want to and the reason
 
-594
-01:50:53,890 --> 01:50:57,610
+574
+01:50:53,890 --> 01:51:03,050
 you probably don't want to is that
 there's a difference the convolutional
 layers all contain pre-trained weights
-
-595
-01:51:00,910 --> 01:51:05,290
 so they're like they're not random for
-things that are close to imagenet
 
-596
-01:51:05,290 --> 01:51:09,190
+575
+01:51:03,150 --> 01:51:11,170
+things that are close to imagenet
 they're actually really good for things
 that are not close to imagenet they're
-
-597
-01:51:09,190 --> 01:51:13,250
 better than that
-all of our fully connected layers
 
-598
-01:51:13,250 --> 01:51:19,969
+576
+01:51:11,270 --> 01:51:24,050
+all of our fully connected layers
 however are totally random so therefore
 you would always want to make the fully
-
-599
-01:51:19,969 --> 01:51:24,050
 connected weights better than random by
 training them a bit first because
 
-600
-01:51:24,050 --> 01:51:28,840
+577
+01:51:24,050 --> 01:51:37,256
 otherwise if you go straight to unfreeze
 then you're actually going to be like
-
-601
-01:51:28,840 --> 01:51:34,369
 fiddling around of those early early can
 early layer weights when the later ones
 are still random that's probably not
-
-602
-01:51:35,809 --> 01:51:41,900
 what you want I think that's another
+
+578
+01:51:37,356 --> 01:51:54,349
 question here any possible so when we
 unfreeze what are the things we're
-
-603
-01:51:46,909 --> 01:51:54,349
 trying to change there will it change
 the Colonel's themselves that that's
 
-604
-01:51:54,349 --> 01:52:02,869
+579
+01:51:54,349 --> 01:52:26,985
 always what SGD does yeah so the only
 thing what training means is setting
 these numbers right and these numbers
-
-605
-01:52:09,619 --> 01:52:19,699
 and these numbers the weights so the
 weights are the weights of the fully
-
-606
-01:52:19,699 --> 01:52:24,320
 connected layers and the weights in
 those kernels and the convolutions so
-
-607
-01:52:24,320 --> 01:52:29,750
 that's what training means it's and
+
+580
+01:52:27,085 --> 01:52:32,190
 we'll learn about how to do it with SGD
-
-608
-01:52:29,750 --> 01:52:34,730
 but training literally is setting those
-numbers these numbers on the other hand
 
-609
-01:52:34,730 --> 01:52:41,329
+581
+01:52:32,290 --> 01:52:45,239
+numbers these numbers on the other hand
 are activations they're calculated
 they're calculated from the weights and
-
-610
-01:52:41,329 --> 01:52:49,250
 the previous layers activations or
-amounts of questions so you can lift it
 
-611
-01:52:49,250 --> 01:52:52,670
+582
+01:52:45,339 --> 01:53:05,966
+amounts of questions so you can lift it
 up higher and speak badly so in your
 example of a cheerleader set of that
-
-612
-01:52:52,670 --> 01:52:58,610
 English example so you start with very
 small size existed for yeah so does it
-
-613
-01:52:58,610 --> 01:53:03,559
 literally mean you know the model takes
 a small area from the entire image that
-
-614
-01:53:03,559 --> 01:53:13,489
 is 64 bytes so how do we get that 64 by
+
+583
+01:53:06,066 --> 01:53:13,489
 64 depends on the transforms by default
 our transform takes the smallest edge
 
-615
-01:53:18,019 --> 01:53:24,070
+584
+01:53:18,019 --> 01:53:30,004
 and recites the whole thing out
 samples it so the smallest edge is
 societics t4 and then it takes a Center
-
-616
-01:53:27,010 --> 01:53:33,099
 crop of that okay
+
+585
+01:53:30,104 --> 01:53:36,769
 although when we're using data
-
-617
-01:53:33,099 --> 01:53:40,539
 augmentation it actually takes a
-randomly chosen prop ie the case where
 
-618
-01:53:40,539 --> 01:53:46,780
+586
+01:53:36,869 --> 01:53:50,170
+randomly chosen prop ie the case where
 the image ties to multiple objects don't
 in this case like would it be possible
-
-619
-01:53:46,780 --> 01:53:50,170
 that you would just lose the other
 things that they try to predict yeah
 
-620
-01:53:50,170 --> 01:53:54,070
+587
+01:53:50,170 --> 01:53:59,289
 which is why data augmentation is
 important so by by and particularly
-
-621
-01:53:54,070 --> 01:53:59,289
 their test time augmentation is going to
 be particularly important because you
 
-622
-01:53:59,289 --> 01:54:03,880
+588
+01:53:59,289 --> 01:54:13,129
 would you wouldn't want to you know that
 there may be a artisanal mine out in the
-
-623
-01:54:03,880 --> 01:54:08,860
 corner which if you take a center crop
 you you don't see so data augmentation
-
-624
-01:54:08,860 --> 01:54:17,499
 becomes very important yeah so when we
-talk on their tributaries are he
 
-625
-01:54:17,499 --> 01:54:23,230
+589
+01:54:13,229 --> 01:54:22,095
+talk on their tributaries are he
 receiver up to that's not really what a
 model choice Delton that's a great point
 
-626
-01:54:23,230 --> 01:54:27,039
+590
+01:54:22,195 --> 01:54:32,740
 that's not the loss function yeah right
 the loss function is something we'll be
-
-627
-01:54:27,039 --> 01:54:33,429
 learning about next week and it uses
 cross entropy or otherwise known as like
 
-628
-01:54:33,429 --> 01:54:39,249
+591
+01:54:32,840 --> 01:54:43,114
 negative log likelihood the metric is
 just this thing that's printed so we can
-
-629
-01:54:39,249 --> 01:54:47,079
 see what's going on just next to that so
-in the context of my deep pass modeling
 
-630
-01:54:47,079 --> 01:54:51,280
+592
+01:54:43,214 --> 01:55:04,030
+in the context of my deep pass modeling
 cannot change data does it trading it
 also have to be multiplied so can I
-
-631
-01:54:51,280 --> 01:54:54,909
 train on just like images of pure cats
 and dogs and expect it at prediction
-
-632
-01:54:54,909 --> 01:55:04,030
 time to predict if I give it a picture
 of both having cat eye on it over I've
 
-633
-01:55:04,030 --> 01:55:08,409
+593
+01:55:04,030 --> 01:55:14,949
 never tried that and I've never seen an
 example of something that needed it
-
-634
-01:55:08,409 --> 01:55:14,949
 I guess conceptually there's no reason
 it wouldn't work but it's kind of out
 
-635
-01:55:14,949 --> 01:55:19,389
+594
+01:55:14,949 --> 01:55:20,131
 there and you still use a sigmoid you
 would have to make sure you're using a
-
-636
-01:55:19,389 --> 01:55:22,659
 sigmoid loss function so in this case
+
+595
+01:55:20,231 --> 01:55:31,230
 faster eyes default would not work
 because by default first day I would say
-
-637
-01:55:24,579 --> 01:55:28,150
 your training data knitter has both a
 cat and the dog so you would have to
-
-638
-01:55:28,150 --> 01:55:31,230
 override the loss function
 
-639
-01:55:35,349 --> 01:55:40,729
+596
+01:55:35,349 --> 01:55:43,589
 when you use the differential learning
 rates those three learning rates do they
-
-640
-01:55:40,729 --> 01:55:46,550
 just kind of spread evenly across the
-layers yeah we'll talk more about this
 
-641
-01:55:46,550 --> 01:55:50,689
+597
+01:55:43,689 --> 01:55:51,836
+layers yeah we'll talk more about this
 later in the course but I mean the
 faster I library there's a concept of
-
-642
-01:55:50,689 --> 01:55:55,579
 layer groups so in something like a
+
+598
+01:55:51,936 --> 01:56:03,679
 resonant 50 you know there's hundreds of
 layers and I think it you don't want to
-
-643
-01:55:57,889 --> 01:56:03,679
 write down hundreds of learning rates so
 I've basically decided for you how to
 
-644
-01:56:03,679 --> 01:56:10,219
+599
+01:56:03,679 --> 01:56:12,524
 split them and the the last one always
 refers just to the fully connected
-
-645
-01:56:10,219 --> 01:56:14,929
 layers that we've randomly initialized
+
+600
+01:56:12,624 --> 01:56:17,249
 and edit to the end and then these ones
-
-646
-01:56:14,929 --> 01:56:19,669
 are split generally about halfway
-through basically I've tried to make it
 
-647
-01:56:19,669 --> 01:56:24,019
+601
+01:56:17,349 --> 01:56:26,630
+through basically I've tried to make it
 so that these you know these ones are
 kind of the ones which you hardly want
-
-648
-01:56:24,019 --> 01:56:26,630
 to change at all and these are the ones
 you might want to change a little bit
 
-649
-01:56:26,630 --> 01:56:30,469
+602
+01:56:26,630 --> 01:56:36,314
 and I don't think we're covered in the
 course but if you're interested we can
-
-650
-01:56:30,469 --> 01:56:33,860
 talk about in the forum there are ways
 you can override this behavior to define
-
-651
-01:56:33,860 --> 01:56:38,869
 your own layer groups if you want to and
-is there any way to visualize the model
 
-652
-01:56:38,869 --> 01:56:43,999
+603
+01:56:36,414 --> 01:56:43,999
+is there any way to visualize the model
 easily or like don't dump the layers of
 the model yeah absolutely
 
-653
-01:56:43,999 --> 01:56:54,229
+604
+01:56:43,999 --> 01:57:02,479
 you can let's make sure we've got one
 here okay so if you just type learn it
-
-654
-01:56:54,229 --> 01:57:02,479
 doesn't tell you much at all but what
 you can do is go learn summary and that
 
-655
+605
 01:57:02,479 --> 01:57:09,590
 spits out basically everything there's
 all the letters and so you can see in
 
-656
+606
 01:57:09,590 --> 01:57:14,419
 this case these are the names I
 mentioned how they look up names right
 
-657
-01:57:14,419 --> 01:57:21,919
+607
+01:57:14,419 --> 01:57:30,135
 so the first layer is called con 2 d 1
 and it's going to take as input this is
-
-658
-01:57:21,919 --> 01:57:27,110
 useful to actually look at it's taking
 64 by 64 images which is what we told it
-
-659
-01:57:27,110 --> 01:57:33,260
 we're going to transform things to this
-is three channels high torch like most
 
-660
-01:57:33,260 --> 01:57:38,449
+608
+01:57:30,235 --> 01:57:38,449
+is three channels high torch like most
 things have channels at the end would
 say 64 by 64 by 3 ply torch music to the
 front so it's 3 by 64 by 64 that's
 
-661
-01:57:41,869 --> 01:57:46,820
+609
+01:57:41,869 --> 01:57:53,530
 because it turns out that some of the
 GPU computations run faster when it
-
-662
-01:57:46,820 --> 01:57:50,900
 in that order okay but that happens all
 behind-the-scenes automatic plays a part
-
-663
-01:57:50,900 --> 01:57:56,260
 of that transformation stuff that's kind
-of all done automatically is to do that
 
-664
-01:57:56,260 --> 01:58:04,280
+610
+01:57:53,630 --> 01:58:10,305
+of all done automatically is to do that
 minus one means however however big the
 batch size is in care us they use the
 number they use a special number none in
-
-665
-01:58:07,580 --> 01:58:13,130
 pile types that used minus one so this
-is a four dimensional mini batch the
 
-666
-01:58:13,130 --> 01:58:18,290
+611
+01:58:10,405 --> 01:58:23,660
+is a four dimensional mini batch the
 number of elements in the amount of
 images in the mini batch is dynamic you
-
-667
-01:58:18,290 --> 01:58:23,660
 can change that the number of channels
 is three number which is a 64 by 64 okay
 
-668
-01:58:23,660 --> 01:58:29,200
+612
+01:58:23,660 --> 01:58:35,240
 and so then you can basically see that
 this particular convolutional kernel
-
-669
-01:58:29,200 --> 01:58:35,240
 apparently has 64 kernels in it and it's
 also having we haven't talked about this
 
-670
-01:58:35,240 --> 01:58:39,200
+613
+01:58:35,240 --> 01:58:43,485
 but convolutions can have something
 called a stride that is like Matt pullin
-
-671
-01:58:39,200 --> 01:58:47,870
 it changes the size so it's returning a
+
+614
+01:58:43,585 --> 01:58:47,870
 32 by 32 564 kernel tenza and so on and
 
-672
-01:58:47,870 --> 01:58:54,080
+615
+01:58:47,870 --> 01:58:57,375
 so forth so that's summary and we'll
 learn all about that's doing in detail
-
-673
-01:58:54,080 --> 01:59:00,770
 on in the second half of the course one
-where I clicked in my own data set and I
 
-674
-01:59:00,770 --> 01:59:06,260
+616
+01:58:57,475 --> 01:59:18,260
+where I clicked in my own data set and I
 try to use the in as a really small data
 set these currencies from Google Images
-
-675
-01:59:06,260 --> 01:59:12,650
 and I tried to do a learning rate find
 and then the plot and it just it gave me
 some numbers which I didn't understand
-
-676
-01:59:14,030 --> 01:59:18,260
 and the learning rate font yeah and then
 the plot was empty so yeah I mean let's
 
-677
-01:59:18,260 --> 01:59:22,910
+617
+01:59:18,260 --> 01:59:24,630
 let's talk about that on the forum but
 basically the learning rate finder is
-
-678
-01:59:22,910 --> 01:59:26,450
 going to go through a mini batch at a
-time if you've got a tiny data set
 
-679
-01:59:26,450 --> 01:59:30,560
+618
+01:59:24,730 --> 01:59:35,530
+time if you've got a tiny data set
 there's just not enough mini batches so
 the trick is to make your mini bit make
-
-680
-01:59:30,560 --> 01:59:35,530
 your batch size really small like try
 making it like four
 
-681
-01:59:38,250 --> 01:59:44,440
+619
+01:59:38,250 --> 01:59:48,160
 okay they were great questions it's not
 nothing online to add you know they were
-
-682
-01:59:44,440 --> 01:59:48,160
 great questions we've got a little bit
 past where I hope to but let's let's
 
-683
+620
 01:59:48,160 --> 01:59:52,690
 quickly talk about structured data so we
 can start thinking about it for next
 
-684
+621
 01:59:52,690 --> 02:00:02,500
 week so this is really weird right to me
 there's basically two types of data set
 
-685
+622
 02:00:02,500 --> 02:00:10,300
 we use in machine learning there's a
 type of data like audio images natural
 
-686
+623
 02:00:10,300 --> 02:00:16,600
 language text where all of the all of
 the things inside an object like all of
 
-687
+624
 02:00:16,600 --> 02:00:21,850
 the pixels inside an image are all the
 same kind of thing they're all pixels or
 
-688
+625
 02:00:21,850 --> 02:00:30,130
 they're all apertures of a waveform or
 they're all words I call this kind of
 
-689
+626
 02:00:30,130 --> 02:00:37,199
 data unstructured and then there's data
 sets like a profit and loss statement or
 the information about a Facebook user
 
-690
+627
 02:00:39,960 --> 02:00:45,520
 where each column is like structurally
 quite different you know one thing is
 
-691
+628
 02:00:45,520 --> 02:00:49,449
 representing like how many page views
 last month another one is their sex
 another one is what zip code they're in
 
-692
+629
 02:00:51,550 --> 02:00:57,940
 and I call this structure there that
 particular terminology is not unusual
 like lots of people use that terminology
 
-693
+630
 02:01:00,480 --> 02:01:05,489
 but lots of people don't
 there's no particularly agreed-upon
 
-694
+631
 02:01:05,489 --> 02:01:11,770
 terminology so when I say structured
 data I'm referring to kind of columnar
 
-695
+632
 02:01:11,770 --> 02:01:16,210
 data as you might find in a database or
 a spreadsheet where different columns
 
-696
+633
 02:01:16,210 --> 02:01:21,840
 represent different kinds of things and
 each row represents an observation and
 
-697
+634
 02:01:21,840 --> 02:01:31,199
 so structured data is probably what most
 of you are analyzing most of the time
 funnily enough you know academics in the
 
-698
+635
 02:01:34,810 --> 02:01:39,730
 deep learning world don't really give a
 about structured data because it's
 pretty hard to get published in fancy
 
-699
+636
 02:01:41,590 --> 02:01:46,179
 conference proceedings if you're like if
 you've got a better logistics model you
 
-700
+637
 02:01:46,179 --> 02:01:49,719
 know it's the thing that makes the world
 goes round it's a thing that makes
 
-701
+638
 02:01:49,719 --> 02:01:55,880
 everybody you know
 and efficiency and make stuff work but
 
-702
+639
 02:01:55,880 --> 02:02:01,309
 it's largely ignored sadly so we're not
 going to ignore it because we're a
 
-703
+640
 02:02:01,309 --> 02:02:05,749
 practical deep learning and cackled
 doesn't ignore it either because people
 
-704
+641
 02:02:05,749 --> 02:02:10,070
 put prize money up on Cagle to solve
 real-world problems so there are some
 
-705
+642
 02:02:10,070 --> 02:02:14,780
 great capable competitions we can look
 at there's one running right now which
 
-706
+643
 02:02:14,780 --> 02:02:21,130
 is the grocery sales forecasting
 competition for Ecuador's largest chain
 
-707
+644
 02:02:21,399 --> 02:02:26,360
 it's always a little I've got to be a
 little careful about how much I show you
 about currently running competitions
 
-708
+645
 02:02:28,099 --> 02:02:32,659
 because I don't want to you know help
 you cheat but it so happens there was a
 competition a year or two ago for one of
 
-709
+646
 02:02:35,989 --> 02:02:40,099
 Germany's magistrate chains which is
 almost identical so I'm going to show
 
-710
+647
 02:02:40,099 --> 02:02:50,539
 you how to do that so that was called
 the Rossman stores data and so I would
 
-711
+648
 02:02:50,539 --> 02:02:53,780
 suggest you know first of all try
 practicing what we're learning on
 
-712
+649
 02:02:53,780 --> 02:02:58,579
 Russman right but then see if you can
 get it working on on grocery because
 
-713
+650
 02:02:58,579 --> 02:03:03,320
 currently on the leaderboard no one
 seems to basically know what they're
 
-714
+651
 02:03:03,320 --> 02:03:10,130
 doing in the groceries competition if
 you look at the leaderboard the let's
 
-715
+652
 02:03:10,130 --> 02:03:15,769
 see here yeah these ones around 5 to 9 v
 3o are people that are literally finding
 
-716
+653
 02:03:15,769 --> 02:03:19,849
 like group averages and submitting those
 I know because they're kernels that
 
-717
+654
 02:03:19,849 --> 02:03:24,369
 they're using so you know the basically
 the people around 20th place are not
 actually doing any machine learning so
 
-718
+655
 02:03:29,059 --> 02:03:34,639
 yeah let's see if we can improve things
 so you'll see there's a less than 3
 
-719
+656
 02:03:34,639 --> 02:03:40,189
 rossmann notebook sure you get pull ok
 in fact you know just reminder you know
 
-720
+657
 02:03:40,189 --> 02:03:45,289
 before you start working get pull in
 you're faster a repo and from time to
 time Condor and update for you guys
 
-721
+658
 02:03:48,889 --> 02:03:52,849
 during the in-person course the Condor
 and update you should do it more often
 
-722
+659
 02:03:52,849 --> 02:03:57,769
 because we're kind of changing things a
 little bit um folks in the MOOC you know
 
-723
+660
 02:03:57,769 --> 02:04:04,010
 more like once a month should be fine
 so anyway I just just changed this a
 
-724
+661
 02:04:04,010 --> 02:04:09,560
 little bit so make sure you get Paul to
 get lesson 3 Rossman and there's a
 
-725
+662
 02:04:09,560 --> 02:04:14,600
 couple of new libraries here one is fast
 AI dot structure faster guided
 
-726
+663
 02:04:14,600 --> 02:04:18,950
 structured contain stuff which is
 actually not at all high torch specific
 and we actually use that in the machine
 
-727
+664
 02:04:20,600 --> 02:04:25,000
 learning course as well for doing random
 forests with no tie torch at all I
 
-728
+665
 02:04:25,000 --> 02:04:30,230
 mentioned that because you can use that
 particular library without any of the
 
-729
+666
 02:04:30,230 --> 02:04:36,080
 other parts of fast AI so that can be
 handy and then we're also going to use
 
-730
+667
 02:04:36,080 --> 02:04:41,630
 faster column data which is basically
 some stuff that allows us to do fast a
 
-731
+668
 02:04:41,630 --> 02:04:49,100
 type a torch stuff with columnar
 structured data for structured data we
 
-732
+669
 02:04:49,100 --> 02:04:54,710
 need to use pandas a lot anybody who's
 used our data frames will be very
 
-733
+670
 02:04:54,710 --> 02:04:59,240
 familiar with pandas pandas is basically
 an attempt to kind of replicate data
 
-734
+671
 02:04:59,240 --> 02:05:08,240
 friends in Python you know and a bit
 more if you're not entirely familiar
 
-735
+672
 02:05:08,240 --> 02:05:13,690
 with pandas there's a great book
 
-736
+673
 02:05:14,730 --> 02:05:18,020
 [Music]
 which I think I might have mentioned
 
-737
+674
 02:05:18,020 --> 02:05:24,920
 before - for data analysis by Wes
 McKinney there's a new addition that
 
-738
+675
 02:05:24,920 --> 02:05:30,619
 just came out a couple of weeks ago
 obviously being by the pandas author its
 
-739
+676
 02:05:30,619 --> 02:05:37,340
 coverage of pandas is excellent but it
 also covers numpy scipy matplotlib
 
-740
+677
 02:05:37,340 --> 02:05:45,940
 scikit-learn - and Jupiter really well
 okay and so I'm kind of going to assume
 that you know your way around these
 
-741
+678
 02:05:48,949 --> 02:05:54,980
 libraries to some extent also there was
 the workshop we did before they started
 
-742
+679
 02:05:54,980 --> 02:05:59,030
 and there's a video of that online where
 we kind of have a brief mention of all
 
-743
+680
 02:05:59,030 --> 02:06:06,710
 of those tools structured data is
 generally shared as CSV files it was no
 
-744
+681
 02:06:06,710 --> 02:06:10,610
 different in this competition as you'll
 see there's a hyperlink to the rustman
 
-745
+682
 02:06:10,610 --> 02:06:15,500
 data set here right now if you look at
 the bottom of my screen you'll see this
 
-746
+683
 02:06:15,500 --> 02:06:19,579
 goes to file start faster day.i because
 this doesn't require any login or
 
-747
+684
 02:06:19,579 --> 02:06:24,409
 anything to grab this data set it's as
 simple as right clicking copy link
 
-748
+685
 02:06:24,409 --> 02:06:36,159
 address head over to wherever you want
 it and just type W get and the URL okay
 
-749
+686
 02:06:36,159 --> 02:06:44,150
 so that's because you know it's it's not
 behind a login or anything so you can
 
-750
+687
 02:06:44,150 --> 02:06:49,820
 grab the grab it from there and you can
 always read a CSV file with just pandas
 
-751
+688
 02:06:49,820 --> 02:06:55,639
 don't read CSV now in this particular
 case there's a lot of pre-processing
 
-752
+689
 02:06:55,639 --> 02:07:03,710
 that we do and what I've actually done
 here is I've I've actually stolen the
 
-753
+690
 02:07:03,710 --> 02:07:08,780
 entire pipeline from the third place
 winner roster okay so they made all
 
-754
+691
 02:07:08,780 --> 02:07:12,440
 their data they're really great you know
 they better get hub available with
 
-755
+692
 02:07:12,440 --> 02:07:16,880
 everything that we need and I've ported
 it all across and simplified it and
 
-756
+693
 02:07:16,880 --> 02:07:23,030
 tried to make it pretty easy to
 understand this course is about deep
 
-757
+694
 02:07:23,030 --> 02:07:28,460
 learning not about data processing so
 I'm not going to go through it but we
 
-758
+695
 02:07:28,460 --> 02:07:30,840
 will be going through it in the machine
 learning course
 
-759
+696
 02:07:30,840 --> 02:07:34,469
 in some detail because feature
 engineering is really important so if
 
-760
+697
 02:07:34,469 --> 02:07:41,520
 you're interested you know check out the
 machine learning course for that I will
 
-761
+698
 02:07:41,520 --> 02:07:48,780
 however show you kind of what it looks
 like so once we read the CSV Xin you can
 see basically what's there so the key
 
-762
+699
 02:07:50,909 --> 02:08:04,190
 one is for a particular store we have
 the
 
-763
+700
 02:08:05,400 --> 02:08:12,270
 we have the date and we have the sales
 for that particular store we know
 
-764
+701
 02:08:12,270 --> 02:08:19,860
 whether that thing is on promo or not we
 know the number of customers at that
 particular store had we know whether
 
-765
+702
 02:08:23,429 --> 02:08:26,510
 that date was a school holiday
 
-766
+703
 02:08:29,940 --> 02:08:38,320
 we also know what kind of store it is so
 this is pretty common right you'll often
 
-767
+704
 02:08:38,320 --> 02:08:43,360
 get datasets where there's some column
 with like just some kind of code we
 
-768
+705
 02:08:43,360 --> 02:08:47,410
 don't really know what the code means
 and most of the time I find it doesn't
 
-769
+706
 02:08:47,410 --> 02:08:51,760
 matter what it means like normally you
 get given a data dictionary when you
 
-770
+707
 02:08:51,760 --> 02:08:54,550
 start on a project and obviously if
 you're working on an internal project
 
-771
+708
 02:08:54,550 --> 02:08:59,740
 you can ask the people at your company
 what does this column mean I kind of
 
-772
+709
 02:08:59,740 --> 02:09:03,400
 stay away from learning too much about
 it I prefer to like to see what the data
 
-773
+710
 02:09:03,400 --> 02:09:10,210
 says first there's something about what
 kind of product are we selling in this
 
-774
+711
 02:09:10,210 --> 02:09:12,930
 particular row
 
-775
+712
 02:09:13,989 --> 02:09:19,239
 and then there's information about like
 how far away is the nearest competitor
 
-776
+713
 02:09:19,239 --> 02:09:31,120
 how long have they been open for how
 long is the promo being on for for each
 
-777
+714
 02:09:31,120 --> 02:09:35,380
 store we can find out what state it's in
 for each state we can find at the name
 
-778
+715
 02:09:35,380 --> 02:09:40,540
 of the state this is in Germany and
 interestingly they were allowed to
 
-779
+716
 02:09:40,540 --> 02:09:44,380
 download any data external data they
 wanted in this competition just very
 
-780
+717
 02:09:44,380 --> 02:09:48,520
 common as long as you share it with
 everybody else and so some folks tried
 
-781
+718
 02:09:48,520 --> 02:09:55,180
 downloading data from Google Trends I'm
 not sure exactly what it was that they
 
-782
+719
 02:09:55,180 --> 02:09:59,430
 would check in the trend off but we have
 this information from Google Trends
 
-783
+720
 02:09:59,430 --> 02:10:05,760
 somebody downloaded the weather for
 every day in Germany every state
 
-784
+721
 02:10:09,250 --> 02:10:20,710
 and yeah that's about it right so you
 can get a data frame summary with pandas
 
-785
+722
 02:10:20,710 --> 02:10:24,430
 which kind of lets you see how many
 observations and means and standard
 
-786
+723
 02:10:24,430 --> 02:10:30,130
 deviations again I don't do a hell of a
 lot with that early on but it's nice to
 
-787
+724
 02:10:30,130 --> 02:10:35,530
 note there so what we do you know this
 is called a relational data set a
 
-788
+725
 02:10:35,530 --> 02:10:38,920
 relational data set is one where there's
 quite a few tables we have to join
 
-789
+726
 02:10:38,920 --> 02:10:43,780
 together it's very easy to do that in
 pandas there's a thing called merge so
 
-790
+727
 02:10:43,780 --> 02:10:46,360
 great little function to do that and so
 I just started joining everything
 
-791
+728
 02:10:46,360 --> 02:10:49,380
 together
 joining the weather or the Google Trends
 
-792
+729
 02:10:49,380 --> 02:10:59,530
 stores yeah that's about everything I
 guess you'll see there's one thing that
 
-793
+730
 02:10:59,530 --> 02:11:04,300
 I'm using from the FASTA a library which
 is called add date part we talked about
 
-794
+731
 02:11:04,300 --> 02:11:07,630
 this a lot in the machine learning
 course but basically this is going to
 
-795
+732
 02:11:07,630 --> 02:11:12,970
 take a date and pull out of a bunch of
 columns day of week is at the start of a
 
-796
+733
 02:11:12,970 --> 02:11:18,460
 quarter month of year so on and so forth
 and add them all in to the dataset okay
 
-797
+734
 02:11:18,460 --> 02:11:22,020
 so this is all standard pre-processing
 
-798
+735
 02:11:22,740 --> 02:11:26,800
 all right so we join everything together
 we fiddle around with some of the dates
 
-799
+736
 02:11:26,800 --> 02:11:29,950
 a little bit some of them are in month
 in year format we turn it into date
 
-800
+737
 02:11:29,950 --> 02:11:37,930
 format we spend a lot of time trying to
 take information about for example
 
-801
+738
 02:11:37,930 --> 02:11:42,940
 holidays and add a column for like how
 long until the next holiday how long has
 it been since the last holiday ditto for
 
-802
+739
 02:11:45,130 --> 02:11:52,180
 promos so on and so forth okay so we do
 all that and at the very end we
 
-803
+740
 02:11:52,180 --> 02:11:57,630
 basically save a big structured data
 file that contains all that stuff
 
-804
+741
 02:11:57,630 --> 02:12:01,300
 something that those of you that use
 pandas may not be aware of is that
 
-805
+742
 02:12:01,300 --> 02:12:05,800
 there's a very cool new format called
 feather which you can save a panda's
 
-806
+743
 02:12:05,800 --> 02:12:11,170
 data frame into this feather format it's
 kind of pretty much takes it as it sits
 
-807
+744
 02:12:11,170 --> 02:12:16,420
 in RAM and dumps it to the disk and so
 it's like really really really fast the
 
-808
+745
 02:12:16,420 --> 02:12:20,770
 reason that you need to know this is
 because the ecuadorian grocery
 
-809
+746
 02:12:20,770 --> 02:12:26,410
 competition is on now has
 350 million records so you will care
 about how long things take a talk I
 
-810
+747
 02:12:28,420 --> 02:12:32,410
 believe about six seconds for me to save
 three hundred and fifty million records
 
-811
+748
 02:12:32,410 --> 02:12:37,540
 to feather format so that's pretty cool
 so at the end of all that I'd save it as
 
-812
+749
 02:12:37,540 --> 02:12:40,540
 a feather format and for the rest of
 this discussion I'm just going to take
 
-813
+750
 02:12:40,540 --> 02:12:45,400
 it as given that we've got this nicely
 pre-processed feature engineered file
 
-814
+751
 02:12:45,400 --> 02:12:50,650
 and I can just go read better okay but
 for you to play along at home you will
 
-815
+752
 02:12:50,650 --> 02:12:57,580
 have to run those previous cells oh
 except the see these ones have commented
 
-816
+753
 02:12:57,580 --> 02:13:01,690
 out you don't have to run those because
 the file that you download from files
 
-817
+754
 02:13:01,690 --> 02:13:09,400
 doc bastard AI has already done that for
 you okay all right so we basically have
 
-818
+755
 02:13:09,400 --> 02:13:18,510
 all these columns so it basically is
 going to tell us you know how many of
 
-819
+756
 02:13:18,510 --> 02:13:25,780
 this thing was sold on this date at this
 store and so the goal of this
 competition is to find out how many
 
-820
+757
 02:13:28,990 --> 02:13:36,160
 things will be sold for each store for
 each type of thing in the future okay
 
-821
+758
 02:13:36,160 --> 02:13:40,900
 and so that's basically what we're going
 to be trying to do and so here's an
 
-822
+759
 02:13:40,900 --> 02:13:48,640
 example of what some of the data looks
 like and so next week we're going to see
 
-823
+760
 02:13:48,640 --> 02:13:52,300
 how to go through these steps but
 basically what we're going to learn is
 
-824
+761
 02:13:52,300 --> 02:13:58,480
 we're going to learn to split the
 columns into two types some columns were
 going to treat as categorical which is
 
-825
+762
 02:14:01,390 --> 02:14:08,050
 to say store ID one and store ID - I'm
 not numerically related to each other
 
-826
+763
 02:14:08,050 --> 02:14:13,150
 they're categories right we're going to
 treat day of week like that - Monday and
 Tuesday day zero and day one not
 
-827
+764
 02:14:15,490 --> 02:14:20,620
 numerically related to each other where
 else distance in kilometers to the
 
-828
+765
 02:14:20,620 --> 02:14:26,170
 nearest competitor that's a number that
 we're going to treat numerically right
 
-829
+766
 02:14:26,170 --> 02:14:29,770
 so in other words the categorical
 variables we basically are going to one
 
-830
+767
 02:14:29,770 --> 02:14:34,039
 how to encode them you can think of it
 as one hot encoding on where
 the continuous variables we're going to
 
-831
+768
 02:14:35,839 --> 02:14:43,609
 be feeding into fully connected layers
 just as is okay so what we'll be doing
 
-832
+769
 02:14:43,609 --> 02:14:49,849
 is we'll be basically creating a
 validation set and you'll see like a lot
 
-833
+770
 02:14:49,849 --> 02:14:53,419
 of these are start to look familiar this
 is the same function we used on planet
 
-834
+771
 02:14:53,419 --> 02:14:58,669
 and dog breeds to create a validation
 set there's some stuff that you haven't
 
-835
+772
 02:14:58,669 --> 02:15:02,899
 seen before
 where we're going to basically rather
 
-836
+773
 02:15:02,899 --> 02:15:09,109
 than saying image data dot from CSV
 we're going to say columnar data from
 
-837
+774
 02:15:09,109 --> 02:15:13,780
 data frame right so you can see like the
 basic API concepts will be the same but
 they're a little different right but
 
-838
+775
 02:15:17,689 --> 02:15:23,659
 just like before we're going to get a
 learner and we're going to go lr find to
 find our best learning rate and then
 
-839
+776
 02:15:26,359 --> 02:15:33,019
 we're going to go dot fit with a metric
 with a cycle length okay so the basic
 
-840
+777
 02:15:33,019 --> 02:15:39,079
 sequence who's going to end up looking
 hopefully very familiar okay so we're
 out of time
 
-841
+778
 02:15:40,339 --> 02:15:47,479
 so what I suggest you do this week is
 like try to enter as many capital image
 
-842
+779
 02:15:47,479 --> 02:15:53,030
 competitions as possible like like try
 to really get this feel for like cycling
 learning rates plotting things you know
 
-843
+780
 02:15:59,030 --> 02:16:05,869
 that that post I showed you at the start
 of class today that kind of took you
 
-844
+781
 02:16:05,869 --> 02:16:11,030
 through lesson one like really go
 through that on as many image datasets
 
-845
+782
 02:16:11,030 --> 02:16:17,059
 as you can you just feel really
 comfortable with it right because you
 
-846
+783
 02:16:17,059 --> 02:16:19,879
 want to get to the point where next week
 when we start talking about structured
 
-847
+784
 02:16:19,879 --> 02:16:24,619
 data that this idea of like how learners
 kind of work and data works and data
 
-848
+785
 02:16:24,619 --> 02:16:28,869
 loaders and data sets and looking at
 pictures should be really you know
 
-849
+786
 02:16:28,869 --> 02:16:34,119
 intuitive all right good luck see you
 next week
