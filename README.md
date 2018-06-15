@@ -1,8 +1,8 @@
 ## Русские субтитры к курсу fasta.ai Deep Learning Part 1: Practical Deep Learning for Coders ##
 
-  * Первая лекция: перевод закончен, опубликован на Youtube youtu.be/IPBSB1HLNLo
-  * Вторая лекция: перевод закончен, опубликован на Youtube youtu.be/JNxcznsrRb8
-  * Третья лекция: перевод закончен, на Youtube ~13.06.18
+  * Первая лекция: перевод закончен, опубликован [на Youtube](youtu.be/IPBSB1HLNLo)
+  * Вторая лекция: перевод закончен, опубликован [на Youtube](youtu.be/JNxcznsrRb8)
+  * Третья лекция: перевод закончен, опубликован [на Youtube](youtu.be/9C06ZPF8Uuc)
   * Четвертая лекция: перевод будет готов 17.06.18, на Youtube ~20.06.18
   * Пятая лекция: перевод будет готов 24.06.18, на Youtube ~27.06.18
 
