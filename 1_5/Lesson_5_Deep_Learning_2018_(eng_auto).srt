@@ -1464,28 +1464,22 @@ if you had a CSV that was bigger than
 impressive if that did happen I guess
 
 199
-00:39:48,510 --> 00:39:52,769
+00:39:48,510 --> 00:40:03,519
 you would have to instead
 save that as a be calls array and create
 a slightly different version that reads
-
-200
-00:39:54,210 --> 00:40:00,359
 from a because array just streaming in
 or maybe from a desk data frame which
-
-201
-00:40:00,359 --> 00:40:03,519
 also so it would be easy to do I don't
 
-202
+200
 00:40:03,619 --> 00:40:15,549
 think I've seen real-world situations
 where you have 512 gigabyte
 collaborative filtering matrices but
 yeah we can do it okay now this is PI
 
-203
+201
 00:40:15,649 --> 00:40:32,640
 torch specific this next bit is that
 when you define like the actual work to
@@ -1493,37 +1487,28 @@ be done which is here return user times
 movie dot some you have to put it in a
 special method called forward okay and
 
-204
-00:40:32,640 --> 00:40:37,109
+202
+00:40:32,640 --> 00:40:45,549
 this is this idea that like it's very
 likely you're on that right in a neural
-
-205
-00:40:37,109 --> 00:40:43,019
 net the thing where you calculate the
 next set of activations is called the
-
-206
-00:40:43,019 --> 00:40:48,180
 the forward pass and so that's doing a
-forward calculation the gradients is
 
-207
-00:40:48,180 --> 00:40:51,989
+203
+00:40:45,649 --> 00:40:54,369
+forward calculation the gradients is
 called the backward calculation we don't
 have to do that because PI torch
-
-208
-00:40:51,989 --> 00:40:54,369
 calculates that automatically so we just
 
-209
+204
 00:40:54,469 --> 00:41:01,529
 have to define forward so we create a
 new class we define forward and here we
 write in our definition of dot product
 
-210
+205
 00:41:01,529 --> 00:41:13,979
 ok so that's it so now that we've
 created this class definition we can
@@ -1531,7 +1516,7 @@ instantiate our model right and we can
 call our model and get back the numbers
 be expected okay so that's it that's how
 
-211
+206
 00:41:16,529 --> 00:41:29,811
 we create a custom PI torch layer and if
 you compare that to like any other
@@ -1539,12 +1524,12 @@ library around pretty much this is way
 easier basically I guess because we're
 leveraging what's already in person so
 
-212
+207
 00:41:29,911 --> 00:41:34,499
 let's go ahead and now create a more
 complex module and we're going to
 
-213
+208
 00:41:38,039 --> 00:41:49,670
 basically do the same thing we've got to
 have a forward again we're going to have
@@ -1552,39 +1537,39 @@ our users x movies dot sum but we're
 going to do one more thing before hand
 which is we're going to create two
 
-214
+209
 00:41:49,670 --> 00:42:00,254
 embedding matrices and then we're going
 to look up our users and our movies in
 those inventing matrices so let's go
 through and and do that so the first
 
-215
+210
 00:42:00,354 --> 00:42:07,054
 thing to realize is
 that the uses the user IDs and the movie
 IDs may not be contiguous you know like
 
-216
+211
 00:42:07,154 --> 00:42:16,864
 they're maybe they start at a million
 and go to a million in 1000 so right so
 
-217
+212
 00:42:16,964 --> 00:42:25,952
 if we just used those IDs directly to
 look up into an embedding matrix we
 would have to create an embedding matrix
 of size 1 million 1000 right which we
 
-218
+213
 00:42:26,052 --> 00:42:38,210
 don't want to do so the first thing I do
 is to get a list of the unique user IDs
 and then I create a mapping from every
 user ID to a contiguous integer this
 
-219
+214
 00:42:38,310 --> 00:43:03,640
 thing I've done here where I've created
 a dictionary which maps from every
@@ -1598,13 +1583,13 @@ won't go through it here it's easy
 enough to figure out if you can't figure
 it out just ask on the forum anyway so
 
-220
+215
 00:43:06,729 --> 00:43:18,439
 once we've got the mapping from user to
 a contiguous index we then can say let's
 now replace the user ID column with that
 
-221
+216
 00:43:18,539 --> 00:43:31,639
 contiguous index right so pandas dot
 apply applies an arbitrary function and
@@ -1612,32 +1597,32 @@ python lambda is how you create an
 anonymous function on the fly and this
 anonymous function simply returns the NS
 
-222
+217
 00:43:31,739 --> 00:43:36,039
 through the same thing for movies and so
 
-223
+218
 00:43:36,039 --> 00:43:41,319
 after that we now have the same ratings
 table we had before but our IDs have
 been mapped to contiguous integers
 
-224
+219
 00:43:43,690 --> 00:43:49,239
 therefore they're things that we can
 look up into an embedding matrix so
 
-225
+220
 00:43:49,239 --> 00:43:54,819
 let's get the count of our users in our
 movies and let's now go ahead and try
 
-226
+221
 00:43:54,819 --> 00:44:00,609
 and create our Python version of this
 okay
 
-227
+222
 00:44:00,609 --> 00:44:21,760
 so earlier on when we created our
 simplest possible PI torch module
@@ -1647,7 +1632,7 @@ saying how many users are there or how
 many movies are there or how many
 factors do we want or whatever right
 
-228
+223
 00:44:21,760 --> 00:44:37,850
 anytime we want to do something like
 this where we're passing in and saying
@@ -1655,7 +1640,7 @@ we want to construct our module with
 this number of users and this number of
 movies then we need a constructor for
 
-229
+224
 00:44:37,850 --> 00:44:50,550
 our class and you create a constructor
 in Python by defining a dunder init
@@ -1663,7 +1648,7 @@ underscore underscore init underscore
 underscore yet special name
 so this just creates a constructor and
 
-230
+225
 00:44:50,650 --> 00:45:01,930
 if you haven't done over before you
 wanted to do some study during the week
@@ -1671,7 +1656,7 @@ but it's pretty simple idea this is just
 the thing that when we create this
 object this is what gets wrong okay
 
-231
+226
 00:45:02,030 --> 00:45:16,920
 again special python thing when you
 create your own constructor you have to
@@ -1680,14 +1665,14 @@ you want to have all of the cool
 behavior of a PI porch module you get
 that by inheriting from an end module
 
-232
+227
 00:45:17,020 --> 00:45:27,685
 neural net module okay so basically by
 inheriting here and calling the
 superclass constructor we now have a
 fully functioning PI torch layer okay so
 
-233
+228
 00:45:27,785 --> 00:45:41,870
 now we have to give it some behavior and
 so we give us some behavior by storing
@@ -1695,25 +1680,25 @@ some things in it all right so here
 we're going to create something called
 self dot you users and that is going to
 
-234
+229
 00:45:41,870 --> 00:45:55,280
 be an embedding layer a number of rows
 is an user's number of columns is in
 factors so that is exactly this right
 the number of rows is M users number of
 
-235
+230
 00:45:55,280 --> 00:46:01,880
 columns is inventors and then we'll have
 to do the same thing for movies okay so
 
-236
+231
 00:46:01,880 --> 00:46:09,910
 that's going to go ahead and create
 these two randomly initialized arrays
 however when you randomly initialize
 
-237
+232
 00:46:12,920 --> 00:46:33,665
 over an array it's important to randomly
 initialize it to a reasonable set of
@@ -1726,7 +1711,7 @@ and billions of
 writing and that's going to be very hard
 to do gradient descent on so I just kind
 
-238
+233
 00:46:33,765 --> 00:46:51,020
 of manually figured here like okay about
 what size numbers are going to give me
@@ -1735,7 +1720,7 @@ don't we know we did ratings between
 about normal five so if we start out
 with stuff between about naught and 0.05
 
-239
+234
 00:46:51,020 --> 00:47:13,960
 then we're going to get ratings of about
 the right level you can easily enough
@@ -1745,20 +1730,20 @@ basically doing doing that calculation
 and the basic the key algorithm is
 something called initialization from
 
-240
+235
 00:47:14,060 --> 00:47:34,765
 climbing her and the basic idea is that
 you take the yeah you basically set the
 weights equal to a normal distribution
 with a standard deviation which is
 
-241
+236
 00:47:34,865 --> 00:47:48,950
 basically inversely proportional to the
 number of things in the previous layer
 and so in our previous layer so in this
 
-242
+237
 00:47:48,950 --> 00:48:04,940
 case we basically if you basically take
 that nor to 0.05 and multiply it by the
@@ -1767,7 +1752,7 @@ or 50 things coming out of it
 50 50 things coming out of it and then
 you're going to get something about the
 
-243
+238
 00:48:04,940 --> 00:48:28,430
 right size pi torch has already has like
 her initialization class they're like we
@@ -1778,7 +1763,7 @@ we're trying to do this all like from
 scratch here okay without any special
 stuff going on so there's quite a bit of
 
-244
+239
 00:48:28,430 --> 00:48:53,774
 pi torch notation here so self dot u
 we've already set to an instance of the
@@ -1788,7 +1773,7 @@ actual embed images
 so that contains this the actual
 embedding matrix is not a tensor it's a
 
-245
+240
 00:48:53,874 --> 00:49:12,284
 variable a variable is exactly the same
 as a tensor in other words it supports
@@ -1798,19 +1783,19 @@ differentiation that's all a variable is
 basically to pull the tensor out of a
 variable you get its data attribute okay
 
-246
+241
 00:49:12,384 --> 00:49:22,484
 so this is so this is now the tensor of
 the weight matrix of the self dot you're
 
-247
+242
 00:49:22,584 --> 00:49:33,419
 inventing and then something that's
 really handy to know is that all of the
 tensor functions in pi torch you can
 stick an underscore at the end and that
 
-248
+243
 00:49:33,519 --> 00:49:48,344
 means do it in place all right so this
 is say create a random uniform random
@@ -1818,7 +1803,7 @@ number of an appropriate size for this
 tensor and don't return it but actually
 fill in that matrix unless okay so
 
-249
+244
 00:49:48,444 --> 00:50:12,869
 that's a super handy thing to know about
 I mean it wouldn't be rocket science
@@ -1828,31 +1813,31 @@ okay here's the non in-place version
 that's what saves us some typing saves
 us some screen noise that's all okay so
 
-250
+245
 00:50:12,969 --> 00:50:21,449
 now we've got our randomly initialized
 embedding weight matrices and so now the
 
-251
+246
 00:50:21,549 --> 00:50:31,069
 forward I'm actually going to use the
 same columnar model data that we used
 for Russman and so it's actually going
 
-252
+247
 00:50:31,069 --> 00:50:38,579
 to be passed both categorical variables
 and continuous variables and in this
 case there are no continuous variables
 
-253
+248
 00:50:38,679 --> 00:50:48,329
 so I'm just going to grab the 0th column
 out of the categorical variables and
 call it users and the first column and
 call it movies okay so I'm just kind of
 
-254
+249
 00:50:48,429 --> 00:50:58,264
 too lazy to create my own I've lots to
 do about too lazy out that we do have a
@@ -1860,7 +1845,7 @@ special class with this but I'm trying
 to avoid creating a special class so
 just going to leverage this columnar
 
-255
+250
 00:50:58,364 --> 00:51:21,220
 model data plus okay so we can basically
 grab our user and movies mini-batches
@@ -1871,14 +1856,14 @@ look up that mini batch of users in our
 embedding matrix U and the movies in are
 embedding matrix okay so this is like
 
-256
+251
 00:51:21,320 --> 00:51:31,359
 exactly the same is just doing an array
 lookup to grab the user ID numbered
 value but we're doing that a whole mini
 batch at a time right and so it's
 
-257
+252
 00:51:31,459 --> 00:51:43,449
 because PI torch can do a whole mini
 batch at a time with pretty much
@@ -1887,60 +1872,60 @@ speed up we don't have to write any
 loops on the whole to do everything
 through our mini batch and in fact if
 
-258
+253
 00:51:43,549 --> 00:51:52,509
 you do ever loop through your mini batch
 manually you don't get GPU acceleration
 that's really important to know right so
 you never want to loop have a for loop
 
-259
+254
 00:51:52,609 --> 00:51:59,339
 going through your mini batch you always
 want to do things in this kind of like
 whole mini batch at a time but pretty
 
-260
+255
 00:51:59,339 --> 00:52:05,604
 much everything imply torch does things
 are holding events at a time so you
 shouldn't have to worry about it
 
-261
+256
 00:52:05,704 --> 00:52:13,239
 and then here's our product just like
 before right so having to find that I'm
 
-262
+257
 00:52:13,339 --> 00:52:27,684
 now going to go ahead and say alright my
 X values is everything except the rating
 and the timestamp in my writings table
 my Y is my rating and then I can just
 
-263
+258
 00:52:27,784 --> 00:52:39,546
 say okay let's grab a model data from a
 data frame using that X and that Y and
 here is our list of categorical
 variables okay and then so let's now
 
-264
+259
 00:52:39,646 --> 00:52:47,519
 instantiate that PI torch object alright
 so we've now created that from scratch
 
-265
+260
 00:52:49,549 --> 00:52:55,469
 and then the next thing we need to do is
 to create an optimizer so this is part
 
-266
+261
 00:52:55,469 --> 00:53:02,640
 of pi torch the only fast AI thing here
 is this line right because that's like I
 
-267
+262
 00:53:02,640 --> 00:53:15,630
 don't think showing you how to build
 data sets and data load is interesting
@@ -1950,7 +1935,7 @@ it's actually so straightforward like a
 lot of you are already doing it on the
 forums so I'm not going to show you that
 
-268
+263
 00:53:17,220 --> 00:53:33,610
 in this part but if you're interested
 feel free to talk on the forums about it
@@ -1961,31 +1946,31 @@ flexible right you know if you've got
 stuff enough data frame you can just use
 this you don't have to rewrite it so
 
-269
+264
 00:53:33,710 --> 00:53:39,130
 that's the only fast AI thing we're
 using so this is a PI torch thing and so
 
-270
+265
 00:53:39,230 --> 00:53:51,579
 optiom is the thing and pi torch that
 gives us an optimizer will be learning
 about that very shortly so it's actually
 the thing that's going to update our
 
-271
+266
 00:53:51,679 --> 00:53:57,939
 weights pi torch calls them the
 parameters of the model so earlier on we
 
-272
+267
 00:53:58,039 --> 00:54:07,859
 set model equals embedding dot blah blah
 right and because embedding dot derives
 from NN module we get all of the pi
 torch module behavior and one of the
 
-273
+268
 00:54:10,230 --> 00:54:29,319
 things we got for free is the ability to
 say got parameters so that's pretty
@@ -1995,31 +1980,31 @@ give us a list of all of the weights in
 our model that have to be updated and so
 that's what gets passed to the optimizer
 
-274
+269
 00:54:29,419 --> 00:54:38,721
 we also passed the optimized at the
 learning rate the weight decay which
 we'll talk about later and momentum that
 we'll talk about later okay one other
 
-275
+270
 00:54:38,821 --> 00:54:43,950
 thing that I'm not going to do right now
 but we will do later is to write a
 
-276
+271
 00:54:45,809 --> 00:54:58,230
 training loop so the training loop is a
 thing that lives for each mini batch and
 updates the weight to subtract the
 gradient times the moment there's a
 
-277
+272
 00:54:58,230 --> 00:55:02,935
 function in fast AI which is the
 training loop and it's it's pretty
 
-278
+273
 00:55:03,035 --> 00:55:25,099
 simple here it is right for a POC in
 epochs this is just the thing that shows
@@ -2027,14 +2012,14 @@ a progress bar so ignore this for X
 comma Y in my training data loader
 calculate the loss
 
-279
+274
 00:55:25,490 --> 00:55:39,960
 print out the lots you know in a
 progress bar call any callbacks you have
 and at the end call the call the metrics
 on the validation alright so there's
 
-280
+275
 00:55:39,960 --> 00:55:55,120
 there's just eh
 Apoc go through each mini batch and do
@@ -2042,20 +2027,20 @@ one step of optimizer step is basically
 going to take advantage of this
 optimizer but we'll be writing that from
 
-281
+276
 00:55:55,220 --> 00:56:06,745
 scratch shortly so this is notice we're
 not using a learner okay we're just
 using a hi book module so this this fit
 thing although it's passed to a part of
 
-282
+277
 00:56:06,845 --> 00:56:14,700
 fast AI it's like lower down the layers
 of abstraction now this is the thing
 that takes a regular high torch model so
 
-283
+278
 00:56:14,700 --> 00:56:33,355
 if you ever want to like skip as much
 faster eye stuff as possible like you've
@@ -2066,13 +2051,13 @@ write your own training loop then this
 is this is what you want to do you want
 to call fast a high speed version and so
 
-284
+279
 00:56:33,455 --> 00:56:41,250
 what you'll find is like the library is
 designed so that you can kind of dig in
 at any layer abstraction you like right
 
-285
+280
 00:56:41,250 --> 00:56:51,640
 and so at this layer of abstraction
 you're not going to get things like
@@ -2080,7 +2065,7 @@ stochastic gradient descent with
 restarts you're not going to get like
 differential learning rates like all
 
-286
+281
 00:56:51,740 --> 00:57:02,100
 that stuff that's in the learner like
 you could do it but you'd have to write
@@ -2088,7 +2073,7 @@ it all about by hand yourself alright
 and that's the downside of kind of going
 down to this level of abstraction the
 
-287
+282
 00:57:02,100 --> 00:57:13,375
 upside is that as you saw the code for
 this is very simple it's just a simple
@@ -2097,23 +2082,23 @@ torch model so this is like this is a
 good thing for us to use here we can we
 just call it and it looks exactly like
 
-288
+283
 00:57:13,475 --> 00:57:24,230
 what we used to see all right we got our
 validation and training loss for the 3 e
 
-289
+284
 00:57:24,330 --> 00:57:33,190
 bus now you'll notice that we wanted
 something around 0.76 so we're not there
 
-290
+285
 00:57:33,290 --> 00:57:41,369
 so in other words the the the default
 fast AI collaborative dory
 rhythm is doing something smarter than
 
-291
+286
 00:57:41,369 --> 00:57:57,960
 this so we're going to try and do that
 one thing that we can do since we're
@@ -2124,3951 +2109,3339 @@ learning rate annealing so you can hear
 it see here there's a first day I
 function called set learning rates you
 
-292
+287
 00:57:57,960 --> 00:58:05,275
 can pass in a standard height watch
 optimizer and pass in your new learning
 rate and then call fit again and so this
 
-293
+288
 00:58:05,375 --> 00:58:17,185
 is how we can let manually do a learning
 rate schedule and so you can see we've
 got a little bit better 1.13 where you
 still got a long way to go okay so I
 
-294
+289
 00:58:17,285 --> 00:58:33,669
 think what we might do is we might have
 a seven minute break and then we're
 going to come back and try and improve
 this core of it for those who are
 
-295
-00:58:33,769 --> 00:58:39,809
+290
+00:58:36,869 --> 00:58:54,960
 interested somebody was asking me the
-
-296
-00:58:39,809 --> 00:58:45,779
 break for a kind of a quick walkthrough
 so this is totally optional but if you
-
-297
-00:58:45,779 --> 00:58:54,960
 go into the first day I library there's
 a model py file and that's where fit is
 
-298
-00:58:54,960 --> 00:59:01,049
+291
+00:58:54,960 --> 00:59:12,204
 which we're just looking at which goes
 through each epoch in epochs and then
-
-299
-00:59:01,049 --> 00:59:07,470
 goes through each x and y in the mini
 batch and then it calls this step
-
-300
-00:59:07,470 --> 00:59:17,039
 function so the step function is here
-and you can see the key thing is it
 
-301
-00:59:17,039 --> 00:59:20,940
+292
+00:59:12,304 --> 00:59:39,569
+and you can see the key thing is it
 calculates the output from the model the
 models for M right and so if you
-
-302
-00:59:20,940 --> 00:59:28,500
 remember our dot product we didn't
 actually call model dot forward we just
-
-303
-00:59:28,500 --> 00:59:35,059
 called model parentheses and that's
 because the N n dot module automatically
-
-304
-00:59:35,059 --> 00:59:39,569
 you know when you call it as if it's a
 function it passes it along to forward
 okay so that's that's what that's doing
 
-305
-00:59:42,059 --> 00:59:45,960
+293
+00:59:42,059 --> 00:59:51,772
 there right and then the rest of this
 world will learn about shortly which is
-
-306
-00:59:45,960 --> 00:59:50,550
 basically doing the the loss function
 and
-
-307
-00:59:50,550 --> 00:59:55,740
 the backward pass okay so for those who
+
+294
+00:59:51,872 --> 01:00:00,130
 are interested that's that's kind of
 gets you a bit of a sense of how the
-
-308
-00:59:57,480 --> 01:00:02,880
 cone it's structured if you want to look
-at it and as I say like the the faster I
 
-309
-01:00:02,880 --> 01:00:09,780
+295
+01:00:00,230 --> 01:00:09,780
+at it and as I say like the the faster I
 code is designed to both be world-class
 performance but also pretty easy to read
 
-310
-01:00:09,780 --> 01:00:15,210
+296
+01:00:09,780 --> 01:00:22,840
 so like feel free like take a look at it
 and if you want to know what's going on
-
-311
-01:00:15,210 --> 01:00:19,230
 just ask on the forums and if you you
 know if you think is anything that could
-
-312
-01:00:19,230 --> 01:00:26,550
 be clearer let us know because yeah the
+
+297
+01:00:22,940 --> 01:00:29,995
 code is definitely now we're going to be
-
-313
-01:00:26,550 --> 01:00:33,540
 digging into the code or in law okay so
+
+298
+01:00:30,095 --> 01:00:36,790
 let's try and improve this a little bit
-
-314
-01:00:33,540 --> 01:00:40,140
 and let's start off by improving it in
-Excel so you might have noticed here
 
-315
-01:00:40,140 --> 01:00:44,790
+299
+01:00:36,890 --> 01:00:47,830
+Excel so you might have noticed here
 that we've kind of got the idea that use
 a 72
-
-316
-01:00:44,790 --> 01:00:50,970
 you know like sci-fi modern movies with
-special effects you know whatever and
 
-317
-01:00:50,970 --> 01:00:57,150
+300
+01:00:47,930 --> 01:00:57,150
+special effects you know whatever and
 movie number 27 is sci-fi and that
 special effects so much dialogue but
 
-318
-01:00:57,150 --> 01:01:05,400
+301
+01:00:57,150 --> 01:01:17,040
 we're missing an important case which is
 like user 72 is pretty enthusiastic on
-
-319
-01:01:05,400 --> 01:01:10,710
 the hall and on average rates things
 higher and Highland you know and movie
-
-320
-01:01:10,710 --> 01:01:17,040
 27 you know it's just a popular movie
 you know it's just on average its higher
 
-321
-01:01:17,040 --> 01:01:24,300
+302
+01:01:17,040 --> 01:01:29,640
 so what would really like is to add a
 constant for the user and a constant for
-
-322
-01:01:24,300 --> 01:01:29,640
 the movie and remember in neural network
 terms we call that a bias that's what we
 want to add a bias so we could easily do
 
-323
-01:01:32,280 --> 01:01:37,380
+303
+01:01:32,280 --> 01:01:48,050
 that and if we go into the bias tab here
 we've got the same data as before and
-
-324
-01:01:37,380 --> 01:01:44,420
 we've got the same latent factors as
 before and I've just got one extra row
-
-325
-01:01:44,420 --> 01:01:51,780
 here and one extra column here and you
-won't be surprised here that we now take
 
-326
-01:01:51,780 --> 01:01:58,400
+304
+01:01:48,150 --> 01:02:01,929
+won't be surprised here that we now take
 these same matrix multiplication as
 before and we add in that and we add in
-
-327
-01:01:58,400 --> 01:02:05,559
 that okay so that's
-bias so other than that we've got
 
-328
-01:02:05,559 --> 01:02:11,200
+305
+01:02:02,029 --> 01:02:27,630
+bias so other than that we've got
 exactly the same loss function over here
 and so just like before we can now go
 ahead and solve that and now our
-
-329
-01:02:14,650 --> 01:02:20,980
 changing variables include the bias and
 we can say solve and if we leave that
-
-330
-01:02:20,980 --> 01:02:27,630
 for a little while it will come to a
 better result than we had before
 
-331
-01:02:27,630 --> 01:02:32,579
+306
+01:02:27,630 --> 01:02:37,019
 okay so that's the first thing we're
 going to do to improve our model and
-
-332
-01:02:32,579 --> 01:02:41,559
 there's really very little show just to
-make the code a bit shorter I have to
 
-333
-01:02:41,559 --> 01:02:46,900
+307
+01:02:37,119 --> 01:02:48,635
+make the code a bit shorter I have to
 find a function called get embedding
 which takes a number of inputs and a
-
-334
-01:02:46,900 --> 01:02:50,470
 number of factors so the number of rows
 and the embedding matrix Nomos they're
+
+308
+01:02:48,735 --> 01:02:55,685
 both medications creates the embedding
-
-335
-01:02:52,450 --> 01:02:59,020
 and then randomly initializes it I don't
+
+309
+01:02:55,785 --> 01:03:00,575
 know why I'm doing negative to positive
-
-336
-01:02:59,020 --> 01:03:02,230
 here and it zeroed last time honestly it
+
+310
+01:03:00,675 --> 01:03:05,765
 doesn't matter much as long as it's in
-
-337
-01:03:02,230 --> 01:03:09,400
 the right ballpark and then we return
-that initialized emitting so now we need
 
-338
-01:03:09,400 --> 01:03:14,710
+311
+01:03:05,865 --> 01:03:20,866
+that initialized emitting so now we need
 not just our users by factors which are
 Chuck into you our movies by factors
-
-339
-01:03:14,710 --> 01:03:20,440
 which I've shocked into M but we also
 need users by one which will put into UV
-
-340
-01:03:20,440 --> 01:03:25,900
 user bias and movies by one which will
-put into the movie bias okay so this is
 
-341
-01:03:25,900 --> 01:03:29,890
+312
+01:03:20,966 --> 01:03:27,634
+put into the movie bias okay so this is
 just doing a list comprehension going
 through each of the tuples create an
 
-342
-01:03:29,890 --> 01:03:34,630
+313
+01:03:27,734 --> 01:03:34,630
 embedding for each of them and putting
 them into these things okay so now our
 
-343
-01:03:34,630 --> 01:03:44,260
+314
+01:03:34,630 --> 01:04:10,655
 forward is exactly the same as before u
 times M sub I mean this is actually a
-
-344
-01:03:44,260 --> 01:03:50,289
 little confusing because we're doing it
 into two steps maybe they make it a bit
-
-345
-01:03:50,289 --> 01:03:58,380
 easier let's pull this out
 put it up here put this in parentheses
-
-346
-01:03:58,440 --> 01:04:02,770
 okay so maybe that looks a little bit
 more familiar all right you times n dot
-
-347
-01:04:02,770 --> 01:04:07,150
 some that's the same dot product and
 then here it is going to add in our user
-
-348
-01:04:07,150 --> 01:04:14,260
 pious and
-our movie bus dot squeeze is the PI
 
-349
-01:04:14,260 --> 01:04:21,370
+315
+01:04:10,755 --> 01:04:15,962
+our movie bus dot squeeze is the PI
 torch thing that adds an additional unit
+
+316
+01:04:16,062 --> 01:04:29,840
 axis that's not going to make any sense
 if you haven't done broadcasting before
-
-350
-01:04:23,340 --> 01:04:27,640
 I'm not going to do a broadcasting in
 this course because we've already done
 it
-
-351
-01:04:28,030 --> 01:04:31,750
 and we're doing it in the machine
-learning course but basically in in
 
-352
-01:04:31,750 --> 01:04:36,760
+317
+01:04:29,940 --> 01:04:40,700
+learning course but basically in in
 short broadcasting is what happens when
 you do something like this where um is a
-
-353
-01:04:36,760 --> 01:04:44,740
 matrix you be self-taught you the users
 is a is a vector how do you add a vector
-to a matrix and basically what it does
 
-354
-01:04:46,900 --> 01:04:53,800
+318
+01:04:40,800 --> 01:05:00,600
+to a matrix and basically what it does
 is it duplicates the vector so that it
 makes it the same size as the matrix and
-
-355
-01:04:53,800 --> 01:04:58,000
 the particular way whether it duplicates
 it across columns or down rows or how it
-
-356
-01:04:58,000 --> 01:05:03,300
 does it is called broadcasting the
+
+319
+01:05:00,700 --> 01:05:05,280
 broadcasting rules are the same as numpy
-
-357
-01:05:03,300 --> 01:05:07,360
 Pytor didn't actually used to support
-broadcasting so I was actually the guy
 
-358
-01:05:07,360 --> 01:05:11,920
+320
+01:05:05,380 --> 01:05:11,920
+broadcasting so I was actually the guy
 who first added broadcasting to PI torch
 using an ugly hack and then the pipe or
 
-359
+321
 01:05:11,920 --> 01:05:17,110
 authors did an awesome job of supporting
 it actually inside the language so now
 
-360
+322
 01:05:17,110 --> 01:05:22,180
 you can use the same broadcasting
 operations in five torches non-player if
 you haven't dealt with this before it's
 
-361
-01:05:24,640 --> 01:05:29,470
+323
+01:05:24,640 --> 01:05:37,390
 really important to learn it because
 like it's it's kind of the most
-
-362
-01:05:29,470 --> 01:05:34,180
 important fundamental way to do
 computations quickly in the high-end
-
-363
-01:05:34,180 --> 01:05:37,390
 paid warship it's the thing that lets
 you not have to do loops
 
-364
-01:05:37,390 --> 01:05:40,510
+324
+01:05:37,390 --> 01:05:46,870
 how could you imagine here if I had to
 look through every row of this matrix
-
-365
-01:05:40,510 --> 01:05:46,870
 and add each did you know this vector to
 every row it would be slow the you know
 a lot more code and the idea of
 
-366
-01:05:50,590 --> 01:05:54,610
+325
+01:05:50,590 --> 01:05:59,770
 broadcasting it actually goes all the
 way back to APL which was a language
-
-367
-01:05:54,610 --> 01:05:59,770
 designed in the 50s by an extraordinary
 guy called Ken Iverson yeah APL was
 
-368
-01:05:59,770 --> 01:06:05,110
+326
+01:05:59,770 --> 01:06:10,330
 originally designed or written out as a
 new type of mathematical notation he has
-
-369
-01:06:05,110 --> 01:06:10,330
 this great essay called notation as a
 tool for thought and the idea was that
 
-370
+327
 01:06:10,330 --> 01:06:15,220
 like really good notation could actually
 make you think of better things and part
 
-371
-01:06:15,220 --> 01:06:20,110
+328
+01:06:15,220 --> 01:06:22,820
 of that notation is this idea of
 broadcasting I'm incredibly enthusiastic
-
-372
-01:06:20,110 --> 01:06:25,630
 about it
-and we're gonna use it plenty so either
 
-373
-01:06:25,630 --> 01:06:33,880
+329
+01:06:22,920 --> 01:06:34,832
+and we're gonna use it plenty so either
 watch the machine learning lesson or you
 know google numpy broadcasting for
-
-374
-01:06:33,880 --> 01:06:37,990
 information anyway
+
+330
+01:06:34,932 --> 01:06:45,195
 so basically it works reasonably
 intuitively we can add on we can add the
-
-375
-01:06:40,860 --> 01:06:49,630
 vectors to the matrix all right
-having done that we're now going to do
 
-376
-01:06:49,630 --> 01:06:56,220
+331
+01:06:45,295 --> 01:07:04,445
+having done that we're now going to do
 one more trick which is I think it was
 your net asked earlier about could we
 squish the ratings to be between one and
-
-377
-01:06:59,890 --> 01:07:09,100
 five and the answer is we could right
-and specifically what we could do is we
 
-378
-01:07:09,100 --> 01:07:14,110
+332
+01:07:04,545 --> 01:07:19,455
+and specifically what we could do is we
 could put it through a sigmoid function
 all right
-
-379
-01:07:14,110 --> 01:07:24,900
 so remind you a sigmoid function looks
+
+333
+01:07:19,555 --> 01:07:24,900
 like that right and this is that's one
 
-380
-01:07:24,900 --> 01:07:29,500
+334
+01:07:24,900 --> 01:07:51,610
 okay we could put it through a secret
 function so we could take like four
-
-381
-01:07:29,500 --> 01:07:33,520
 point nine six and put it through a
 sigmoid function and like that you know
-
-382
-01:07:33,520 --> 01:07:37,450
 that's kind of high so it kind of be
 over here somewhere right
-
-383
-01:07:37,450 --> 01:07:44,800
 and then we could multiply that sigmoid
 like the result of that by five for
-
-384
-01:07:44,800 --> 01:07:47,020
 example all right
 and in this case we want it to be
-
-385
-01:07:47,020 --> 01:07:51,610
 between one and five right so maybe we
 would multiply it by four and add one
 
-386
-01:07:51,610 --> 01:08:00,100
+335
+01:07:51,610 --> 01:08:08,710
 instance that's the basic idea and so
 here is that trick we take the result so
-
-387
-01:08:00,100 --> 01:08:03,940
 the result is basically the the thing
 that comes straight out of the dot
-
-388
-01:08:03,940 --> 01:08:08,710
 product plus the addition of the biases
 and put it through a sigmoid function
 
-389
-01:08:08,710 --> 01:08:16,450
+336
+01:08:08,710 --> 01:08:33,645
 now in pi torch basically all of the
 functions you can do to tensors are
-
-390
-01:08:16,450 --> 01:08:21,430
 available inside this thing called
 capital F and this is like totally
-
-391
-01:08:21,430 --> 01:08:26,470
 standard in pi torch it's actually
 called torch and or functional but
-
-392
-01:08:26,470 --> 01:08:30,580
 everybody including all of the pipe
 torch Doc's import torch start and end
-
-393
-01:08:30,580 --> 01:08:36,810
 are functional as capital F all right so
-capital F dot sigmoid means a function
 
-394
-01:08:36,810 --> 01:08:42,989
+337
+01:08:33,745 --> 01:08:39,849
+capital F dot sigmoid means a function
 called sigmoid that is coming from
 tortures functional module right and so
-that's going to apply a sigmoid function
 
-395
-01:08:44,729 --> 01:08:48,388
+338
+01:08:39,949 --> 01:08:48,388
+that's going to apply a sigmoid function
 for the result so I squish them all
 between zero and one using that nice
 
-396
-01:08:48,389 --> 01:08:54,989
+339
+01:08:48,389 --> 01:09:00,084
 little shape and then I can multiply
 that by five minus one plus four right
 and then add on one and that's gonna
-
-397
-01:08:57,149 --> 01:09:03,119
 give me plumbing between one and five
-okay so like there's no need to do this
 
-398
-01:09:03,120 --> 01:09:08,429
+340
+01:09:00,184 --> 01:09:24,569
+okay so like there's no need to do this
 I could comment it out and it'll still
 work right but now it has to come up
-
-399
-01:09:08,429 --> 01:09:13,290
 with a set of calculations that are
 always between one and five right where
-
-400
-01:09:13,290 --> 01:09:16,710
 else if I leave this in then it's like
 makes it really easy it's basically like
-
-401
-01:09:16,710 --> 01:09:20,100
 oh if you think this is a really good
 movie just calculate a really high
-
-402
-01:09:20,100 --> 01:09:24,569
 number it's a really crappy movies low
 number and I'll make sure it's in the
 
-403
-01:09:24,569 --> 01:09:28,440
+341
+01:09:24,569 --> 01:09:37,959
 right regions so even though this is a
 neural network it's still a good example
 of this kind of like if you're doing any
-
-404
-01:09:30,689 --> 01:09:35,399
 kind of parameter fitting try and make
 it so that the thing that you want your
-
-405
-01:09:35,399 --> 01:09:40,619
 function to return it's like it's easy
+
+342
+01:09:38,059 --> 01:09:44,304
 for it to return that okay so that's why
-
-406
-01:09:40,620 --> 01:09:48,089
 we do that that function squishing so we
+
+343
+01:09:44,404 --> 01:09:50,589
 call this embedding dot bias so we can
-
-407
-01:09:48,089 --> 01:09:53,190
 create that in the same way as before
-you'll see here I'm calling dr. to put
 
-408
-01:09:53,189 --> 01:09:56,790
+344
+01:09:50,689 --> 01:10:01,350
+you'll see here I'm calling dr. to put
 it on the GPU because we're not using
 any learner stuff normally it'll all
-
-409
-01:09:56,790 --> 01:10:01,350
 happen for you but we have to manually
 say put it on the GPU this is the same
 
-410
+345
 01:10:01,350 --> 01:10:05,580
 as before create our optimizer fit
 exactly the same as before and these
 
-411
-01:10:05,580 --> 01:10:11,520
+346
+01:10:05,580 --> 01:10:23,770
 numbers are looking good all right and
 again we'll do a little change to our
-
-412
-01:10:11,520 --> 01:10:16,050
 learning rate learning rate schedule and
 we're down to 0.8 so we're actually
-
-413
-01:10:16,050 --> 01:10:31,590
 pretty close pretty close so that's the
+
+347
+01:10:23,870 --> 01:10:34,885
 key steps and this is how this is how
-
-414
-01:10:31,590 --> 01:10:38,280
 most collaborative filtering is done and
-unit reminded me of an important point
 
-415
-01:10:38,280 --> 01:10:46,139
+348
+01:10:34,985 --> 01:10:47,664
+unit reminded me of an important point
 which is that this is not strictly
 speaking a matrix factorization because
-
-416
-01:10:46,139 --> 01:10:49,290
 strictly
+
+349
+01:10:47,764 --> 01:10:56,170
 a matrix factorization would take that
-
-417
-01:10:49,290 --> 01:11:03,150
 matrix by that matrix to create this
-matrix and remembering anywhere that
 
-418
-01:11:03,150 --> 01:11:11,730
+350
+01:10:56,270 --> 01:11:14,860
+matrix and remembering anywhere that
 this is empty like here or here we're
 putting in a zero right we're saying if
-
-419
-01:11:11,730 --> 01:11:18,090
 the original was empty put in a zero
-right now normally you can't do that
 
-420
-01:11:18,090 --> 01:11:22,290
+351
+01:11:14,960 --> 01:11:22,290
+right now normally you can't do that
 with normal matrix factorization normal
 matrix factorization it creates the
 
-421
-01:11:22,290 --> 01:11:27,450
+352
+01:11:22,290 --> 01:11:29,650
 whole matrix and so it was a real
 problem actually when people used to try
-
-422
-01:11:27,450 --> 01:11:31,950
 and use traditional linear algebra for
-this because when you have these sparse
 
-423
-01:11:31,950 --> 01:11:36,780
+353
+01:11:29,750 --> 01:11:36,780
+this because when you have these sparse
 matrices like in practice
 this matrix is not doesn't have many
 
-424
-01:11:36,780 --> 01:11:40,500
+354
+01:11:36,780 --> 01:11:43,650
 gaps because we picked the users that
 watch the most movies and the movies
-
-425
-01:11:40,500 --> 01:11:43,650
 that are the most watched but if you
 look at the whole matrix it's it's
 
-426
-01:11:43,650 --> 01:11:49,980
+355
+01:11:43,650 --> 01:11:49,495
 mainly empty and so traditional
 techniques treated empty is zero and so
-
-427
-01:11:49,980 --> 01:11:54,120
 like you basically have to predict a
+
+356
+01:11:49,595 --> 01:11:55,213
 zero as if the fact that I haven't
-
-428
-01:11:54,120 --> 01:11:58,950
 watched a movie means I don't like the
-movie that's gives terrible answers so
 
-429
-01:11:58,950 --> 01:12:05,580
+357
+01:11:55,313 --> 01:12:11,220
+movie that's gives terrible answers so
 this probabilistic matrix factorization
 approach takes advantage of the fact
-
-430
-01:12:05,580 --> 01:12:11,220
 that our data structure actually looks
 like this rather than that cross tab
 
-431
+358
 01:12:11,220 --> 01:12:16,110
 right and so it's only calculating the
 loss for the user ID movie ID
 combinations that actually appear that's
 
-432
-01:12:18,240 --> 01:12:22,860
+359
+01:12:18,240 --> 01:12:25,030
 its if you like use red a1 movie I think
 102 9 should be 3 it's actually three
-
-433
-01:12:22,860 --> 01:12:27,300
 and a half sauce is 0.5 like there's
-nothing here that's ever going to
 
-434
-01:12:27,300 --> 01:12:32,850
+360
+01:12:25,130 --> 01:12:35,440
+nothing here that's ever going to
 calculate a prediction or a loss for a
 user movie combination that doesn't
-
-435
-01:12:32,850 --> 01:12:38,130
 appear in this table by definition the
+
+361
+01:12:35,540 --> 01:12:42,325
 only stuff that we can appear in a mini
-
-436
-01:12:38,130 --> 01:12:46,620
 batch is what's in this table okay and
-like a lot of this happened
 
-437
-01:12:46,620 --> 01:12:50,760
+362
+01:12:43,825 --> 01:12:53,500
+like a lot of this happened
 interestingly enough actually in the
 Netflix price so before the Netflix
-
-438
-01:12:50,760 --> 01:12:56,340
 prize came along there's probabilistic
-matrix factorization it had actually
 
-439
-01:12:56,340 --> 01:13:00,640
+363
+01:12:53,600 --> 01:13:02,540
+matrix factorization it had actually
 already been invented but nobody noticed
 all right and then in the
-
-440
-01:13:00,640 --> 01:13:04,540
 first year of the Netflix price someone
-wrote this like really really famous
 
-441
-01:13:04,540 --> 01:13:08,710
+364
+01:13:02,640 --> 01:13:10,625
+wrote this like really really famous
 blog post where they basically said like
 hey check this out
-
-442
-01:13:08,710 --> 01:13:12,640
 incredibly simple technique works
+
+365
+01:13:10,725 --> 01:13:15,860
 incredibly well when suddenly all the
-
-443
-01:13:12,640 --> 01:13:19,180
 net fix leaderboard entries and so
+
+366
+01:13:15,960 --> 01:13:21,500
 that's quite a few years ago now and
-
-444
-01:13:19,180 --> 01:13:23,920
 this is like now every collaborative
-filtering approach does this not every
 
-445
-01:13:23,920 --> 01:13:27,640
+367
+01:13:21,600 --> 01:13:40,975
+filtering approach does this not every
 collaborative filtering approach adds
 this sigmoid thing by the way it's not
-
-446
-01:13:27,640 --> 01:13:32,800
 like rocket science this is this is not
 like the NLP thing we saw last week
-
-447
-01:13:32,800 --> 01:13:35,770
 which is like hey this is a new
 state-of-the-art like this is you know
-
-448
-01:13:35,770 --> 01:13:39,640
 not particularly uncommon but there are
 still people that don't do this it
-
-449
-01:13:39,640 --> 01:13:45,280
 definitely helps a lot I have to have
+
+368
+01:13:41,075 --> 01:14:20,050
 this and so actually you know what we
 could do is maybe now's a good time to
-
-450
-01:13:47,800 --> 01:13:56,590
 have a look at the definition of this
 right so the column data module contains
-
-451
-01:13:56,590 --> 01:14:03,640
 all these definitions and we can now
 compare this to the thing we originally
-
-452
-01:14:03,640 --> 01:14:09,550
 used which was whatever came out of
 collaborative data set all right so
-
-453
-01:14:09,550 --> 01:14:20,050
 let's go to collab filter data set here
 it is and we called get learner all
 
-454
-01:14:20,050 --> 01:14:27,330
+369
+01:14:20,050 --> 01:14:29,985
 right so we can go down to get Elena and
 that created a collab filter learner
-
-455
-01:14:27,330 --> 01:14:32,740
 passing in the model from get model is
-get model so created an embedding bias
 
-456
-01:14:32,740 --> 01:14:40,300
+370
+01:14:30,085 --> 01:14:48,785
+get model so created an embedding bias
 and so here is embedding drop bias and
 you can see here here it is like it's
-
-457
-01:14:40,300 --> 01:14:44,920
 the same thing there's the embedding for
 each of the things here's our forward
-
-458
-01:14:44,920 --> 01:14:52,750
 that does the you times I dot some plus
-plus sigmoid so in fact we have just
 
-459
-01:14:52,750 --> 01:15:00,340
+371
+01:14:48,885 --> 01:15:00,340
+plus sigmoid so in fact we have just
 actually rebuilt what's in the past our
 library literally okay it's a little
 
-460
-01:15:00,340 --> 01:15:04,960
+372
+01:15:00,340 --> 01:15:11,410
 shorter and easier because we're taking
 advantage of the fact that there's a
-
-461
-01:15:04,960 --> 01:15:11,410
 special collaborative filtering data set
 so we can actually we're getting past in
 
-462
-01:15:11,410 --> 01:15:13,889
+373
+01:15:11,410 --> 01:15:16,104
 the users and the items and we don't
 have to pull them out of cat
-
-463
-01:15:13,889 --> 01:15:18,420
 Kant's but other than that this is
-exactly the same so hopefully you can
 
-464
-01:15:18,420 --> 01:15:22,710
+374
+01:15:16,204 --> 01:15:32,604
+exactly the same so hopefully you can
 see like the faster you have ivory is
 not some inscrutable code containing
-
-465
-01:15:22,710 --> 01:15:26,880
 concepts you can never understand we've
 actually just built up this entire thing
-
-466
-01:15:26,880 --> 01:15:38,429
 from scratch ourselves and so why did we
-get 0.76 rather than 0.8 you know I I
 
-467
-01:15:38,429 --> 01:15:41,940
+375
+01:15:32,704 --> 01:15:51,690
+get 0.76 rather than 0.8 you know I I
 think it's simply because we used
 stochastic gradient descent with
 restarts or the cycle multiplier and an
-
-468
-01:15:44,460 --> 01:15:51,690
 atom optimizer you know like a few
 little training chase some I'm looking
 
-469
-01:15:51,690 --> 01:15:58,159
+376
+01:15:51,690 --> 01:16:08,219
 at this and thinking that is we could
 totally improve this small but maybe
-
-470
-01:15:58,159 --> 01:16:02,820
 looking at the date and doing some
 tricks with the date because this this
-
-471
-01:16:02,820 --> 01:16:08,219
 is kind of a just a regular kind of
 smaller no way yeah you can add more
 
-472
-01:16:08,219 --> 01:16:13,260
+377
+01:16:08,219 --> 01:16:18,179
 features yeah exactly exactly so like
 now that you've seen this you could now
-
-473
-01:16:13,260 --> 01:16:18,179
 you know even if you didn't have
 embedding dot bias in a notebook that
 
-474
-01:16:18,179 --> 01:16:21,600
+378
+01:16:18,179 --> 01:16:29,850
 you've written yourself through some
 other model that's in fast AI you could
-
-475
-01:16:21,600 --> 01:16:25,889
 look at it in faster and be like oh that
 does most of the things that I'd want to
-
-476
-01:16:25,889 --> 01:16:29,850
 do but it doesn't deal with time and so
 you could just go oh okay let's grab it
 
-477
-01:16:29,850 --> 01:16:36,449
+379
+01:16:29,850 --> 01:16:46,830
 copy it you know pop it into my notebook
 and let's create you know the better
 version all right and then you can start
-
-478
-01:16:38,969 --> 01:16:46,830
 playing that and you can now create your
 own model class from the open source
 
-479
-01:16:46,830 --> 01:16:50,850
+380
+01:16:46,830 --> 01:17:01,889
 code here and so yeah your that's
 mentioning a couple things we could do
-
-480
-01:16:50,850 --> 01:16:55,560
 we could try and incorporate in time
 stamp so we could assume that maybe well
-
-481
-01:16:55,560 --> 01:17:00,389
 maybe there's just like some for a
 particular user over time users tend to
-
-482
-01:17:00,389 --> 01:17:06,690
 get more or less positive about movies
+
+381
+01:17:01,989 --> 01:17:06,690
 also remember there was the list of
 genres for each movie maybe we could
 
-483
-01:17:08,940 --> 01:17:13,800
+382
+01:17:08,940 --> 01:17:27,110
 incorporate that so one problem is it's
 a little bit difficult to incorporate
-
-484
-01:17:13,800 --> 01:17:19,650
 that stuff into this embedding bias
 model because it's kind of it's pretty
 custom right so what we're going to do
-
-485
-01:17:21,900 --> 01:17:27,110
 next is we're going to try to create a
 neural net version
 
-486
-01:17:27,110 --> 01:17:36,770
+383
+01:17:27,110 --> 01:17:49,435
 of this hey so the basic idea here is
 we're going to take exactly the same
-
-487
-01:17:36,770 --> 01:17:43,450
 thing as we had before here's our list
 of users right and here is Erin Bates
 alright and here's our list of movies
-
-488
-01:17:46,130 --> 01:17:52,840
 and here is our embedded right and so as
-you can see I've just kind of transposed
 
-489
-01:17:52,840 --> 01:17:58,880
+384
+01:17:49,535 --> 01:17:58,880
+you can see I've just kind of transposed
 the movie ones so that so that they're
 all in the same orientation and here is
 
-490
-01:17:58,880 --> 01:18:05,300
+385
+01:17:58,880 --> 01:18:09,370
 our user movie rating but D cross tab
 okay so in the original format so each
-
-491
-01:18:05,300 --> 01:18:13,540
 row is a user movie rating okay so the
-first thing I do is I need to replace
 
-492
-01:18:13,540 --> 01:18:22,180
+386
+01:18:09,470 --> 01:18:45,170
+first thing I do is I need to replace
 user 14 with that users contiguous in
 this right and so I can do that in Excel
-
-493
-01:18:22,180 --> 01:18:27,710
 using this match that basically says
 what you know how far down this list do
-
-494
-01:18:27,710 --> 01:18:34,040
 you have to go and it said user 14 was
 the first thing in that list okay
-
-495
-01:18:34,040 --> 01:18:39,980
 user 29 was the second thing in that
 list so forth okay so this is the same
-
-496
-01:18:39,980 --> 01:18:45,170
 as that thing that we did in our Python
 code where we basically created a
 
-497
-01:18:45,170 --> 01:18:52,180
+387
+01:18:45,170 --> 01:18:58,640
 dictionary to master so now we can for
 this particular user movie rating
-
-498
-01:18:52,180 --> 01:18:58,640
 combination we can look up the
 appropriate embedding right and so you
 
-499
-01:18:58,640 --> 01:19:01,700
+388
+01:18:58,640 --> 01:19:22,580
 can see here what it's doing is it's
 saying
 all right let's basically offset from
-
-500
-01:19:05,120 --> 01:19:10,130
 the start of this list and the number of
 rows we're going to go down is equal to
-
-501
-01:19:10,130 --> 01:19:14,810
 the user index and the number of columns
 we're going to go across is one two
-
-502
-01:19:14,810 --> 01:19:18,590
 three four or five okay and so you can
 see what it does is it creates point one
-
-503
-01:19:18,590 --> 01:19:22,580
 nine point six three point three one
 here it is point one nine point okay so
 
-504
-01:19:22,580 --> 01:19:29,240
+389
+01:19:22,580 --> 01:19:51,800
 so this is literally modern embedding
 this but remember this is exactly the
-
-505
-01:19:29,240 --> 01:19:37,820
 same as doing a one hot encoding right
 because if instead this was a vector
-
-506
-01:19:37,820 --> 01:19:44,150
 containing one zero zero zero zero
 right and we multiplied that by this
-
-507
-01:19:44,150 --> 01:19:51,800
 matrix then the only row it's going to
 return would be the first one okay so so
 
-508
-01:19:51,800 --> 01:19:56,210
+390
+01:19:51,800 --> 01:19:59,190
 it's really useful to remember that
 embedding actually just is a matrix
-
-509
-01:19:56,210 --> 01:20:02,270
 product the only reason it exists the
-only reason it exists is because this is
 
-510
-01:20:02,270 --> 01:20:07,280
+391
+01:19:59,290 --> 01:20:12,840
+only reason it exists is because this is
 an optimization you know this let's pipe
 or to know like okay this is just a
 matrix multiply but I guarantee you that
-
-511
-01:20:10,460 --> 01:20:15,320
 you know this thing is one hard encoded
-therefore you don't have to actually do
 
-512
-01:20:15,320 --> 01:20:19,280
+392
+01:20:12,940 --> 01:20:19,280
+therefore you don't have to actually do
 the matrix multiply you can just do a
 directory of that okay so that's
 
-513
-01:20:19,280 --> 01:20:26,420
+393
+01:20:19,280 --> 01:20:28,830
 literally all an embedding is is it is a
 computational performance thing for a
-
-514
-01:20:26,420 --> 01:20:31,340
 particular kind of matrix multiplier all
-right so that looks up that uses user
 
-515
-01:20:31,340 --> 01:20:38,420
+394
+01:20:28,930 --> 01:20:47,900
+right so that looks up that uses user
 and then we can look up that users movie
 all right so here is movie ID movie ID
-
-516
-01:20:38,420 --> 01:20:43,550
 four one seven which apparently is
 indexed number fourteen here it is here
-
-517
-01:20:43,550 --> 01:20:47,900
 so it should have been point seven five
 point four seven yes it is point seven
 five point plus it okay
 
-518
-01:20:49,460 --> 01:20:55,040
+395
+01:20:49,460 --> 01:21:06,370
 so we've now got the user embedding and
 the movie embedding and rather than
-
-519
-01:20:55,040 --> 01:21:06,370
 doing a dot product of those two okay
 which is what we do normally instead
 
-520
-01:21:06,370 --> 01:21:15,310
+396
+01:21:06,370 --> 01:21:17,562
 what if we concatenate the two together
 into a single vector of length 10 and
-
-521
-01:21:15,310 --> 01:21:24,620
 then feed that into a neural net okay
+
+397
+01:21:17,662 --> 01:21:33,840
 and so anytime we've got you know a
 tensor of import activations or in this
-
-522
-01:21:27,920 --> 01:21:31,820
 case a tensor of actually this is a
 tensor of output activations this is
-
-523
-01:21:31,820 --> 01:21:35,960
 coming out of an embedding layer we can
+
+398
+01:21:33,940 --> 01:21:39,525
 chuck it in a neural net because neural
-
-524
-01:21:35,960 --> 01:21:43,190
 Nets we now know can calculate anything
-okay including hopefully collaborative
 
-525
-01:21:43,190 --> 01:21:51,599
+399
+01:21:39,625 --> 01:21:47,344
+okay including hopefully collaborative
 filtering so let's try that so here is
+
+400
+01:21:47,444 --> 01:21:52,699
 our embedding net so
 
-526
-01:21:51,599 --> 01:22:01,320
+401
+01:21:52,799 --> 01:22:10,050
 this time I have not bothered to create
 a separate bias because instead the
-
-527
-01:22:01,320 --> 01:22:10,050
 linear layer in pi torch already has a
 bias in it all right so when we go NN
 
-528
-01:22:10,050 --> 01:22:17,929
+402
+01:22:10,050 --> 01:22:39,210
 Linea right that's kind of draw this out
-
-529
-01:22:18,050 --> 01:22:27,650
 so we've got our U matrix right and this
 is the number of users and this is the
 number of factors right and we've got
-
-530
-01:22:31,290 --> 01:22:39,210
 our M matrix that so here's our number
 of movies and here's our again number of
 
-531
+403
 01:22:39,210 --> 01:22:50,099
 factors okay and so remember we look up
 a single user we look up a single movie
 
-532
+404
 01:22:50,099 --> 01:22:57,239
 and let's grab them and concatenate them
 together okay so here's like the user
 part here's the movie part and then
 
-533
-01:23:00,480 --> 01:23:08,010
+405
+01:23:00,480 --> 01:23:27,610
 let's put that through a matrix product
 right so that number of rows here is
-
-534
-01:23:08,010 --> 01:23:12,090
 going to have to be the number of users
 plus the number of movies right because
-
-535
-01:23:12,090 --> 01:23:18,000
 that's how long that is and then the
 number of columns can be anything we
-
-536
-01:23:18,000 --> 01:23:25,020
 want because we're going to take that so
 in this case we're going to pick 10
-
-537
-01:23:25,020 --> 01:23:30,300
 apparently so it's pick 10 and then
-we're going to stick that through a rail
 
-538
-01:23:30,300 --> 01:23:37,349
+406
+01:23:27,710 --> 01:23:49,329
+we're going to stick that through a rail
 you and then stick that through another
 matrix which obviously needs to be of
-
-539
-01:23:37,349 --> 01:23:43,889
 size 10 here and then the number of
 columns is a size 1 because we want to
-
-540
-01:23:43,889 --> 01:23:54,869
 predict a single rating okay and so
+
+407
+01:23:49,429 --> 01:23:57,879
 that's our kind of flow chart of what's
-
-541
-01:23:54,869 --> 01:24:00,989
 going on right it is a standard I'm
-called a one hidden layer neural net it
 
-542
-01:24:00,989 --> 01:24:05,190
+408
+01:23:57,979 --> 01:24:05,190
+called a one hidden layer neural net it
 depends how you think of it like there's
 kind of an embedding layer but because
 
-543
-01:24:05,190 --> 01:24:09,360
+409
+01:24:05,190 --> 01:24:21,270
 is linear and this is linear the two
 together is really one linear layer
-
-544
-01:24:09,360 --> 01:24:14,100
 right this just a computational
 convenience so it's really got one
-
-545
-01:24:14,100 --> 01:24:21,270
 hidden layer because it's got one layer
 before this nonlinear activation so in
 
-546
+410
 01:24:21,270 --> 01:24:27,690
 order to create a linear layer with some
 number of rows and some number of
 columns you just go in and on in the
 
-547
-01:24:31,290 --> 01:24:37,230
+411
+01:24:31,290 --> 01:24:46,020
 machine learning class this week we
 learnt how to create a linear layer from
-
-548
-01:24:37,230 --> 01:24:41,760
 scratch by creating our own weight
 matrix and our own biases so if you want
-
-549
-01:24:41,760 --> 01:24:46,020
 to check that out you couldn't do so
 there right but it's the same basic
 
-550
-01:24:46,020 --> 01:24:52,680
+412
+01:24:46,020 --> 01:24:57,750
 technique we've already seen so we
 create our embeddings we create our two
-
-551
-01:24:52,680 --> 01:24:57,750
 linear layers that's all the stuff that
 we need to start with you know really if
 
-552
-01:24:57,750 --> 01:25:01,770
+413
+01:24:57,750 --> 01:25:06,415
 I wanted to make this more general I
 would have had another parameter here
-
-553
-01:25:01,770 --> 01:25:11,160
 called like num hidden you know equals
 equals 10 and then this would be a
-parameter and then you could like more
 
-554
-01:25:14,250 --> 01:25:18,570
+414
+01:25:06,515 --> 01:25:32,820
+parameter and then you could like more
 easily play around with different
 numbers of activations so when we say
-
-555
-01:25:18,570 --> 01:25:21,810
 like okay in this layer I'm going to
 create a layer with this many
-
-556
-01:25:21,810 --> 01:25:28,469
 activations all I mean assuming it's a
 fully connected layer is my linear layer
-
-557
-01:25:28,469 --> 01:25:32,820
 has how many columns in its weight
 matrix that's how many activations it
 
-558
-01:25:32,820 --> 01:25:38,550
+415
+01:25:32,820 --> 01:25:52,320
 creates all right so we grab our users
 and movies we put them through our
-
-559
-01:25:38,550 --> 01:25:41,670
 embedding matrix and then we concatenate
 them together
-
-560
-01:25:41,670 --> 01:25:47,100
 okay so torch cat concatenate them
 together on the first dimension so in
-
-561
-01:25:47,100 --> 01:25:52,320
 other words we concatenate the columns
 together to create longer rows okay so
 that's concatenating on dimension one
 
-562
+416
 01:25:56,300 --> 01:26:01,580
 drop out we'll come back to her in a
 moment we've got that briefly
 
-563
-01:26:01,580 --> 01:26:07,980
+417
+01:26:01,580 --> 01:26:11,020
 so then having done that we'll put it
 through that linear layer we had we'll
-
-564
-01:26:07,980 --> 01:26:14,160
 do our value and you'll notice that
-value is again inside our capital F and
 
-565
-01:26:14,160 --> 01:26:16,199
+418
+01:26:11,120 --> 01:26:16,199
+value is again inside our capital F and
 end up optional right it's just a
 function
 
-566
-01:26:16,199 --> 01:26:20,550
+419
+01:26:16,199 --> 01:26:21,855
 so remember activation function
 are basically things that take one
-
-567
-01:26:20,550 --> 01:26:26,070
 activation in and spit one activation
+
+420
+01:26:21,955 --> 01:26:31,676
 out in this case taking something that
 can have negatives or positives and
-
-568
-01:26:28,220 --> 01:26:34,950
 truncate the negatives to zero that's
+
+421
+01:26:31,776 --> 01:26:38,740
 what well you does and then here's a
-
-569
-01:26:34,950 --> 01:26:42,630
 sigmoid so that's that that is now a
-genuine neural network I don't know if I
 
-570
-01:26:42,630 --> 01:26:45,690
+422
+01:26:38,840 --> 01:26:45,690
+genuine neural network I don't know if I
 get to call it deep it's only got one
 hidden layer but it's definitely a
 neural network all right and so we can
 
-571
-01:26:48,030 --> 01:26:52,890
+423
+01:26:48,030 --> 01:26:54,007
 now construct it we can put it on the
 GPU you can create an optimizer for it
-
-572
-01:26:52,890 --> 01:26:57,660
 and we can fit it now you'll notice
+
+424
+01:26:54,107 --> 01:27:02,995
 there's one other thing I've been
 passing to fit which is what loss
-
-573
-01:27:00,810 --> 01:27:05,280
 function are we trying to minimize okay
 this is the mean squared error loss and
+
+425
+01:27:03,095 --> 01:27:11,320
 again it's inside F okay pretty much all
-
-574
-01:27:08,130 --> 01:27:14,610
 the functions are inside it okay so one
-of the things that you have to pass fit
 
-575
-01:27:14,610 --> 01:27:20,340
+426
+01:27:11,420 --> 01:27:20,340
+of the things that you have to pass fit
 is something saying like how do you
 score it's what counts as good or bad so
 
-576
-01:27:20,340 --> 01:27:25,860
+427
+01:27:20,340 --> 01:27:27,560
 it should I mean now that we have a real
 neural net do we have to use the same
 number of embeddings for users and
 
-577
-01:27:27,840 --> 01:27:31,800
+428
+01:27:27,840 --> 01:27:38,100
 that's a great question you don't know
 absolutely right
-
-578
-01:27:31,800 --> 01:27:38,100
 you don't and so like we've got a lot of
 benefits here right because if we you
 
-579
-01:27:38,100 --> 01:27:48,600
+429
+01:27:38,100 --> 01:27:54,810
 know think about you know we're grabbing
 a user embedding or concatenating it
-
-580
-01:27:48,600 --> 01:27:54,810
 with a movie embedding which maybe is
 like some different size but then also
 
-581
-01:27:54,810 --> 01:27:59,820
+430
+01:27:54,810 --> 01:28:05,110
 perhaps we looked up the genre of the
 movie and like you know there's actually
 a embedding matrix of like number of
-
-582
-01:28:02,490 --> 01:28:07,830
 genres by I don't know three or
-something and so like we could then
 
-583
-01:28:07,830 --> 01:28:12,270
+431
+01:28:05,210 --> 01:28:13,770
+something and so like we could then
 concatenate like a genre embedding and
 then maybe the timestamp is in here as a
-
-584
-01:28:12,270 --> 01:28:18,570
 continuous number right and so then that
+
+432
+01:28:13,870 --> 01:28:18,570
 whole thing we can then feed into you
 know and you're on it all right and then
 
-585
-01:28:24,420 --> 01:28:30,750
+433
+01:28:24,420 --> 01:28:43,639
 at the end remember a final
 non-linearity was a sigmoid right so we
-
-586
-01:28:30,750 --> 01:28:34,619
 can now recognize that
 thing we did where we did sigmoid x max
-
-587
-01:28:34,619 --> 01:28:40,789
 reading vote - min reading + blah blah
 blah is actually just another nonlinear
-
-588
-01:28:40,789 --> 01:28:46,590
 activation function alright remember in
+
+434
+01:28:43,739 --> 01:28:48,879
 our last layer we use generally
-
-589
-01:28:46,590 --> 01:28:51,269
 different kinds of activation functions
-so as we said we don't need any
 
-590
-01:28:51,269 --> 01:28:59,309
+435
+01:28:48,979 --> 01:29:06,580
+so as we said we don't need any
 activation function at all right we
 could just do that right but by not
-
-591
-01:28:59,309 --> 01:29:03,030
 having any nonlinear activation function
 we're just making it harder so that's
-
-592
-01:29:03,030 --> 01:29:10,230
 why we put the sigmoid in there as well
-okay so we can then fit it in the usual
 
-593
-01:29:10,230 --> 01:29:15,599
+436
+01:29:06,680 --> 01:29:19,509
+okay so we can then fit it in the usual
 way and there we go
 you know interestingly we actually got a
-
-594
-01:29:15,599 --> 01:29:23,519
 better score than we did with our this
-model so I'll be interesting to try
 
-595
-01:29:23,519 --> 01:29:26,429
+437
+01:29:19,609 --> 01:29:50,789
+model so I'll be interesting to try
 training this with stochastic gradient
 descent with restarts and see if it's
-
-596
-01:29:26,429 --> 01:29:30,960
 actually better you know maybe you can
 play around with the number of hidden
-
-597
-01:29:30,960 --> 01:29:35,699
 layers and the drop out and whatever
 else and see if you can come up with you
-
-598
-01:29:35,699 --> 01:29:50,789
 know get a better answer than point
 seven six ish okay so so general so this
 
-599
-01:29:50,789 --> 01:29:55,110
+438
+01:29:50,789 --> 01:29:57,389
 is like if you were going deep into
 collaborative filtering at your
-
-600
-01:29:55,110 --> 01:29:57,389
 workplace
 whatever this wouldn't be a bad way to
 
-601
-01:29:57,389 --> 01:30:01,499
+439
+01:29:57,389 --> 01:30:15,420
 go I could like I'd start out with like
 oh okay here's like a flat footed
-
-602
-01:30:01,499 --> 01:30:06,269
 dataset 30 in first day I get learner
 there's you know not much I can send it
-
-603
-01:30:06,269 --> 01:30:10,920
 basically number of factors is about the
 only thing that I pass in I can learn
-
-604
-01:30:10,920 --> 01:30:15,420
 for a while maybe try a few different
 approaches and then you're like okay
 
-605
-01:30:15,420 --> 01:30:22,019
+440
+01:30:15,420 --> 01:30:30,869
 there's like that's how I go if I use
 the defaults okay how do I make it
-
-606
-01:30:22,019 --> 01:30:24,960
 better and then I'd be like dig into the
 code and seeing like okay well what if
-
-607
-01:30:24,960 --> 01:30:30,869
 Jeremy actually do here this is actually
 what I want you know and so one of the
 
-608
-01:30:30,869 --> 01:30:36,150
+441
+01:30:30,869 --> 01:30:39,699
 nice things about the neural net
 approach is that you know as unit
-
-609
-01:30:36,150 --> 01:30:43,349
 mentioned we can have different numbers
-of embeddings we can choose how many
 
-610
-01:30:43,349 --> 01:30:51,000
+442
+01:30:39,799 --> 01:30:51,000
+of embeddings we can choose how many
 hidden and we can also choose
 drop now right so so what we're actually
 
-611
-01:30:51,000 --> 01:30:57,620
+443
+01:30:51,000 --> 01:31:18,510
 doing is we haven't just got real you
 that we're also going like okay let's
-
-612
-01:31:00,770 --> 01:31:08,489
 let's delete a few things at random
 alright let's drop out so in this case
 we were deleting after the first linear
-
-613
-01:31:12,570 --> 01:31:18,510
 layer 75% of them all right and then
 after the second one in like 75% of them
 
-614
-01:31:18,510 --> 01:31:22,830
+444
+01:31:18,510 --> 01:31:28,320
 so we can add a whole lot of
 regularization yes so you know this it
-
-615
-01:31:22,830 --> 01:31:28,320
 kind of feels like the this this
 embedding net you know you could you
 
-616
-01:31:28,320 --> 01:31:31,710
+445
+01:31:28,320 --> 01:31:51,025
 could change this again we could like
 have it so that we can pass into the
-
-617
-01:31:31,710 --> 01:31:39,210
 constructor well if you're gonna make it
 look as much as possible like what we
-
-618
-01:31:39,210 --> 01:31:48,630
 had before we could surpass him peace
 peace equals 0.75 oh I'm not sure this
-
-619
-01:31:48,630 --> 01:31:53,520
 is the best API but it's not terrible
-probably what since we've only got
 
-620
-01:31:53,520 --> 01:32:08,790
+446
+01:31:51,125 --> 01:32:08,790
+probably what since we've only got
 exactly two layers we could say p1
 equals 0.75 v p2 v and so then this will
 be P 1 this will be Peter you know where
 
-621
-01:32:18,630 --> 01:32:24,719
+447
+01:32:18,630 --> 01:32:28,044
 we go and like if you wanted to go
 further you could make it look more like
-
-622
-01:32:24,719 --> 01:32:31,469
 our structured data learner you could
-actually have a thing this number of
 
-623
-01:32:31,469 --> 01:32:37,590
+448
+01:32:28,144 --> 01:32:44,845
+actually have a thing this number of
 hidden you know maybe you could make a
 list and so then rather than creating
-
-624
-01:32:37,590 --> 01:32:42,780
 exactly one hidden layer and one output
 layer this could be a little loop that
-
-625
-01:32:42,780 --> 01:32:47,010
 creates and hidden miners each one of
-the size you want so like this is all
 
-626
-01:32:47,010 --> 01:32:52,230
+449
+01:32:44,945 --> 01:32:49,570
+the size you want so like this is all
 stuff you can play with during the
 hearing the week if you want to and I
-feel like if you've got like a much
 
-627
-01:32:53,790 --> 01:32:57,989
+450
+01:32:49,670 --> 01:33:05,555
+feel like if you've got like a much
 smaller collaborative children data set
 you know maybe you need like more
-
-628
-01:32:57,989 --> 01:33:02,500
 regularization or whatever
 it's a much bigger one maybe more layers
-
-629
-01:33:02,500 --> 01:33:08,710
 would help I don't know you know III
-haven't seen much discussion of this
 
-630
-01:33:08,710 --> 01:33:12,040
+451
+01:33:05,655 --> 01:33:21,390
+haven't seen much discussion of this
 kind of neural network approach to
 collaborative filtering but I'm not a
-
-631
-01:33:12,040 --> 01:33:15,880
 collaborative filtering expert so maybe
 it's maybe it's around but that'd be
-
-632
-01:33:15,880 --> 01:33:27,000
 interesting thing to try so the next
-thing I wanted to do was to talk about
 
-633
-01:33:27,000 --> 01:33:34,870
+452
+01:33:21,490 --> 01:33:34,870
+thing I wanted to do was to talk about
 the training loop so what's actually
 happening inside the training loop so at
 
-634
-01:33:34,870 --> 01:33:42,220
+453
+01:33:34,870 --> 01:33:58,640
 the moment we're basically passing off
 the actual updating of the weights to PI
-
-635
-01:33:42,220 --> 01:33:49,330
 torches optimizer but what I'm going to
 do is like understand what that
-
-636
-01:33:49,330 --> 01:33:54,160
 optimizer is is actually good and we're
 also I also want to understand what this
-
-637
-01:33:54,160 --> 01:34:03,220
 Momentum's him he's doing so you'll find
-we have a spreadsheet called grab disk
 
-638
-01:34:03,220 --> 01:34:08,110
+454
+01:33:58,740 --> 01:34:08,110
+we have a spreadsheet called grab disk
 gradient descent and it's kind of
 designed to be read left to right sorry
 right to left worksheet was so the
 
-639
+455
 01:34:11,200 --> 01:34:16,030
 rightmost worksheet is some data right
 and we're going to implement gradient
 
-640
-01:34:16,030 --> 01:34:20,560
+456
+01:34:16,030 --> 01:34:21,815
 descent in Excel because obviously
 everybody wants to do deep learning in
-
-641
-01:34:20,560 --> 01:34:23,770
 it Selman we've done collaborative
-filtering in Excel we've done
 
-642
-01:34:23,770 --> 01:34:30,040
+457
+01:34:22,115 --> 01:34:30,040
+filtering in Excel we've done
 convolutions in Excel so now we need SJD
 in Excel so we can replace - once and
 for all
 
-643
-01:34:30,430 --> 01:34:37,270
+458
+01:34:30,430 --> 01:34:41,250
 okay so let's start by creating some
 data right and so here's you know here's
-
-644
-01:34:37,270 --> 01:34:45,330
 some independent you know I've got one
 column of X's you know and one column of
-wise and these are actually directly
 
-645
-01:34:48,400 --> 01:34:54,460
+459
+01:34:41,350 --> 01:35:01,760
+wise and these are actually directly
 linearly related so this is this is
 random right and this one here is equal
-
-646
-01:34:54,460 --> 01:35:09,160
 to x times 2 plus 30 ok so let's try and
+
+460
+01:35:01,860 --> 01:35:13,675
 use Excel to take that data and try and
-
-647
-01:35:09,160 --> 01:35:18,290
 learn those parameters
+
+461
+01:35:13,775 --> 01:35:20,910
 okay that's going to be able so let's
-
-648
-01:35:18,290 --> 01:35:23,630
 start with the most basic version of SGD
-and so the first thing I'm going to do
 
-649
-01:35:23,630 --> 01:35:27,410
+462
+01:35:21,010 --> 01:35:35,190
+and so the first thing I'm going to do
 is I'm going to run a macro so you can
 see what this looks like so I'll hit run
-
-650
-01:35:27,410 --> 01:35:32,180
 and it does five eight bucks under
 another five eight bucks
-
-651
-01:35:32,180 --> 01:35:38,300
 - another five eight bucks okay so the
-first one was pretty terrible it's hard
 
-652
-01:35:38,300 --> 01:35:45,650
+463
+01:35:35,290 --> 01:35:41,925
+first one was pretty terrible it's hard
 to see so I'll just delete that first
 one get better scaling alright so you
-can see it actually it's pretty
 
-653
-01:35:47,450 --> 01:35:53,060
+464
+01:35:42,025 --> 01:35:53,060
+can see it actually it's pretty
 constantly improving the loss all right
 this is the loss per pot all right so
 
-654
-01:35:53,060 --> 01:36:03,740
+465
+01:35:53,060 --> 01:36:01,045
 how do we do that so let's reset it so
 here is my X's and my y's and what I do
 is I start out by assuming some
 
-655
-01:36:06,500 --> 01:36:13,820
+466
+01:36:01,145 --> 01:36:31,105
 intercept and some slope right so this
 is my randomly initialized weights so I
-
-656
-01:36:13,820 --> 01:36:18,440
 have randomly initialized them both to
 one you could pick a different random
-
-657
-01:36:18,440 --> 01:36:24,670
 number if you like but I promise that I
 randomly picked the number one twice
-
-658
-01:36:24,670 --> 01:36:27,850
 there you go
-
-659
-01:36:27,880 --> 01:36:34,430
 it was a random number between one and
-one so here is my intercept and slope
 
-660
-01:36:34,430 --> 01:36:37,940
+467
+01:36:31,205 --> 01:36:44,265
+one so here is my intercept and slope
 I'm just going to copy them over here
 right so you can literally see this is
 just equal see one here is equals c2
-
-661
-01:36:41,390 --> 01:36:47,240
 okay so I'm gonna start with my very
 first row of data x equals 14 y equals
-58 and my goal is to come up after I
 
-662
-01:36:51,710 --> 01:36:54,860
+468
+01:36:44,365 --> 01:36:58,855
+58 and my goal is to come up after I
 look at this piece of data I want to
 come up with a slightly better intercept
-
-663
-01:36:54,860 --> 01:37:02,950
 and a slightly better slope okay so to
-do that I need to first of all basically
 
-664
-01:37:02,950 --> 01:37:10,460
+469
+01:36:58,955 --> 01:37:10,460
+do that I need to first of all basically
 figure out which direction is is down in
 other words if I make my intercept a
 
-665
-01:37:10,460 --> 01:37:15,050
+470
+01:37:10,460 --> 01:37:17,640
 little bit higher or a little bit lower
 would it make my error a little bit
-
-666
-01:37:15,050 --> 01:37:20,330
 better or a little bit worse so let's
+
+471
+01:37:17,740 --> 01:37:22,320
 start out by calculating the error so to
-
-667
-01:37:20,330 --> 01:37:24,410
 calculate the error the first thing we
+
+472
+01:37:22,420 --> 01:37:28,664
 need is a prediction so the prediction
-
-668
-01:37:24,410 --> 01:37:33,019
 is equal to the interest
+
+473
+01:37:28,764 --> 01:37:36,524
 at plus x times so that is our zero
-
-669
-01:37:33,019 --> 01:37:40,129
 hidden layer neural network okay
+
+474
+01:37:36,624 --> 01:37:42,899
 and so here is our era it's equal to our
-
-670
-01:37:40,129 --> 01:37:45,769
 prediction - our actual squared so we
-could like play around with this I don't
 
-671
-01:37:45,769 --> 01:37:49,760
+475
+01:37:42,999 --> 01:37:57,049
+could like play around with this I don't
 want my error to be 18-49 I'd like it to
 be lower so what if we set the
-
-672
-01:37:49,760 --> 01:37:57,049
 intercepts to one point one 18-49 goes
 to 1840 okay so a higher intercept would
 
-673
-01:37:57,049 --> 01:38:05,599
+476
+01:37:57,049 --> 01:38:13,999
 be better okay what about the slope to
 increase that it goes from 1849 to 1730
-
-674
-01:38:05,599 --> 01:38:09,969
 okay a higher slope would be better as
 well not surprising because we know
-
-675
-01:38:09,969 --> 01:38:18,129
 actually that there should be 30 into so
-one way to figure that out
 
-676
-01:38:18,129 --> 01:38:23,059
+477
+01:38:14,099 --> 01:38:23,059
+one way to figure that out
 you know encode and this protein is to
 do literally what I just did is to add a
 
-677
+478
 01:38:23,059 --> 01:38:26,419
 little bit to the intercept and the
 slope and see what happens and that's
 
-678
+479
 01:38:26,419 --> 01:38:30,769
 called finding the derivative through
 finite differencing right and so let's
 
-679
+480
 01:38:30,769 --> 01:38:40,969
 go ahead and do that so here is the
 value of my error if I add 0.01 to my
 
-680
-01:38:40,969 --> 01:38:46,219
+481
+01:38:40,969 --> 01:38:48,674
 intercept all right so it's c4 plus 0.01
 and then I just put that into my Lydian
-
-681
-01:38:46,219 --> 01:38:51,229
 function and then I subtract my actual
-all squared all right and so that causes
 
-682
-01:38:51,229 --> 01:38:59,089
+482
+01:38:48,774 --> 01:39:05,324
+all squared all right and so that causes
 my arrow to go down a bit
 that's our increasing my is that
-
-683
-01:38:59,089 --> 01:39:03,349
 increasing will see for increasing the
 intercept a little bit has caused my
-
-684
-01:39:03,349 --> 01:39:07,399
 arrow to go down so what's the
-derivative well the derivative is equal
 
-685
-01:39:07,399 --> 01:39:11,749
+483
+01:39:05,424 --> 01:39:11,749
+derivative well the derivative is equal
 to how much the dependent variable
 changed by divided by how much the
 independent variable changed by all
 
-686
-01:39:13,999 --> 01:39:18,469
+484
+01:39:13,999 --> 01:39:21,511
 right and so there it is right our
 dependent variable changed by that -
-
-687
-01:39:18,469 --> 01:39:24,049
 that right and our independent variable
+
+485
+01:39:21,611 --> 01:39:27,239
 we changed by 0.01 so there is the
-
-688
-01:39:24,049 --> 01:39:30,530
 estimated value of the error dB so
-remember when people talking about
 
-689
-01:39:30,530 --> 01:39:34,609
+486
+01:39:27,339 --> 01:39:39,570
+remember when people talking about
 derivatives right this is this is all
 they're doing is they're saying what's
-
-690
-01:39:34,609 --> 01:39:39,570
 this value but as we make this number
 smaller and smaller and smaller
 and smaller as it as limits to zero
 
-691
-01:39:43,530 --> 01:39:47,760
+487
+01:39:43,530 --> 01:39:56,430
 I'm not mad enough to think in terms of
 like derivatives and integrals and stuff
-
-692
-01:39:47,760 --> 01:39:51,540
 like that so whatever I think about this
 I always think about you know an actual
-
-693
-01:39:51,540 --> 01:39:56,430
 like plus 0.01 and divided by 0.01
 because like I just find that easier
 
-694
-01:39:56,430 --> 01:40:00,540
+488
+01:39:56,430 --> 01:40:06,025
 just like I'd ever think about
 probability density functions I always
-
-695
-01:40:00,540 --> 01:40:03,240
 think about actual probabilities of that
 toss a coin
-
-696
-01:40:03,240 --> 01:40:08,910
 something happens three times so I
-always think like remember it's it's
 
-697
-01:40:08,910 --> 01:40:14,220
+489
+01:40:06,125 --> 01:40:16,255
+always think like remember it's it's
 totally fair to do this because a
 computer is discrete it's not continuous
-
-698
-01:40:14,220 --> 01:40:18,390
 like a computer can't do anything
-infinitely small anyway right so it's
 
-699
-01:40:18,390 --> 01:40:23,460
+490
+01:40:16,355 --> 01:40:23,460
+infinitely small anyway right so it's
 actually got to be calculating things at
 some level of precision right and our
 
-700
+491
 01:40:23,460 --> 01:40:29,490
 brains kind of need that as well so this
 is like my version of Jeffery Clinton's
 
-701
+492
 01:40:29,490 --> 01:40:33,660
 like to visualize things in more than
 two dimensions you just like say 12
 
-702
+493
 01:40:33,660 --> 01:40:36,780
 dimensions really quickly well
 visualizing in two dimensions this is my
 
-703
+494
 01:40:36,780 --> 01:40:41,970
 equivalent you know to to think about
 derivatives just think about division
 
-704
+495
 01:40:41,970 --> 01:40:47,640
 and like although all the mathematicians
 say no you can't do that you actually
 
-705
+496
 01:40:47,640 --> 01:40:51,810
 can like if you think of DX dy is being
 literally you know change in X over
 
-706
+497
 01:40:51,810 --> 01:40:58,080
 changing Y like the division actually
 like the calculations do work like all
 the time so okay so let's do the same
 
-707
+498
 01:41:01,710 --> 01:41:07,680
 thing now with changing my slope by a
 little bit and so here's the same thing
 
-708
+499
 01:41:07,680 --> 01:41:13,620
 right and so you can see both of these
 are negative okay so that's saying if I
 
-709
+500
 01:41:13,620 --> 01:41:20,010
 increase my intercept my loss goes down
 if I increase my slope my loss goes down
 
-710
+501
 01:41:20,010 --> 01:41:29,010
 right and so my derivative of my error
 with respect to my slope is is actually
 
-711
+502
 01:41:29,010 --> 01:41:36,240
 pretty high and that's not surprising
 because it's actually you know the
 
-712
+503
 01:41:36,240 --> 01:41:42,020
 constant term is just being added where
 else as slope is being multiplied by 40
 
-713
+504
 01:41:42,890 --> 01:41:49,950
 okay now find that differencing is all
 very well and good but there's a big
 problem with finite difference seeing in
 
-714
+505
 01:41:52,040 --> 01:41:56,050
 Hyden
 no spaces and the problem is this right
 
-715
+506
 01:41:56,050 --> 01:42:02,770
 and this is like you don't need to learn
 how to calculate derivatives or
 
-716
+507
 01:42:02,770 --> 01:42:06,969
 integrals but you need to learn how to
 think about them spatially right and so
 
-717
+508
 01:42:06,969 --> 01:42:13,630
 remember we have some vector very high
 dimensional vector it's got like a
 
-718
+509
 01:42:13,630 --> 01:42:22,090
 million items in it right and it's going
 through some weight matrix right of size
 
-719
+510
 01:42:22,090 --> 01:42:26,890
 like 1 million by size a hundred
 thousand or whatever and it's spitting
 
-720
+511
 01:42:26,890 --> 01:42:33,580
 out something of size I hundred thousand
 and so you need to realize like there
 
-721
+512
 01:42:33,580 --> 01:42:38,380
 isn't like a gradient yeah but it's like
 for every one of these things in this
 
-722
+513
 01:42:38,380 --> 01:42:45,850
 vector right there's a gradient in every
 direction you know in every part of the
 
-723
+514
 01:42:45,850 --> 01:42:52,719
 output right so it actually has not a
 single gradient number not even a
 
-724
+515
 01:42:52,719 --> 01:43:03,100
 gradient vector but a gradient matrix
 right and so this this is a lot to
 
-725
+516
 01:43:03,100 --> 01:43:07,989
 calculate right I would literally have
 to like add a little bit to this and see
 what happens to all of these add a
 
-726
+517
 01:43:09,790 --> 01:43:14,739
 little bit to this see what happens to
 all of these right to fill in one column
 
-727
+518
 01:43:14,739 --> 01:43:21,400
 of this at a time so that's going to be
 horrendously slow like that so that's
 
-728
+519
 01:43:21,400 --> 01:43:24,250
 why like if you're ever thinking like
 how we can just do this with finite
 
-729
+520
 01:43:24,250 --> 01:43:28,480
 differencing just remember like okay we
 we're dealing in the with these very
 
-730
+521
 01:43:28,480 --> 01:43:37,870
 high dimensional vectors where you know
 this this kind of matrix calculus like
 
-731
+522
 01:43:37,870 --> 01:43:42,880
 all the concepts are identical but when
 you actually draw it out like this you
 
-732
+523
 01:43:42,880 --> 01:43:47,199
 suddenly realize like okay for each
 number I could change there's a whole
 bunch of numbers that impacts and I have
 
-733
+524
 01:43:49,060 --> 01:43:54,310
 this whole matrix of things to compute
 right and so your gradient calculations
 
-734
+525
 01:43:54,310 --> 01:43:59,260
 can take up a lot of memory and they can
 take up a lot of time so we want to find
 
-735
+526
 01:43:59,260 --> 01:44:07,000
 some way to do this more quickly okay
 and it's definitely well worth like
 
-736
+527
 01:44:07,000 --> 01:44:14,200
 spending time kind of studying these
 ideas of like you know the idea of like
 
-737
+528
 01:44:14,200 --> 01:44:24,640
 the gradients like look up things like
 Jacobian and Hessian they're the things
 
-738
+529
 01:44:24,640 --> 01:44:29,020
 that you want to search for just that
 unfortunately people normally write
 
-739
+530
 01:44:29,020 --> 01:44:35,860
 about them with you know lots of great
 letters and bla bla bla right but there
 are some there are some nice you know
 
-740
+531
 01:44:39,760 --> 01:44:43,060
 intuitive explanations out there and
 hopefully you can share them on the
 
-741
+532
 01:44:43,060 --> 01:44:47,830
 forum if you find them because this is
 stuff you really need to really need to
 understand in here you know because
 
-742
+533
 01:44:51,960 --> 01:44:56,380
 you're trying to train something and
 it's not working properly and like later
 
-743
+534
 01:44:56,380 --> 01:45:00,640
 on we'll learn how to like look inside
 hi torch to like actually get the values
 
-744
+535
 01:45:00,640 --> 01:45:04,240
 of the gradients and you need to know
 like okay well how would I like what the
 gradients you know what would I consider
 
-745
+536
 01:45:06,430 --> 01:45:10,840
 unusual like you know these are the
 things that turn you into a really
 
-746
+537
 01:45:10,840 --> 01:45:15,580
 awesome deep learning practitioner is
 when you can like debug your problems by
 
-747
+538
 01:45:15,580 --> 01:45:19,720
 like grabbing the gradients and doing
 histograms of them and like knowing you
 
-748
+539
 01:45:19,720 --> 01:45:23,530
 know that you could like plot that all
 each layer my average gradients getting
 worse or you know bigger okay so the
 
-749
+540
 01:45:28,270 --> 01:45:34,270
 trick to doing this more quickly is to
 do it analytically rather than through
 
-750
+541
 01:45:34,270 --> 01:45:40,150
 finite differencing and so analytically
 is basically there is a list you
 probably all learned it at high school
 
-751
+542
 01:45:41,500 --> 01:45:46,600
 there is a literally a list of rules
 that for every mathematical function
 
-752
+543
 01:45:46,600 --> 01:45:53,050
 there's a like this is the derivative of
 that function so you probably remember a
 
-753
+544
 01:45:53,050 --> 01:46:02,920
 few of them for example x squared - it's
 alright and so we actually have here an
 
-754
+545
 01:46:02,920 --> 01:46:10,720
 x squared so here is our two x right now
 the one that I actually want you to know
 
-755
+546
 01:46:10,720 --> 01:46:17,550
 is not any of the individual rules but I
 want you to know the chain rule right
 
-756
+547
 01:46:17,550 --> 01:46:22,450
 which
 you've got some function of some
 
-757
+548
 01:46:22,450 --> 01:46:26,380
 function of something why is this
 important
 
-758
+549
 01:46:26,380 --> 01:46:33,670
 I don't know that's a linear layer
 that's a rally right and then we can
 
-759
+550
 01:46:33,670 --> 01:46:42,160
 kind of keep going backwards map etc
 right a neural net is just a function of
 
-760
+551
 01:46:42,160 --> 01:46:45,100
 a function of a function of a function
 where the innermost is you know it's
 
-761
+552
 01:46:45,100 --> 01:47:00,940
 basically linear rally your linear rally
 your dot linear sigmoid or soft mass all
 right and so it's a function of a
 
-762
+553
 01:47:02,170 --> 01:47:06,940
 function of a function and so therefore
 to calculate the derivative of the
 weights in your model the loss of your
 
-763
+554
 01:47:10,960 --> 01:47:13,330
 model with respect to the weights of
 your model you're going to need to use
 
-764
+555
 01:47:13,330 --> 01:47:17,860
 the chain rule and specifically whatever
 layer it is that you're up to like I
 
-765
+556
 01:47:17,860 --> 01:47:23,020
 want to calculate the derivative here
 and got a need to use all of these all
 
-766
+557
 01:47:23,020 --> 01:47:25,690
 of these ones because that's all that's
 that's the function that's being applied
 right and that's why they call this back
 
-767
+558
 01:47:28,150 --> 01:47:36,310
 propagation because the value of the
 derivative of that is equal to that
 
-768
+559
 01:47:36,310 --> 01:47:43,810
 derivative now basically you can do it
 like this you can say let's call you is
 
-769
+560
 01:47:43,810 --> 01:47:47,020
 this right
 let's call that you all right then it's
 
-770
+561
 01:47:47,020 --> 01:47:56,440
 simply equal to the derivative of that
 times derivative of that right
 you just multiply them together and so
 
-771
+562
 01:47:59,170 --> 01:48:03,910
 that's what back propagation is like
 it's not that back propagation is a new
 
-772
+563
 01:48:03,910 --> 01:48:10,240
 thing for you to learn it's not a new
 algorithm it is literally take the
 
-773
+564
 01:48:10,240 --> 01:48:16,270
 derivative of every one of your layers
 and multiply them all together so like
 
-774
+565
 01:48:16,270 --> 01:48:23,050
 it doesn't deserve a new name right
 apply the chain rule to my layers does
 
-775
+566
 01:48:23,050 --> 01:48:27,790
 not deserve a new name but it gets one
 because us neural networks folk really
 
-776
+567
 01:48:27,790 --> 01:48:31,750
 need to seem as clever as possible it's
 really important that everybody else
 
-777
+568
 01:48:31,750 --> 01:48:34,929
 thinks
 we are way outside of their capabilities
 
-778
+569
 01:48:34,929 --> 01:48:39,429
 so the fact that you're here means that
 we've failed because you guys somehow
 
-779
+570
 01:48:39,429 --> 01:48:43,540
 think that you're capable right so
 remember it's really important when you
 
-780
+571
 01:48:43,540 --> 01:48:48,010
 talk to other people that you say
 backpropagation and rectified linear
 
-781
+572
 01:48:48,010 --> 01:48:54,400
 unit rather than like multiply the
 layers gradients or replace negatives
 with zeros okay so so here we go
 
-782
+573
 01:48:57,520 --> 01:49:03,159
 so here is so I've just gone ahead and
 grabbed the derivative unfortunately
 there is no automatic differentiation in
 
-783
+574
 01:49:05,079 --> 01:49:09,610
 Excel yet so I did the alternative which
 is to paste the formula into Wolfram
 
-784
+575
 01:49:09,610 --> 01:49:14,020
 Alpha and got back the derivative so
 there's the first derivative and there's
 
-785
+576
 01:49:14,020 --> 01:49:19,510
 the second derivative analytically we
 only have one layer in this infinite
 
-786
+577
 01:49:19,510 --> 01:49:23,860
 finally small neural network so we don't
 have to worry about the chain rule and
 we should see that this analytical
 
-787
+578
 01:49:25,480 --> 01:49:28,599
 derivative is pretty close to our
 estimated derivative from the find out
 
-788
+579
 01:49:28,599 --> 01:49:33,880
 differencing and indeed it is right and
 we should see that these ones are pretty
 
-789
+580
 01:49:33,880 --> 01:49:38,790
 similar as well and indeed they are
 right and if you're you know back when I
 
-790
+581
 01:49:38,790 --> 01:49:45,130
 implemented my own neural Nets 20 years
 ago I you know had to actually calculate
 
-791
+582
 01:49:45,130 --> 01:49:48,550
 the derivatives and so I always would
 write like had something that would
 
-792
+583
 01:49:48,550 --> 01:49:52,090
 check the derivatives using finite
 difference in and so for those poor
 
-793
+584
 01:49:52,090 --> 01:49:55,420
 people that they'd have to write these
 things by hand you'll still see that
 
-794
+585
 01:49:55,420 --> 01:49:59,710
 they have like a finite differencing
 checkout so if you ever do have to
 
-795
+586
 01:49:59,710 --> 01:50:05,469
 implement a derivative by hand please
 make sure that you have a finite
 
-796
+587
 01:50:05,469 --> 01:50:10,719
 differencing checker so that you can
 test it alright so there's no
 
-797
+588
 01:50:10,719 --> 01:50:17,139
 derivatives so we know that if we
 increase B then we're going to get a
 
-798
+589
 01:50:17,139 --> 01:50:22,239
 slightly better loss so let's increase B
 by a bit how much should we increase it
 by well we'll increase it by some more
 
-799
+590
 01:50:24,670 --> 01:50:28,060
 for this so the motor-pod we're going to
 choose is called a learning rate and so
 
-800
+591
 01:50:28,060 --> 01:50:37,300
 here's our learning rate so here's one
 enoch 4 ok so our new value is equal to
 
-801
+592
 01:50:37,300 --> 01:50:45,219
 whatever it was before
 - our derivative times our learning rate
 
-802
+593
 01:50:45,219 --> 01:50:52,239
 okay so we've gone from one to one point
 or one and then a we've done the same
 thing so it's gone from one to one point
 
-803
+594
 01:50:56,349 --> 01:51:02,530
 one two so this is a special kind of
 mini batch it's a mini batch of size one
 
-804
+595
 01:51:02,530 --> 01:51:09,099
 okay so we call this online grading does
 it just means mini batch of size one so
 
-805
+596
 01:51:09,099 --> 01:51:11,800
 then we can go into the next one next is
 86
 
-806
+597
 01:51:11,800 --> 01:51:17,590
 why is 202 right this is my intercept
 and slope copied across from the last
 
-807
+598
 01:51:17,590 --> 01:51:26,170
 row okay so here's my new wire
 prediction here's my new era here are my
 
-808
+599
 01:51:26,170 --> 01:51:32,559
 derivatives here are my new a and B okay
 so we keep doing that for every mini
 
-809
+600
 01:51:32,559 --> 01:51:41,139
 batch of one until eventually we run out
 at the end of the new pocket okay and so
 
-810
+601
 01:51:41,139 --> 01:51:48,849
 then at the end of an epoch we would
 grab our intercept and slope and paste
 
-811
+602
 01:51:48,849 --> 01:51:56,440
 them back over here as our new values
 there we are and we can now continue
 again all right so we're now starting
 
-812
+603
 01:51:59,050 --> 01:52:06,070
 with pops today's either in the wrong
 spot it should be pasted special
 transpose values all right okay
 
-813
+604
 01:52:10,420 --> 01:52:13,809
 so there's a new intercept there's any
 slope possibly I got that the wrong way
 
-814
+605
 01:52:13,809 --> 01:52:19,570
 around but anyway you get the idea and
 then we continue okay so I recorded the
 world's tiniest macro which literally
 
-815
+606
 01:52:22,989 --> 01:52:32,070
 just copies the final slope and puts it
 into the new slope copies the final
 
-816
+607
 01:52:32,070 --> 01:52:40,989
 intercept put the new intercept and does
 that five times and after each time it
 
-817
+608
 01:52:40,989 --> 01:52:45,550
 grabs the root mean squared error and
 pastes it into the next spare area and
 
-818
+609
 01:52:45,550 --> 01:52:49,690
 that is attached to this Run button and
 so that's going to go ahead and do that
 five times okay so that's stochastic
 
-819
+610
 01:52:53,769 --> 01:52:58,990
 gradient descent and if so so to turn
 this into a CNN
 
-820
+611
 01:52:58,990 --> 01:53:05,170
 all right you would just replace this
 error function right and therefore this
 
-821
+612
 01:53:05,170 --> 01:53:12,220
 prediction with the output of that
 convolutional example spreadsheet okay
 
-822
+613
 01:53:12,220 --> 01:53:19,750
 and that then would be in CNN being
 trained with with SGD okay
 
-823
+614
 01:53:19,750 --> 01:53:30,610
 now the problem is that you'll see when
 I run this it's kind of going very
 
-824
+615
 01:53:30,610 --> 01:53:35,410
 slowly right we know that we need to get
 to a slope of two and an intercept of
 
-825
+616
 01:53:35,410 --> 01:53:40,180
 thirty and you can kind of see it this
 rate it's going to take a very long time
 
-826
+617
 01:53:40,180 --> 01:53:51,850
 right and specifically it's like it
 keeps going the same direction so it's
 
-827
+618
 01:53:51,850 --> 01:53:56,830
 like come on take a hint that's a good
 direction so they come on take a hint
 
-828
+619
 01:53:56,830 --> 01:54:01,260
 that's a good direction please keep
 doing that but more is called momentum
 
-829
+620
 01:54:01,260 --> 01:54:11,350
 right so on our next spreadsheet we're
 going to implement momentum okay so what
 
-830
+621
 01:54:11,350 --> 01:54:16,510
 momentum does is the same thing and what
 to simplify this spreadsheet I've
 
-831
+622
 01:54:16,510 --> 01:54:21,430
 removed the finite difference cause okay
 other than that this is just the same
 
-832
+623
 01:54:21,430 --> 01:54:28,810
 right so it's true what our X is our
 wise A's and B's predictions our error
 
-833
+624
 01:54:28,810 --> 01:54:39,340
 is now over here okay and here's our
 derivatives okay our new calculation for
 
-834
+625
 01:54:39,340 --> 01:54:49,660
 this particular row our new calculation
 here for our new a term just like before
 
-835
+626
 01:54:49,660 --> 01:54:59,110
 is is equal to whatever a was before -
 okay now this time I'm not taking the
 
-836
+627
 01:54:59,110 --> 01:55:03,850
 derivative but I'm - income other number
 times the loan rate so what's this other
 
-837
+628
 01:55:03,850 --> 01:55:13,020
 number okay so this other number is
 equal to the derivative
 
-838
+629
 01:55:13,020 --> 01:55:26,800
 times what's this k 1.02 plus 0.98 times
 the thing just above it okay so this is
 
-839
+630
 01:55:26,800 --> 01:55:32,650
 a linear interpolation between this rows
 derivative for this mini-batches
 derivative and whatever direction we
 
-840
+631
 01:55:35,830 --> 01:55:41,740
 went last time right so in other words
 keep going the same direction as you
 
-841
+632
 01:55:41,740 --> 01:55:48,940
 were before right then update it a
 little bit right and so in our rich in
 
-842
+633
 01:55:48,940 --> 01:55:55,600
 our Python just before we had a momentum
 of 0.9 okay so you can see what tends to
 
-843
+634
 01:55:55,600 --> 01:56:03,280
 happen is that our negative kind of gets
 more and more negative right all the way
 up to like 2,000 where else with our
 
-844
+635
 01:56:08,080 --> 01:56:14,200
 standard SGD approach a derivatives are
 kind of all over the place right
 
-845
+636
 01:56:14,200 --> 01:56:18,790
 sometimes there's 700 something negative
 7 positive 100 you know so this is
 
-846
+637
 01:56:18,790 --> 01:56:24,100
 basically saying like yeah if you've
 been going down for quite a while keep
 
-847
+638
 01:56:24,100 --> 01:56:28,300
 doing that until finally here it's like
 okay that's that seems to be far enough
 
-848
+639
 01:56:28,300 --> 01:56:32,140
 so that's being less and less and less
 negative all right mister we start being
 
-849
+640
 01:56:32,140 --> 01:56:35,680
 positive again so you can kind of see
 why it's called momentum it's like once
 
-850
+641
 01:56:35,680 --> 01:56:40,240
 you start traveling in a particular
 direction for a particular weight you're
 kind of the wheel start spinning and
 
-851
+642
 01:56:41,950 --> 01:56:46,810
 then once the gradient turns around the
 other way it's like Oh slow down we've
 
-852
+643
 01:56:46,810 --> 01:56:51,700
 got this kind of event um and then
 finally turn back around right so when
 we do it this way all right we can do
 
-853
+644
 01:56:57,340 --> 01:57:04,300
 exactly the same thing right and after
 five iterations we're at 89 where else
 
-854
+645
 01:57:04,300 --> 01:57:11,950
 before after five iterations we're at
 104 right and after a few more let's go
 
-855
+646
 01:57:11,950 --> 01:57:22,620
 maybe 15 okay so get this 102 for us
 here
 
-856
+647
 01:57:26,160 --> 01:57:31,660
 it's going right so it's it's it's a bit
 better it's not hips better you can
 
-857
+648
 01:57:31,660 --> 01:57:38,710
 still see like these numbers they're not
 zipping along right but it's definitely
 
-858
+649
 01:57:38,710 --> 01:57:41,680
 an improvement and it also gives us
 something else to tune which is nice
 
-859
+650
 01:57:41,680 --> 01:57:45,910
 like so if this is kind of a
 well-behaved error surface right in
 
-860
+651
 01:57:45,910 --> 01:57:50,800
 other words like although it might be
 bumpy along the way there's kind of some
 
-861
+652
 01:57:50,800 --> 01:57:55,300
 overall direction like imagine you're
 going down a hill right and there's like
 
-862
+653
 01:57:55,300 --> 01:57:59,170
 bumps oh alright so the mobile more
 momentum you got going to skipping over
 
-863
+654
 01:57:59,170 --> 01:58:03,330
 the tops right so we could say like okay
 let's increase our beater up to 0.98
 
-864
+655
 01:58:03,330 --> 01:58:08,140
 right and see if that like allows us to
 train a little faster and whoa look at
 
-865
+656
 01:58:08,140 --> 01:58:12,160
 that suddenly what's going to okay so
 one nice thing about things like
 momentum is it's like another parameter
 
-866
+657
 01:58:13,750 --> 01:58:21,670
 that you can choose to try and make your
 model train better in practice basically
 
-867
+658
 01:58:21,670 --> 01:58:26,230
 everybody does this every like you look
 at any like image net winner or whatever
 they all use momentum okay and so back
 
-868
+659
 01:58:37,930 --> 01:58:44,740
 over here when we said here's SGD that
 basically means use the basic tab of our
 Excel spreadsheet but then momentum
 
-869
+660
 01:58:46,960 --> 01:58:58,000
 equals 0.9 means add in put a point nine
 over here okay and so that that's kind
 
-870
+661
 01:58:58,000 --> 01:59:03,240
 of your like default starting point so
 
-871
+662
 01:59:03,720 --> 01:59:18,220
 let's keep going and talk about Adam so
 Adam is something which I actually was
 
-872
+663
 01:59:18,220 --> 01:59:22,720
 not right earlier on in this course I
 said we've been using Adam by default we
 
-873
+664
 01:59:22,720 --> 01:59:25,690
 actually haven't we've actually been I
 noticed our we've actually been using
 SGD with momentum by default and the
 
-874
+665
 01:59:29,020 --> 01:59:36,690
 reason is that Adam has had
 much faster as you'll see it's much much
 faster to learn with but there's been
 
-875
+666
 01:59:38,489 --> 01:59:41,700
 some problems which is people who
 haven't been getting quite as good like
 
-876
+667
 01:59:41,700 --> 01:59:46,440
 final answers with Adam as they have
 with std with momentum and that's why
 
-877
+668
 01:59:46,440 --> 01:59:50,670
 you'll see like all the you know image
 net winning solutions and so forth and
 
-878
+669
 01:59:50,670 --> 01:59:56,880
 all the academic papers always use SGD
 with momentum and I'll Adam seems to be
 
-879
+670
 01:59:56,880 --> 02:00:00,330
 a particular problem in NLP people
 really haven't got Adam working at all
 
-880
+671
 02:00:00,330 --> 02:00:08,640
 well the good news is this was I built
 it looks like this was solved two weeks
 
-881
+672
 02:00:08,640 --> 02:00:14,730
 ago it basically it turned out that the
 way people were dealing with a
 combination of weight decay in Adam had
 
-882
+673
 02:00:17,310 --> 02:00:22,200
 a nasty kind of bargainer basically and
 that's that's kind of carried through to
 every single library and one of our
 
-883
+674
 02:00:24,750 --> 02:00:31,170
 students and then Sahara has actually
 just completed a prototype of adding is
 
-884
+675
 02:00:31,170 --> 02:00:36,390
 this new version of Adam has called Adam
 W into fast AI and he's confirmed that
 
-885
+676
 02:00:36,390 --> 02:00:43,710
 he's getting much faster both the faster
 performance and also the better accuracy
 
-886
+677
 02:00:43,710 --> 02:00:49,560
 so hopefully we'll have this Adam W in
 faster ideally before next week we'll
 
-887
+678
 02:00:49,560 --> 02:00:53,660
 see how we go very very soon
 so so it is worth telling you about
 about Adam so let's talk about it it's
 
-888
+679
 02:00:58,830 --> 02:01:04,560
 actually incredibly simple but again you
 know make sure you make it sound really
 
-889
+680
 02:01:04,560 --> 02:01:09,690
 complicated when you tell people so that
 you can so here's the same spreadsheet
 again right and here's our randomly
 
-890
+681
 02:01:13,920 --> 02:01:19,020
 selected a and B again somehow it's
 still one here's a prediction here's our
 
-891
+682
 02:01:19,020 --> 02:01:25,230
 derivatives okay so now how we count
 letting on you hey you could immediately
 see it's looking pretty hopeful because
 
-892
+683
 02:01:28,290 --> 02:01:34,110
 even by like row ten we're like we're
 seeing the numbers move a lot more right
 
-893
+684
 02:01:34,110 --> 02:01:42,960
 so this is looking pretty encouraging so
 how are we calculating this it's equal
 
-894
+685
 02:01:42,960 --> 02:01:49,989
 to our previous value with B minus j h
 we're gonna have to find out what that
 is times our learning rate divided by
 
-895
+686
 02:01:56,739 --> 02:02:00,400
 the square root of LH okay so I'm gonna
 have to dig it and see what's going on
 
-896
+687
 02:02:00,400 --> 02:02:05,650
 one thing to notice here is that my
 learning rate is way higher than it used
 
-897
+688
 02:02:05,650 --> 02:02:12,730
 to be but then we're dividing it by this
 big number okay so let's start out by
 
-898
+689
 02:02:12,730 --> 02:02:19,300
 looking and seeing what this day-out
 thing is okay
 
-899
+690
 02:02:19,300 --> 02:02:25,690
 j8 is identical to what we had before j8
 is equal to the linear interpolation of
 the derivative and the previous
 
-900
+691
 02:02:28,750 --> 02:02:36,550
 direction okay so that was easy so one
 part of atom is to use momentum in the
 
-901
+692
 02:02:36,550 --> 02:02:41,680
 way we just defined it
 okay the second piece was to divide by
 
-902
+693
 02:02:41,680 --> 02:02:48,610
 square root L 8 what is that square root
 L 8 okay is another linear interpolation
 of something and something else and
 
-903
+694
 02:02:52,920 --> 02:03:00,610
 specifically it's a linear interpolation
 of F 8 squared okay it's a linear
 
-904
+695
 02:03:00,610 --> 02:03:07,210
 interpolation of the derivative squared
 along with the derivative squared last
 
-905
+696
 02:03:07,210 --> 02:03:13,210
 time okay so in other words we've got
 two pieces of momentum going on here
 
-906
+697
 02:03:13,210 --> 02:03:22,420
 one is calculating the momentum version
 of the gradient the other is calculating
 
-907
+698
 02:03:22,420 --> 02:03:28,780
 the momentum version of the gradient
 squared and we often refer to this idea
 
-908
+699
 02:03:28,780 --> 02:03:34,090
 as a exponentially weighted moving
 average in other words it's basically
 
-909
+700
 02:03:34,090 --> 02:03:37,630
 equal to the average of this one and the
 last one in the last one in the last one
 
-910
+701
 02:03:37,630 --> 02:03:42,130
 that we're like multiplicatively
 decreasing the previous ones right
 
-911
+702
 02:03:42,130 --> 02:03:47,830
 because we're multiplying it by 0.9
 times what 999 and so you actually see
 
-912
+703
 02:03:47,830 --> 02:03:53,370
 that for instance in the faster I code
 
-913
+704
 02:04:00,180 --> 02:04:10,380
 if you look at fish we don't just
 calculate the average loss right because
 
-914
+705
 02:04:10,380 --> 02:04:14,980
 what I actually want we certainly don't
 just report the loss for every mini
 match because that just bounces around
 
-915
+706
 02:04:16,210 --> 02:04:22,360
 so much so instead I say average loss is
 equal to whatever the average loss was
 
-916
+707
 02:04:22,360 --> 02:04:31,900
 last time times 0.98 plus the loss this
 time times 0.02 right so in other words
 
-917
+708
 02:04:31,900 --> 02:04:36,489
 the faster you library the thing that
 it's actually when you do like the
 
-918
+709
 02:04:36,489 --> 02:04:40,930
 learning rate finder or plot loss it's
 actually showing you the exponentially
 
-919
+710
 02:04:40,930 --> 02:04:47,290
 weighted moving average of the loss okay
 so it's like a really handy concept it
 
-920
+711
 02:04:47,290 --> 02:04:52,390
 appears quite a lot right the other in
 handy concept know about is this idea of
 
-921
+712
 02:04:52,390 --> 02:04:58,120
 like you've got two numbers one of them
 is multiplied by some value the other is
 
-922
+713
 02:04:58,120 --> 02:05:02,770
 multiplied by one minus that value so
 this is a linear interpolation of two
 
-923
+714
 02:05:02,770 --> 02:05:09,190
 values you'll see it all the time and
 for some reason deep learning people
 nearly always use the value alpha when
 
-924
+715
 02:05:11,949 --> 02:05:15,280
 they do this so like keep an eye out if
 you're reading a paper or something and
 
-925
+716
 02:05:15,280 --> 02:05:22,840
 you see like alpha times bla bla bla bla
 bla plus one minus alpha times some
 
-926
+717
 02:05:22,840 --> 02:05:28,180
 other bla bla bla bla right immediately
 like when people read papers none of us
 
-927
+718
 02:05:28,180 --> 02:05:33,730
 like read every thing in the equation we
 look at it we go oh linear interpolation
 right and I said something I was just
 
-928
+719
 02:05:35,890 --> 02:05:39,670
 talking to Rachel about yesterday is
 like whether we could start trying to
 
-929
+720
 02:05:39,670 --> 02:05:44,080
 find like a a new way of writing papers
 where we literally refactor them right
 
-930
+721
 02:05:44,080 --> 02:05:50,620
 like it'd be so much better to have
 written like linear interpolate bla bla
 
-931
+722
 02:05:50,620 --> 02:05:55,090
 bla bla bla right because then you don't
 have to have that pattern recognition
 
-932
+723
 02:05:55,090 --> 02:05:59,440
 right but until we convince the world to
 change how they write papers this is
 what you have to do is you have to look
 
-933
+724
 02:06:00,820 --> 02:06:06,850
 you know know what to look for right and
 once you do suddenly the huge page with
 
-934
+725
 02:06:06,850 --> 02:06:11,020
 formulas
 that at all like you often notice like
 
-935
+726
 02:06:11,020 --> 02:06:15,580
 for example the two things in here like
 they might be totally identical but this
 might be a time T and this might be at
 
-936
+727
 02:06:17,260 --> 02:06:21,730
 like time t minus y or something right
 like it's very often these big ugly
 formulas turn out to be really really
 
-937
+728
 02:06:24,400 --> 02:06:30,340
 simple if only they had ripped out them
 okay so what are we doing with this
 
-938
+729
 02:06:30,340 --> 02:06:37,540
 gradient squared so what we were doing
 with the gradient squared is we were
 
-939
+730
 02:06:37,540 --> 02:06:42,370
 taking the square root and then we were
 adjusting the learning rate by dividing
 
-940
+731
 02:06:42,370 --> 02:06:49,320
 the learning rate by that okay so
 gradient squared is always positive
 
-941
+732
 02:06:49,320 --> 02:06:55,300
 right and we're taking the exponentially
 waiting move moving average of a bunch
 
-942
+733
 02:06:55,300 --> 02:06:58,750
 of things that are always positive and
 then we're taking the square root of
 
-943
+734
 02:06:58,750 --> 02:07:04,060
 that right so when is this number going
 to be high it's going to be particularly
 
-944
+735
 02:07:04,060 --> 02:07:09,550
 high if there's like one big you know if
 the gradients got a lot of variation
 
-945
+736
 02:07:09,550 --> 02:07:14,980
 that's oh there's a high variance of
 gradient then this G squared thing is
 going to be a really high number for us
 
-946
+737
 02:07:16,840 --> 02:07:22,630
 if it's like a constant amount right
 it's going to be smaller that cuz when
 
-947
+738
 02:07:22,630 --> 02:07:26,980
 you add things that are squared the
 squared slight jump out much bigger for
 us if there wasn't if there wasn't much
 
-948
+739
 02:07:28,510 --> 02:07:34,870
 change it's not going to be as big so
 basically this number at the bottom here
 
-949
+740
 02:07:34,870 --> 02:07:41,320
 is going to be high if our Brady --nt is
 changing a lot now what do you want to
 
-950
+741
 02:07:41,320 --> 02:07:46,210
 do if you've got something which is like
 first negative and then positive and
 
-951
+742
 02:07:46,210 --> 02:07:53,260
 then small and then high right well you
 probably want to be more careful right
 
-952
+743
 02:07:53,260 --> 02:07:56,650
 you probably don't want to take a big
 step because you can't really trust it
 right so when the when the variance of
 
-953
+744
 02:07:59,290 --> 02:08:03,480
 the gradient is high we're going to
 divide our learning rate by a big number
 
-954
+745
 02:08:03,480 --> 02:08:09,760
 we also found learning rate is very
 similar kind of size all the time then
 
-955
+746
 02:08:09,760 --> 02:08:13,120
 we probably feel pretty good about the
 step so we're dividing it by a small
 
-956
+747
 02:08:13,120 --> 02:08:18,100
 amount yeah and so this is called an
 adaptive learning rate yeah and like a
 
-957
+748
 02:08:18,100 --> 02:08:22,240
 lot of people have this confusion about
 atom I've seen it on the forum actually
 like there's some kind of adaptive
 
-958
+749
 02:08:24,700 --> 02:08:29,650
 learning rate where somehow you like
 setting different learning rates for
 
-959
+750
 02:08:29,650 --> 02:08:33,010
 different layers or something it's like
 no not really
 
-960
+751
 02:08:33,010 --> 02:08:37,720
 right all we're doing is we're just
 saying like this keep track of the
 
-961
+752
 02:08:37,720 --> 02:08:43,060
 average of the squares of the gradients
 and use that to adjust the learning rate
 
-962
+753
 02:08:43,060 --> 02:08:48,550
 so there's still one learning rate okay
 in this case it's one okay but
 
-963
+754
 02:08:48,550 --> 02:08:55,030
 effectively every parameter at every
 epoch is being kind of like getting a
 
-964
+755
 02:08:55,030 --> 02:08:58,840
 bigger jump if the learning rate if the
 gradients been pretty constant for that
 
-965
+756
 02:08:58,840 --> 02:09:04,660
 wait and a smaller jump otherwise okay
 and that's Adam that's the entirety of
 
-966
+757
 02:09:04,660 --> 02:09:09,940
 Adam in in Excel right so there's now no
 reason at all why you can't train
 
-967
+758
 02:09:09,940 --> 02:09:13,540
 imagenet in Excel because you've got
 you've got access to all of the pieces
 
-968
+759
 02:09:13,540 --> 02:09:18,660
 you need and so let's try this out run
 
-969
+760
 02:09:19,830 --> 02:09:25,000
 okay that's not bad right five and we
 straight up to twenty nine and two right
 
-970
+761
 02:09:25,000 --> 02:09:31,480
 so the difference between like you know
 standard SGD and this is is huge and
 
-971
+762
 02:09:31,480 --> 02:09:35,140
 basically that you know the key
 difference was that it figured out that
 
-972
+763
 02:09:35,140 --> 02:09:42,100
 we need to be you know moving this
 number much faster okay and so and so it
 
-973
+764
 02:09:42,100 --> 02:09:48,370
 do and so you can see we've now got like
 two different parameters one is kind of
 momentum for the gradient piece the
 
-974
+765
 02:09:50,500 --> 02:09:56,500
 other is the momentum for the gradient
 squared piece and there I think they're
 
-975
+766
 02:09:56,500 --> 02:10:00,670
 called like I think there's just a
 couple of the beta I think when you when
 
-976
+767
 02:10:00,670 --> 02:10:03,790
 you want to change it in PI tortes is I
 think what beta which is just a couple
 
-977
+768
 02:10:03,790 --> 02:10:15,430
 of two numbers you can change Jeremy so
 so you set the yeah I think I understand
 
-978
+769
 02:10:15,430 --> 02:10:21,310
 this concept of you know one day when a
 gradient is it goes up and down then
 
-979
+770
 02:10:21,310 --> 02:10:26,770
 you're not really sure which direction
 should should go so you should kind of
 
-980
+771
 02:10:26,770 --> 02:10:29,590
 slow things down
 therefore you subtract that gradient
 
-981
+772
 02:10:29,590 --> 02:10:35,500
 from the learning rate so but how do you
 implement how far do you go I guess
 
-982
+773
 02:10:35,500 --> 02:10:38,610
 maybe I miss something
 early on you do you set a number
 
-983
+774
 02:10:38,610 --> 02:10:45,930
 somewhere we divide yeah we divide the
 learning rate divided by the square root
 
-984
+775
 02:10:45,930 --> 02:10:50,880
 of the moving average gradient squared
 so that's where we use it
 
-985
+776
 02:10:50,880 --> 02:10:57,720
 oh I'm sorry can you be a little more
 sure so d2 is the learning rate which is
 
-986
+777
 02:10:57,720 --> 02:11:02,850
 one yeah m27
 is our moving average of the squared
 
-987
+778
 02:11:02,850 --> 02:11:12,750
 gradients so we just go D 2 divided by
 square root and preserve that's it okay
 
-988
+779
 02:11:12,750 --> 02:11:19,860
 thanks I have one question yeah
 so the new method that you just
 
-989
+780
 02:11:19,860 --> 02:11:27,480
 mentioned which is in the process of
 getting implemented in yes how different
 
-990
+781
 02:11:27,480 --> 02:11:34,739
 is it from here okay let's do that so to
 understand Adam W we have to understand
 
-991
+782
 02:11:34,739 --> 02:11:39,510
 wait okay and maybe we'll learn more
 about that later let's see how we go now
 
-992
+783
 02:11:39,510 --> 02:11:46,440
 with great okay
 so the idea is that when you have lots
 and lots of parameters like we do with
 
-993
+784
 02:11:48,570 --> 02:11:54,330
 you know most of the neural Nets we
 train you very often have like more
 
-994
+785
 02:11:54,330 --> 02:11:57,989
 parameters and data points or you know
 like regularization becomes important
 
-995
+786
 02:11:57,989 --> 02:12:03,360
 and we've learnt how to avoid
 overfitting by using dropout right which
 
-996
+787
 02:12:03,360 --> 02:12:08,910
 randomly deletes some activations in the
 hope that's going to learn some kind of
 
-997
+788
 02:12:08,910 --> 02:12:14,100
 more resilient set of weights there's
 another kind of Ritter ization we can
 
-998
+789
 02:12:14,100 --> 02:12:19,140
 use called weight decay or l2
 regularization and it's actually comes
 
-999
+790
 02:12:19,140 --> 02:12:23,400
 kind of as a kind of classic statistical
 technique and the idea is that we take
 our loss function right so we take out
 
-1000
+791
 02:12:26,130 --> 02:12:32,880
 like arrow squared loss function and we
 add an additional piece to it let's add
 
-1001
+792
 02:12:32,880 --> 02:12:39,270
 weight decay right now the additional
 piece we add is to basically add the
 
-1002
+793
 02:12:39,270 --> 02:12:49,619
 square of the weights so we'd say plus B
 squared plus a squared
 okay that is now wait 2 K or L tree
 
-1003
+794
 02:12:55,960 --> 02:13:04,840
 regularization and so the idea is that
 now the the loss function wants to keep
 
-1004
+795
 02:13:04,840 --> 02:13:10,750
 the weight small because increasing the
 weights makes the loss worse and so it's
 
-1005
+796
 02:13:10,750 --> 02:13:15,909
 only going to increase the weights if
 the loss improves by more than the
 
-1006
+797
 02:13:15,909 --> 02:13:19,630
 amount of that penalty and in fact to
 make this weight to get to proper weight
 
-1007
+798
 02:13:19,630 --> 02:13:24,219
 decay
 we then need some multiplier yeah right
 
-1008
+799
 02:13:24,219 --> 02:13:31,719
 so if you remember back in our here we
 said weight decay equals W d5e neg 4
 
-1009
+800
 02:13:31,719 --> 02:13:39,159
 okay so to actually use the same way to
 K I would have to multiply by 0.005 all
 
-1010
+801
 02:13:39,159 --> 02:13:47,679
 right so that's actually now the same
 weight okay so if you have a really high
 
-1011
+802
 02:13:47,679 --> 02:13:52,150
 weight decay that it's going to set all
 the parameters to zero so it'll never
 
-1012
+803
 02:13:52,150 --> 02:13:57,550
 over fit right because it can't set any
 parameter to anything and so as you
 
-1013
+804
 02:13:57,550 --> 02:14:02,770
 gradually decrease the weight decay a
 few more weights can actually be used
 
-1014
+805
 02:14:02,770 --> 02:14:07,210
 right but the ones that don't help much
 it's still going to leave at zero or
 
-1015
+806
 02:14:07,210 --> 02:14:14,469
 close to zero right so that's what
 that's what weight decay is is is
 
-1016
+807
 02:14:14,469 --> 02:14:21,780
 literally to change the loss function to
 a D in this sum of squares of weights
 
-1017
+808
 02:14:21,780 --> 02:14:28,809
 times some parameter some hyper
 parameter I should say the problem is
 
-1018
+809
 02:14:28,809 --> 02:14:35,829
 that if you put that into the loss
 function as I have here then it ends up
 in the moving average of gradients and
 
-1019
+810
 02:14:38,139 --> 02:14:42,940
 the moving average of Squared's of
 gradients for atom right and so
 basically we end up when there's a lot
 
-1020
+811
 02:14:46,929 --> 02:14:53,559
 of variation we end up decreasing the
 amount of weight decay and if there's
 
-1021
+812
 02:14:53,559 --> 02:14:56,920
 very little variation we end up
 increasing the amount of weight decay so
 
-1022
+813
 02:14:56,920 --> 02:15:02,739
 we end up basically saying penalize
 parameters you know weights that are
 really
 
-1023
+814
 02:15:03,070 --> 02:15:09,580
 hi unless their gradient varies a lot
 which is never what we intended right
 
-1024
+815
 02:15:09,580 --> 02:15:15,460
 that's just not not the plan at all so
 the trick with Adam W is we basically
 
-1025
+816
 02:15:15,460 --> 02:15:22,000
 remove weight decay from here so it's
 not in the last function it's not in the
 
-1026
+817
 02:15:22,000 --> 02:15:28,480
 G not in the G squared and we move it so
 that instead it's it's it's added
 
-1027
+818
 02:15:28,480 --> 02:15:32,110
 directly to the when we update with the
 learning rate
 
-1028
+819
 02:15:32,110 --> 02:15:36,400
 it's out of there instead so in other
 words it would be we would put the
 
-1029
+820
 02:15:36,400 --> 02:15:40,300
 weight decay or I should a gradient of
 the weight decay in here when we
 
-1030
+821
 02:15:40,300 --> 02:15:47,410
 calculate the new a mu V so it never
 ends up in our G M G squared so that was
 
-1031
+822
 02:15:47,410 --> 02:15:51,970
 like a super fast description which will
 probably only make sense if you listen
 
-1032
+823
 02:15:51,970 --> 02:15:57,340
 to a three or four times on the video
 and then talk about it on the forum yeah
 
-1033
+824
 02:15:57,340 --> 02:16:01,960
 but if you're interested let me know and
 we can also look at Ann Ann's code
 
-1034
+825
 02:16:01,960 --> 02:16:11,440
 that's implemented yes and you know the
 the idea of using weight decay is it's a
 
-1035
+826
 02:16:11,440 --> 02:16:17,410
 really helpful regularizer because it's
 basically this way that we can kind of
 
-1036
+827
 02:16:17,410 --> 02:16:26,950
 stay like you know please don't increase
 any of the weight values unless the you
 
-1037
+828
 02:16:26,950 --> 02:16:34,510
 know improvement in the loss is worth it
 and so generally speaking pretty much
 
-1038
+829
 02:16:34,510 --> 02:16:40,150
 all state of the art models have both
 dropout and weight decay and I don't
 
-1039
+830
 02:16:40,150 --> 02:16:46,540
 claim to know like how to set each one
 and how much of H to use to say like you
 
-1040
+831
 02:16:46,540 --> 02:16:53,200
 it's worth trying both to go back to the
 idea of embeddings is there any way to
 
-1041
+832
 02:16:53,200 --> 02:16:57,460
 interpret the final to reduce it
 embeddings like absolutely we're gonna
 look at that next week I've it's super
 
-1042
+833
 02:16:59,170 --> 02:17:03,130
 fun it turns out that you know we'll
 learn what some of the worst movies of
 
-1043
+834
 02:17:03,129 --> 02:17:05,550
 all time
 
-1044
+835
 02:17:06,620 --> 02:17:11,460
 it's Letham it's that John Travolta
 Scientology once my battleship earth or
 something I think that was like the
 
-1045
+836
 02:17:12,660 --> 02:17:21,420
 worst movie of all time according to our
 beds to many recommendations for scaling
 
-1046
+837
 02:17:21,420 --> 02:17:27,030
 the l2 penalty or is that kind of based
 on how how wide the notes are how many
 
-1047
+838
 02:17:27,030 --> 02:17:32,640
 notes about III have no suggestion at
 all like I I kind of look for like
 papers or cackle competitions or
 
-1048
+839
 02:17:35,280 --> 02:17:40,350
 whatever similar and try to set up
 frankly the same it seems like in a
 
-1049
+840
 02:17:40,350 --> 02:17:46,080
 particular area like computer vision
 object recognition it's like somewhere
 
-1050
+841
 02:17:46,080 --> 02:17:50,340
 between one in neck four or one in egg
 five seems to work you know
 
-1051
+842
 02:17:50,340 --> 02:17:57,120
 actually in the Adam W paper the authors
 point out that with this new approach it
 
-1052
+843
 02:17:57,120 --> 02:18:00,480
 actually becomes like it seems to be
 much more stable as to what the right
 way to K amounts are so hopefully now
 
-1053
+844
 02:18:02,459 --> 02:18:06,149
 when we start playing with it
 we'll be able to have some definitive
 
-1054
+845
 02:18:06,150 --> 02:18:10,680
 recommendations by the time we get to
 part two all right well that's nine
 
-1055
+846
 02:18:10,680 --> 02:18:17,280
 o'clock so this week you know practice
 the thing that you're least familiar
 
-1056
+847
 02:18:17,280 --> 02:18:21,060
 with so if it's like jacobians and
 Hessians read about those if it's
 broadcasting read about those if it's
 
-1057
+848
 02:18:23,309 --> 02:18:26,969
 understanding python ooo read about that
 you know try to implement your own
 
-1058
+849
 02:18:26,969 --> 02:18:32,219
 custom layers read the faster higher
 layers you know and and talk on the
 
-1059
+850
 02:18:32,219 --> 02:18:39,439
 forum about anything that you find weird
 or confusing alright see you next week
